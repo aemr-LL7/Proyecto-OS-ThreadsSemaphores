@@ -9,6 +9,8 @@ package WorkingClasses;
  * @author andre
  * PM Gestiona el proyecto y el contador. Extends employee
  */
-public class ProjectManager {
+public class ProjectManager extends Thread{
+
+
     
 }

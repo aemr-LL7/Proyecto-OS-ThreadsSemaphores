@@ -6,9 +6,16 @@ package WorkingClasses;
 
 /**
  *
- * @author andre
- * Worker incluye informacion sobre los trabajadores de producción. Extends Employee
+ * @author B-St
  */
-public class Worker {
+public class Worker extends Thread{
     
+    private String type;
+    private int hourlyPay;
+    private int wQuantity;
+    
+    @Override 
+    public void run(){
+        System.out.println("Toy trabajandito mano");
+    };
 }

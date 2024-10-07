@@ -6,9 +6,9 @@ package WorkingClasses;
 
 /**
  *
- * @author andre
- * Employee es la clase base para los diferentes tipos de empleados
+ * @author B-St
  */
-public class Employee {
+public class ComputerAssembler  {
+
     
 }

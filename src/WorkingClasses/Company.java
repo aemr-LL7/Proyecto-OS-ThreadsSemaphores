@@ -12,7 +12,7 @@ public class Company extends Thread{
     
     private static final int normalWorkers = 21; 
     
-    private WareHouse inventoryWareHouse;
+    private Warehouse inventoryWareHouse;
     private int readyComputers = 0;
     
     private int daysTillShipement;  

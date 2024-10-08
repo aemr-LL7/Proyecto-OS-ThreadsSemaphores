@@ -15,10 +15,5 @@ public class Company extends Thread{
     private WareHouse inventoryWareHouse;
     private int readyComputers = 0;
     
-    private int daysTillShipement;
-    
-    
-    
-    
-    
+    private int daysTillShipement;  
 }

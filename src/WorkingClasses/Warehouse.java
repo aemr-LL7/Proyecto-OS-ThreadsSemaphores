@@ -26,8 +26,8 @@ public class WareHouse {
     private int PSU_Count;
     private int GPU_Count;
     
-    public WareHouse(String company){
-        this.companyName = company;
+    public WareHouse(String companyName){
+        this.companyName = companyName;
         this.MOBO_Count =0;
         this.CPU_Count =0;
         this.RAM_Count = 0;

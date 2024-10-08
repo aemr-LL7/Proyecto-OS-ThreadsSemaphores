@@ -12,7 +12,7 @@ public class Worker extends Thread{
     
     private String type;
     private int hourlyPay;
-    private int wQuantity;
+    private int workersQuantity;
     
     @Override 
     public void run(){

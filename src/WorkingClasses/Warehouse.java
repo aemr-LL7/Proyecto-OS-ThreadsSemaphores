@@ -12,7 +12,7 @@ import java.util.concurrent.Semaphore;
  * capacidad será limitada. El acceso sera controlado mediante semaforos para no
  * sobrepasar la capacidad al producir nuevos elementos
  */
-public class Warehouse {
+public class WareHouse {
 
     private String companyName;
 
@@ -28,7 +28,6 @@ public class Warehouse {
     private int PSU_Count;
     private int GPU_Count;
 
-
     // Semaforos para controlar el acceso concurrente
     private final Semaphore moboSemaphore = new Semaphore(1);
     private final Semaphore cpuSemaphore = new Semaphore(1);
@@ -36,7 +35,7 @@ public class Warehouse {
     private final Semaphore psuSemaphore = new Semaphore(1);
     private final Semaphore gpuSemaphore = new Semaphore(1);
 
-    public Warehouse(String company) {
+    public WareHouse(String company) {
         this.companyName = company;
         this.MOBO_Count = 0;
         this.CPU_Count = 0;
@@ -49,29 +48,29 @@ public class Warehouse {
         switch (counterType) {
             case 0:
                 if (this.MOBO_Count == maxReadyMobos) {
-                    System.out.println("Esta lleno el almacen de MOBOs de: " + this.companyName);
                     return true;
-                }   break;
+                }
+                break;
             case 1:
                 if (this.CPU_Count == maxReadyCPUs) {
-                    System.out.println("Esta lleno el almacen de CPUs de: " + this.companyName);
                     return true;
-                }   break;
+                }
+                break;
             case 2:
                 if (this.RAM_Count == maxReadyRAMs) {
-                    System.out.println("Esta lleno el almacen de RAMs de: " + this.companyName);
                     return true;
-                }   break;
+                }
+                break;
             case 3:
                 if (this.PSU_Count == maxReadyPSUs) {
-                    System.out.println("Esta lleno el almacen de PSUs de: " + this.companyName);
                     return true;
-                }   break;
+                }
+                break;
             case 4:
                 if (this.GPU_Count == maxReadyGPUs) {
-                    System.out.println("Esta lleno el almacen de GPUs de: " + this.companyName);
                     return true;
-                }   break;
+                }
+                break;
             default:
                 break;
         }
@@ -103,15 +102,15 @@ public class Warehouse {
             // Verificar si el almacen esta lleno antes de incrementar
             if (!isCounterTypeFull(counterType)) {
                 switch (counterType) {
-                    case 1 ->
+                    case 0 ->
                         this.MOBO_Count++;
-                    case 2 ->
+                    case 1 ->
                         this.CPU_Count++;
-                    case 3 ->
+                    case 2 ->
                         this.RAM_Count++;
-                    case 4 ->
+                    case 3 ->
                         this.PSU_Count++;
-                    case 5 ->
+                    case 4 ->
                         this.GPU_Count++;
                 }
                 System.out.println("Se ha incrementado el componente " + counterType + " en la compañia " + this.companyName);
@@ -121,6 +120,65 @@ public class Warehouse {
 
             semaphoreToUse.release(); // Liberar despues de actualizar
         }
+    }
+
+    public Semaphore getSemaphoreByType(int tipe) {
+
+        Semaphore semaphoreToUse = null;
+
+        // Determinamos el semaforo a utilizar segun el tipo de componente
+        switch (tipe) {
+            case 0 ->
+                semaphoreToUse = this.moboSemaphore;
+            case 1 ->
+                semaphoreToUse = this.cpuSemaphore;
+            case 2 ->
+                semaphoreToUse = this.ramSemaphore;
+            case 3 ->
+                semaphoreToUse = this.psuSemaphore;
+            case 4 ->
+                semaphoreToUse = this.gpuSemaphore;
+        }
+
+        return semaphoreToUse;
+    }
+
+    public int getCapacityByType(int type) {
+
+        if (type == 0){
+            return this.getMOBO_Count();
+        } else if (type == 1) {
+            return this.getCPU_Count();
+        } else if (type == 2) {
+            return this.getRAM_Count();
+        } else if (type == 3) {
+            return this.getPSU_Count();
+        } else if (type == 4) {
+            return this.getGPU_Count();
+        }
+
+        System.out.println("Error al obtener capacidad por tipo");
+        return -1;
+
+    }
+    
+    public int getStockByType(int type) {
+
+        if (type == 0){
+            return this.getMOBO_Count();
+        } else if (type == 1) {
+            return this.getCPU_Count();
+        } else if (type == 2) {
+            return this.getRAM_Count();
+        } else if (type == 3) {
+            return this.getPSU_Count();
+        } else if (type == 4) {
+            return this.getGPU_Count();
+        }
+
+        System.out.println("Error al obtener la cantidad por tipo");
+        return -1;
+
     }
 
     public String getCompany() {

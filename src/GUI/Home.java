@@ -4,7 +4,9 @@
  */
 package GUI;
 
+import FileManager.FileManager;
 import WorkingClasses.Company;
+import java.io.File;
 import javax.swing.JFrame;
 
 /**
@@ -12,6 +14,18 @@ import javax.swing.JFrame;
  * @author andre
  */
 public class Home extends javax.swing.JFrame {
+    // General params
+    private static int duration;
+    private static int deadline;
+
+    // FIle params
+    private static String selectedPath = ".saved//data.txt";
+    private static File selectedFile = new File(selectedPath);
+    private FileManager fileManager = new FileManager();
+
+    public void addWorkerOperationCost(String companyName, int ammount) {
+
+    }
 
     public static void getInstance() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -24,16 +38,22 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     public Home() {
-        
+        this.fileManager.savedDirectoryExists();
+        this.fileManager.loadParamsFromTxt();
+
+        // Mostrar los valores asignados
+        System.out.println("Duration: " + this.getDuration());
+        System.out.println("Deadline: " + this.getDeadline());
+
         //GUI STUFF
         initComponents();
-         // properties gui
+        // properties gui
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Main Home");
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -357,4 +377,47 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the duration
+     */
+    public static int getDuration() {
+        return duration;
+    }
+
+    /**
+     * @return the deadline
+     */
+    public static int getDeadline() {
+        return deadline;
+    }
+
+    /**
+     * @param aDuration the duration to set
+     */
+    public static void setDuration(int aDuration) {
+        duration = aDuration;
+    }
+
+    /**
+     * @param aDeadline the deadline to set
+     */
+    public static void setDeadline(int aDeadline) {
+        deadline = aDeadline;
+    }
+
+    /**
+     * @return the selectedFile
+     */
+    public static File getSelectedFile() {
+        return selectedFile;
+    }
+
+    /**
+     * @param aSelectedFile the selectedFile to set
+     */
+    public static void setSelectedFile(File aSelectedFile) {
+        selectedFile = aSelectedFile;
+    }
+    
 }

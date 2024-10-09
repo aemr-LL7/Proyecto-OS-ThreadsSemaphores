@@ -46,31 +46,34 @@ public class Warehouse {
     }
 
     public boolean isCounterTypeFull(int counterType) {
-        if (counterType == 1) {
-            if (this.MOBO_Count == maxReadyMobos) {
-                System.out.println("Esta lleno el almacen de MOBOs de: " + this.companyName);
-                return true;
-            }
-        } else if (counterType == 2) {
-            if (this.CPU_Count == maxReadyCPUs) {
-                System.out.println("Esta lleno el almacen de CPUs de: " + this.companyName);
-                return true;
-            }
-        } else if (counterType == 3) {
-            if (this.RAM_Count == maxReadyRAMs) {
-                System.out.println("Esta lleno el almacen de RAMs de: " + this.companyName);
-                return true;
-            }
-        } else if (counterType == 4) {
-            if (this.PSU_Count == maxReadyPSUs) {
-                System.out.println("Esta lleno el almacen de PSUs de: " + this.companyName);
-                return true;
-            }
-        } else if (counterType == 5) {
-            if (this.GPU_Count == maxReadyGPUs) {
-                System.out.println("Esta lleno el almacen de GPUs de: " + this.companyName);
-                return true;
-            }
+        switch (counterType) {
+            case 0:
+                if (this.MOBO_Count == maxReadyMobos) {
+                    System.out.println("Esta lleno el almacen de MOBOs de: " + this.companyName);
+                    return true;
+                }   break;
+            case 1:
+                if (this.CPU_Count == maxReadyCPUs) {
+                    System.out.println("Esta lleno el almacen de CPUs de: " + this.companyName);
+                    return true;
+                }   break;
+            case 2:
+                if (this.RAM_Count == maxReadyRAMs) {
+                    System.out.println("Esta lleno el almacen de RAMs de: " + this.companyName);
+                    return true;
+                }   break;
+            case 3:
+                if (this.PSU_Count == maxReadyPSUs) {
+                    System.out.println("Esta lleno el almacen de PSUs de: " + this.companyName);
+                    return true;
+                }   break;
+            case 4:
+                if (this.GPU_Count == maxReadyGPUs) {
+                    System.out.println("Esta lleno el almacen de GPUs de: " + this.companyName);
+                    return true;
+                }   break;
+            default:
+                break;
         }
 
         return false;
@@ -81,15 +84,15 @@ public class Warehouse {
 
         // Determinamos el semaforo a utilizar segun el tipo de componente
         switch (counterType) {
-            case 1 ->
+            case 0 ->
                 semaphoreToUse = moboSemaphore;
-            case 2 ->
+            case 1 ->
                 semaphoreToUse = cpuSemaphore;
-            case 3 ->
+            case 2 ->
                 semaphoreToUse = ramSemaphore;
-            case 4 ->
+            case 3 ->
                 semaphoreToUse = psuSemaphore;
-            case 5 ->
+            case 4 ->
                 semaphoreToUse = gpuSemaphore;
         }
 

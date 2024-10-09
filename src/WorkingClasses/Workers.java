@@ -20,13 +20,11 @@ public class Workers extends Thread {
     private WareHouse wareHouse; //Almacen de la compania
     private Semaphore storageSemaphore; // Semaforo para controlar el acceso al almacén
     private int dayDuration;
-    private int totalSalary;
 
     public Workers(int type, WareHouse wareHouse, int dayDuration) {
         this.tipe = type;
         this.storageSemaphore = wareHouse.getSemaphoreByType(type);
         this.dayDuration = dayDuration;
-        this.totalSalary = 0;
         // Configurar los valores dependiendo del tipo: USANDO X=9
         switch (type) {
             case 0: // Placa base
@@ -90,7 +88,7 @@ public class Workers extends Thread {
 
     public void payMe() {
         int payment = this.productionTime  * (24 * this.salaryPerHour);        
-        this.totalSalary += payment;
+        this.wareHouse.addCost(payment);
     }
 
     public void increment() throws InterruptedException {
@@ -177,14 +175,6 @@ public class Workers extends Thread {
      */
     public void setStorageSemaphore(Semaphore storageSemaphore) {
         this.storageSemaphore = storageSemaphore;
-    }
-
-    public void setTotalOperationCost(int totalOperationCost) {
-        this.totalSalary = totalOperationCost;
-    }
-
-    public int getTotalSalary() {
-        return totalSalary;
     }
 
 }

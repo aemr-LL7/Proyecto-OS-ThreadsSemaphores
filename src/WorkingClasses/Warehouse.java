@@ -34,6 +34,8 @@ public class WareHouse {
     private final Semaphore ramSemaphore = new Semaphore(1);
     private final Semaphore psuSemaphore = new Semaphore(1);
     private final Semaphore gpuSemaphore = new Semaphore(1);
+    
+    private int accumulatedProductionCost;
 
     public WareHouse(String company) {
         this.companyName = company;
@@ -42,6 +44,7 @@ public class WareHouse {
         this.RAM_Count = 0;
         this.PSU_Count = 0;
         this.GPU_Count = 0;
+        this.accumulatedProductionCost = 0;
     }
 
     public boolean isCounterTypeFull(int counterType) {
@@ -247,6 +250,10 @@ public class WareHouse {
 
     }
 
+    public void addCost(int cost){
+        this.accumulatedProductionCost += cost;
+    }
+    
     public String getCompany() {
         return companyName;
     }

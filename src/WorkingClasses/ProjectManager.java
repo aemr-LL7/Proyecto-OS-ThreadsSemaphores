@@ -17,11 +17,14 @@ public class ProjectManager extends Thread {
     private static int SALARY_PER_HOUR = 40;
     private int salaryPenalty = 0;
     private Semaphore semaphore; // Semáforo para sincronización
+    
+    private Company company; 
 
-    public ProjectManager(int initialRemainingDays, Semaphore semaphore) {
+    public ProjectManager(int initialRemainingDays, Semaphore semaphore, Company company) {
         this.remainingDays = initialRemainingDays;
         this.watchingAnime = false;
         this.semaphore = semaphore;
+        this.company = company;
     }
 
     @Override

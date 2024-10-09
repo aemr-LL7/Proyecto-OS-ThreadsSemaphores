@@ -8,32 +8,24 @@ package WorkingClasses;
  *
  * @author B-St
  */
-public class Company extends Thread{
-    
+public class Company {
+
     private String companyName;
-    
-    private int MOBOWorkersAmmount; 
-    private int CPUWorkersAmmount; 
-    private int RAMWorkersAmmount; 
-    private int PSUWorkersAmmount; 
-    private int GPUWorkersAmmount; 
-    
-    private int dayDuration;
-   
-    private Worker MOBO;
-    private Worker CPU;
-    private Worker RAM;
-    private Worker PSU;
-    private Worker GPU;
-    
+
+    private int MOBOWorkersAmmount;
+    private int CPUWorkersAmmount;
+    private int RAMWorkersAmmount;
+    private int PSUWorkersAmmount;
+    private int GPUWorkersAmmount;
+
     private int operationCost;
-    
+
     private WareHouse inventoryWareHouse;
     private int readyComputers = 0;
-    
-    private int daysTillShipement;  
 
-    public Company(String companyName, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, WareHouse inventoryWareHouse, int daysTillShipement, int dayDuration) {
+    private int daysTillShipement;
+
+    public Company(String companyName, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, WareHouse inventoryWareHouse, int daysTillShipement) {
         this.companyName = companyName;
         this.MOBOWorkersAmmount = MOBOWorkersAmmount;
         this.CPUWorkersAmmount = CPUWorkersAmmount;
@@ -42,12 +34,17 @@ public class Company extends Thread{
         this.GPUWorkersAmmount = GPUWorkersAmmount;
         this.inventoryWareHouse = inventoryWareHouse;
         this.daysTillShipement = daysTillShipement;
-        this.dayDuration = dayDuration;
         this.operationCost = 0;
     }
+
+    public void addOperationCost(int cost) {
+        this.operationCost += cost;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
     
-   public void  addOperationCost(int cost){
-       this.operationCost += cost;
-   } 
-   
+    
 }

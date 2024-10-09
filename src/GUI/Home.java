@@ -12,6 +12,10 @@ import javax.swing.JFrame;
  * @author andre
  */
 public class Home extends javax.swing.JFrame {
+
+    public static void getInstance() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     private Company company0; //MSI
     private Company company1; //HP

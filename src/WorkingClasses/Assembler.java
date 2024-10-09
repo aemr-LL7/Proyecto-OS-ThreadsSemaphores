@@ -15,13 +15,13 @@ public class Assembler extends Thread {
     private double salaryPerHour;  // Salario por hora
     private int assemblyTime;      // Tiempo para ensamblar una computadora (2 días)
     private Semaphore storageSemaphore;  // Semáforo para controlar el acceso al almacén
-    private Worker[] workers;      // Los trabajadores (productores) que proporcionan las piezas
+    private Workers[] workers;      // Los trabajadores (productores) que proporcionan las piezas
     private int computersAssembled; // Número de computadoras ensambladas
     private int computersWithoutGPU; // Contador de computadoras sin tarjeta gráfica ensambladas
     private int maxWithoutGPU; // Número máximo de computadoras sin tarjeta gráfica que se pueden ensamblar antes de añadir una con tarjeta gráfica
     private boolean needsGraphicsCard; // Indicador de si la siguiente computadora debe tener tarjeta gráfica
 
-    public Assembler(Worker[] workers, Semaphore storageSemaphore, int maxWithoutGPU) {
+    public Assembler(Workers[] workers, Semaphore storageSemaphore, int maxWithoutGPU) {
         this.salaryPerHour = 50;
         this.assemblyTime = 2; // Días para ensamblar una computadora
         this.storageSemaphore = storageSemaphore;

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author B-St
  */
-public class Worker extends Thread {
+public class Workers extends Thread {
 
     private int tipe; // Identifica el tipo de trabajador: 0=Placa Base, 1=CPU, 2=RAM, 3=Fuente, 4=Tarjeta Grafica
     private int salaryPerHour;
@@ -20,11 +20,9 @@ public class Worker extends Thread {
     private WareHouse wareHouse; //Almacen de la compania
     private Semaphore storageSemaphore; // Semaforo para controlar el acceso al almacén
     private int dayDuration;
-
-    private int dayCounter;
     private int totalSalary;
 
-    public Worker(int type, WareHouse wareHouse, int dayDuration) {
+    public Workers(int type, WareHouse wareHouse, int dayDuration) {
         this.tipe = type;
         this.storageSemaphore = wareHouse.getSemaphoreByType(type);
         this.dayDuration = dayDuration;
@@ -61,7 +59,7 @@ public class Worker extends Thread {
 
         while (true) {
             try {
-                this.addMyPaymentToCost();
+                this.payMe();
                 this.work();
                 // Simulacion del tiempo de producción (en días)
                 Thread.sleep(this.getProductionTime() * this.dayDuration);
@@ -69,7 +67,6 @@ public class Worker extends Thread {
                 System.out.println("Produccion interrumpida para el trabajador de tipo " + getType());
             }
         }
-
     }
 
     public void work() throws InterruptedException {
@@ -88,12 +85,11 @@ public class Worker extends Thread {
             System.out.println("Almacen de tipo " + getType() + " lleno. No se puede producir mas");
 
         }
-        this.dayCounter += getProductionTime();
         this.getStorageSemaphore().release();
     }
 
-    public void addMyPaymentToCost() {
-        int payment = this.productionTime  * (24 * this.salaryPerHour);
+    public void payMe() {
+        int payment = this.productionTime  * (24 * this.salaryPerHour);        
         this.totalSalary += payment;
     }
 
@@ -109,7 +105,7 @@ public class Worker extends Thread {
         try {
             this.wareHouse.incrementCounterByType(this.tipe);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Workers.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -181,10 +177,6 @@ public class Worker extends Thread {
      */
     public void setStorageSemaphore(Semaphore storageSemaphore) {
         this.storageSemaphore = storageSemaphore;
-    }
-
-    public void setDayCounter(int dayCounter) {
-        this.dayCounter = dayCounter;
     }
 
     public void setTotalOperationCost(int totalOperationCost) {

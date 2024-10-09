@@ -4,16 +4,18 @@
  */
 package WorkingClasses;
 
+import java.util.concurrent.Semaphore;
+
 /**
  *
  * @author andre El almacrn se comparte entre diferentes empleados, y su
  * capacidad será limitada. El acceso sera controlado mediante semaforos para no
  * sobrepasar la capacidad al producir nuevos elementos
  */
-public class WareHouse {
+public class Warehouse {
 
     private String companyName;
-    
+
     private static final int maxReadyMobos = 25;
     private static final int maxReadyCPUs = 20;
     private static final int maxReadyRAMs = 55;
@@ -25,14 +27,22 @@ public class WareHouse {
     private int RAM_Count;
     private int PSU_Count;
     private int GPU_Count;
-    
-    public WareHouse(String companyName){
-        this.companyName = companyName;
-        this.MOBO_Count =0;
-        this.CPU_Count =0;
+
+
+    // Semaforos para controlar el acceso concurrente
+    private final Semaphore moboSemaphore = new Semaphore(1);
+    private final Semaphore cpuSemaphore = new Semaphore(1);
+    private final Semaphore ramSemaphore = new Semaphore(1);
+    private final Semaphore psuSemaphore = new Semaphore(1);
+    private final Semaphore gpuSemaphore = new Semaphore(1);
+
+    public Warehouse(String company) {
+        this.companyName = company;
+        this.MOBO_Count = 0;
+        this.CPU_Count = 0;
         this.RAM_Count = 0;
         this.PSU_Count = 0;
-        this.GPU_Count =0;   
+        this.GPU_Count = 0;
     }
 
     public boolean isCounterTypeFull(int counterType) {
@@ -66,24 +76,47 @@ public class WareHouse {
         return false;
     }
 
-    public void incrementCounterByType(int counterType) {
-        if (this.isCounterTypeFull(counterType)) {
-            //Si el almacen esta lleno, podemos no hacer nada
-        } else {
-            switch (counterType) {
-                case 1 ->
-                    this.MOBO_Count++;
-                case 2 ->
-                    this.CPU_Count++;
-                case 3 ->
-                    this.RAM_Count++;
-                case 4 ->
-                    this.PSU_Count++;
-                case 5 ->
-                    this.GPU_Count++;
-                default -> {
+    public void incrementCounterByType(int counterType) throws InterruptedException {
+        Semaphore semaphoreToUse = null;
+
+        // Determinamos el semaforo a utilizar segun el tipo de componente
+        switch (counterType) {
+            case 1 ->
+                semaphoreToUse = moboSemaphore;
+            case 2 ->
+                semaphoreToUse = cpuSemaphore;
+            case 3 ->
+                semaphoreToUse = ramSemaphore;
+            case 4 ->
+                semaphoreToUse = psuSemaphore;
+            case 5 ->
+                semaphoreToUse = gpuSemaphore;
+        }
+
+        // Si el semaforo corresponde a un tipo de componente
+        if (semaphoreToUse != null) {
+            semaphoreToUse.acquire(); // Asegurar exclusion mutua
+
+            // Verificar si el almacen esta lleno antes de incrementar
+            if (!isCounterTypeFull(counterType)) {
+                switch (counterType) {
+                    case 1 ->
+                        this.MOBO_Count++;
+                    case 2 ->
+                        this.CPU_Count++;
+                    case 3 ->
+                        this.RAM_Count++;
+                    case 4 ->
+                        this.PSU_Count++;
+                    case 5 ->
+                        this.GPU_Count++;
                 }
+                System.out.println("Se ha incrementado el componente " + counterType + " en la compañia " + this.companyName);
+            } else {
+                System.out.println("No se pudo incrementar el componente " + counterType + " porque el almacen esta lleno");
             }
+
+            semaphoreToUse.release(); // Liberar despues de actualizar
         }
     }
 
@@ -131,6 +164,4 @@ public class WareHouse {
         return GPU_Count;
     }
 
-    
-    
 }

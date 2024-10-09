@@ -13,13 +13,9 @@ import javax.swing.JFrame;
  */
 public class Home extends javax.swing.JFrame {
     
-    private Company company2 = new Company();
-    private Company company1 = new Company();
+    private Company company0; //MSI
+    private Company company1; //HP
     
-    public void addWorkerOperationCost(String companyName, int ammount){
-        
-    }
-
     /**
      * Creates new form Home
      */

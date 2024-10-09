@@ -26,6 +26,8 @@ public class Company extends Thread{
     private Worker PSU;
     private Worker GPU;
     
+    private int operationCost;
+    
     private WareHouse inventoryWareHouse;
     private int readyComputers = 0;
     
@@ -41,9 +43,11 @@ public class Company extends Thread{
         this.inventoryWareHouse = inventoryWareHouse;
         this.daysTillShipement = daysTillShipement;
         this.dayDuration = dayDuration;
+        this.operationCost = 0;
     }
     
-    
-    
-    
+   public void  addOperationCost(int cost){
+       this.operationCost += cost;
+   } 
+   
 }

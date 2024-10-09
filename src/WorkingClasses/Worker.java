@@ -18,44 +18,35 @@ public class Worker extends Thread {
     private int tipe; // Identifica el tipo de trabajador: 0=Placa Base, 1=CPU, 2=RAM, 3=Fuente, 4=Tarjeta Grafica
     private double salaryPerHour;
     private int productionTime; // Tiempo necesario para producir un componente (en días)
-    
-//    private int storageCapacity; // Capacidad max del almacen
-//    private int currentStock; Esto lo usamos en la coase warehouse 
-    
     private WareHouse wareHouse; //Almacen de la compania
     private Semaphore storageSemaphore; // Semaforo para controlar el acceso al almacén
+    private int dayDuration;
 
     public Worker(int type, WareHouse wareHouse) {
         this.tipe = type;
         this.storageSemaphore = wareHouse.getSemaphoreByType(type);
-//        this.currentStock = 0; // Inicialmente esta vacio -> cambiado para usar el warehouse
 
         // Configurar los valores dependiendo del tipo: USANDO X=9
         switch (type) {
             case 0: // Placa base
                 this.salaryPerHour = 20;
                 this.productionTime = 4; // Días para producir
-//                this.storageCapacity = 25; -> Cambiado para funcionar con Warehouse
                 break;
             case 1: // CPU
                 this.salaryPerHour = 26;
                 this.productionTime = 4;
-//                this.storageCapacity = 20; -> Cambiado para funcionar con Warehouse
                 break;
             case 2: // RAM
                 this.salaryPerHour = 40;
                 this.productionTime = 1;
-//                this.storageCapacity = 55; -> Cambiado para funcionar con WareHouse
                 break;
             case 3: // Fuente de Alimentacion
                 this.salaryPerHour = 16;
                 this.productionTime = 1;
-//                this.storageCapacity = 35; -> Cambiado para funcionar con WareHouse
                 break;
             case 4: // Tarjeta grafica
                 this.salaryPerHour = 34;
                 this.productionTime = 2;
-//                this.storageCapacity = 10; -> Cambiadi para funcionar con Warehouse
                 break;
             default:
                 throw new IllegalArgumentException("Tipo de trabajador no valido");
@@ -67,7 +58,7 @@ public class Worker extends Thread {
         try {
             while (true) {
                 // Simulacion del tiempo de producción (en días)
-                Thread.sleep(this.getProductionTime() * 1000); // Por simplicidad, un día = 1000 ms en la simulacion
+                Thread.sleep(this.getProductionTime() * this.dayDuration); // Por simplicidad, un día = 1000 ms en la simulacion
 
                 // Intentar acceder al almacen (usando el semaforo)
                 this.getStorageSemaphore().acquire();
@@ -82,6 +73,10 @@ public class Worker extends Thread {
         } catch (InterruptedException e) {
             System.out.println("Produccion interrumpida para el trabajador de tipo " + getType());
         }
+    }
+    
+    public void decrement() throws InterruptedException{
+        this.wareHouse.decrementCounterByType(this.tipe);
     }
 
     public void setCurrentStock(){

@@ -104,23 +104,15 @@ public class Assembler extends Thread {
     /*
     *   Metodo para tomar las piezas necesarias del almacen
      */
-    private void takePartsForAssembly() {
+    private void takePartsForAssembly() throws InterruptedException {
         // Obtener el stock actual, decrementar y actualizar el valor
-        int stockPlacaBase = this.workers[0].getCurrentStock();
-        this.workers[0].setCurrentStock(stockPlacaBase - 1); // Placa base
-
-        int stockCPU = this.workers[1].getCurrentStock();
-        this.workers[1].setCurrentStock(stockCPU - 1); // CPU
-
-        int stockRAM = this.workers[2].getCurrentStock();
-        this.workers[2].setCurrentStock(stockRAM - 1); // RAM
-
-        int stockFuente = this.workers[3].getCurrentStock();
-        this.workers[3].setCurrentStock(stockFuente - 1); // Fuente de alimentacion
+        this.workers[0].decrement(); // Placa base
+        this.workers[1].decrement(); // CPU
+        this.workers[2].decrement(); // RAM
+        this.workers[3].decrement(); // Fuente de alimentacion
 
         if (this.needsGraphicsCard) {
-            int stockGPU = this.workers[4].getCurrentStock();
-            this.workers[4].setCurrentStock(stockGPU - 1); // Tarjeta grafica
+            this.workers[4].decrement(); // Tarjeta grafica
         }
     }
 

@@ -122,6 +122,53 @@ public class WareHouse {
         }
     }
 
+    public void decrementCounterByType(int counterType) throws InterruptedException {
+        Semaphore semaphoreToUse = null;
+
+        // Determinamos el semaforo a utilizar segun el tipo de componente
+        switch (counterType) {
+            case 0 ->
+                semaphoreToUse = moboSemaphore;
+            case 1 ->
+                semaphoreToUse = cpuSemaphore;
+            case 2 ->
+                semaphoreToUse = ramSemaphore;
+            case 3 ->
+                semaphoreToUse = psuSemaphore;
+            case 4 ->
+                semaphoreToUse = gpuSemaphore;
+        }
+
+        // Si el semaforo corresponde a un tipo de componente
+        if (semaphoreToUse != null) {
+            semaphoreToUse.acquire(); // Asegurar exclusion mutua
+
+            // Verificar si el almacen esta lleno antes de incrementar
+            if (this.getStockByType(counterType) == 0) {
+                System.out.println("No se pudo restar el componente " + counterType + " porque el almacen esta vacio");
+                
+            } else {
+
+                switch (counterType) {
+                    case 0 ->
+                        this.MOBO_Count--;
+                    case 1 ->
+                        this.CPU_Count--;
+                    case 2 ->
+                        this.RAM_Count--;
+                    case 3 ->
+                        this.PSU_Count--;
+                    case 4 ->
+                        this.GPU_Count--;
+                }
+                
+                System.out.println("Se ha reducido el componente " + counterType + " en la compañia " + this.companyName);
+            }
+
+            semaphoreToUse.release(); // Liberar despues de actualizar
+        }
+    }
+
     public Semaphore getSemaphoreByType(int tipe) {
 
         Semaphore semaphoreToUse = null;
@@ -145,7 +192,7 @@ public class WareHouse {
 
     public int getCapacityByType(int type) {
 
-        if (type == 0){
+        if (type == 0) {
             return this.getMOBO_Count();
         } else if (type == 1) {
             return this.getCPU_Count();
@@ -161,10 +208,10 @@ public class WareHouse {
         return -1;
 
     }
-    
+
     public int getStockByType(int type) {
 
-        if (type == 0){
+        if (type == 0) {
             return this.getMOBO_Count();
         } else if (type == 1) {
             return this.getCPU_Count();

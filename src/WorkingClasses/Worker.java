@@ -5,6 +5,8 @@
 package WorkingClasses;
 
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -82,6 +84,13 @@ public class Worker extends Thread {
         }
     }
 
+    public void setCurrentStock(){
+        try {
+            this.wareHouse.incrementCounterByType(this.tipe);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * @return the type
      */

@@ -122,6 +122,25 @@ public class WareHouse {
         }
     }
 
+    //caso especial PSU, 5 en un dia
+    public void incrementPSUCounter(){
+        
+        int difference = this.getCapacityByType(3) - this.getPSU_Count();
+        
+        if (difference > 5) {
+            for (int i=5; 0<i; i--){
+                this.PSU_Count++;
+            }
+        } else {
+            for (int i=difference; i>0; i--){
+                this.PSU_Count++;
+            }
+            System.out.println("Se boto: " + (5-difference) + "PSUs en la ultima produccion de: " + this.companyName);
+        }
+        
+        
+    }
+    
     public void decrementCounterByType(int counterType) throws InterruptedException {
         Semaphore semaphoreToUse = null;
 

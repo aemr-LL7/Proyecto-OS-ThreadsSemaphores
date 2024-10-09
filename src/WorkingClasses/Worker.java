@@ -12,7 +12,6 @@ import java.util.logging.Logger;
  *
  * @author B-St
  */
-
 public class Worker extends Thread {
 
     private int tipe; // Identifica el tipo de trabajador: 0=Placa Base, 1=CPU, 2=RAM, 3=Fuente, 4=Tarjeta Grafica
@@ -21,10 +20,13 @@ public class Worker extends Thread {
     private WareHouse wareHouse; //Almacen de la compania
     private Semaphore storageSemaphore; // Semaforo para controlar el acceso al almacén
     private int dayDuration;
+    private int dayCounter;
 
-    public Worker(int type, WareHouse wareHouse) {
+    public Worker(int type, WareHouse wareHouse, int dayDuration) {
         this.tipe = type;
         this.storageSemaphore = wareHouse.getSemaphoreByType(type);
+        this.dayDuration = dayDuration;
+        this.dayCounter = 0;
 
         // Configurar los valores dependiendo del tipo: USANDO X=9
         switch (type) {
@@ -42,7 +44,7 @@ public class Worker extends Thread {
                 break;
             case 3: // Fuente de Alimentacion
                 this.salaryPerHour = 16;
-                this.productionTime = 1;
+                this.productionTime = 1; // -> Como se producen 5 rams en un dia, se multiplica la produccion * 5
                 break;
             case 4: // Tarjeta grafica
                 this.salaryPerHour = 34;
@@ -63,29 +65,41 @@ public class Worker extends Thread {
                 // Intentar acceder al almacen (usando el semaforo)
                 this.getStorageSemaphore().acquire();
                 if (this.getCurrentStock() < this.getStorageCapacity()) {
-//                    this.setCurrentStock(this.getCurrentStock() + 1); -> cambiar para usar Warehouse
-                    System.out.println("Trabajador de tipo " + getType() + " ha producido un componente. Stock actual: " + getCurrentStock());
+                    if (this.tipe == 3) {
+                        this.wareHouse.incrementPSUCounter();
+                    } else {
+                        this.increment();
+                        System.out.println("Trabajador de tipo " + getType() + " ha producido un componente. Stock actual: " + getCurrentStock());
+                    }
+                    this.dayCounter++;
                 } else {
                     System.out.println("Almacen de tipo " + getType() + " lleno. No se puede producir mas");
+                    this.dayCounter++;
                 }
+                
                 this.getStorageSemaphore().release();
             }
         } catch (InterruptedException e) {
             System.out.println("Produccion interrumpida para el trabajador de tipo " + getType());
         }
     }
-    
-    public void decrement() throws InterruptedException{
+
+    public void increment() throws InterruptedException {
+        this.wareHouse.incrementCounterByType(this.tipe);
+    }
+
+    public void decrement() throws InterruptedException {
         this.wareHouse.decrementCounterByType(this.tipe);
     }
 
-    public void setCurrentStock(){
+    public void setCurrentStock() {
         try {
             this.wareHouse.incrementCounterByType(this.tipe);
         } catch (InterruptedException ex) {
             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
      * @return the type
      */

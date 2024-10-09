@@ -1,0 +1,21 @@
+[General Params]
+Duration=1000
+Deadline=10
+
+[HP]
+Motherboard=1
+CPU=1
+RAM=1
+PSU=1
+GPU=1
+Assemblers=1
+MaxCapacity=25
+
+[MSI]
+Motherboard=1
+CPU=1
+RAM=1
+PSU=1
+GPU=1
+Assemblers=1
+MaxCapacity=25

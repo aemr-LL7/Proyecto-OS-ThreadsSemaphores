@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import WorkingClasses.Company;
 import javax.swing.JFrame;
 
 /**
@@ -11,11 +12,20 @@ import javax.swing.JFrame;
  * @author andre
  */
 public class Home extends javax.swing.JFrame {
+    
+    private Company company2 = new Company();
+    private Company company1 = new Company();
+    
+    public void addWorkerOperationCost(String companyName, int ammount){
+        
+    }
 
     /**
      * Creates new form Home
      */
     public Home() {
+        
+        //GUI STUFF
         initComponents();
          // properties gui
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,7 +33,7 @@ public class Home extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Main Home");
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

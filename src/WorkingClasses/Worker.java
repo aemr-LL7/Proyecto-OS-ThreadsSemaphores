@@ -15,18 +15,20 @@ import java.util.logging.Logger;
 public class Worker extends Thread {
 
     private int tipe; // Identifica el tipo de trabajador: 0=Placa Base, 1=CPU, 2=RAM, 3=Fuente, 4=Tarjeta Grafica
-    private double salaryPerHour;
+    private int salaryPerHour;
     private int productionTime; // Tiempo necesario para producir un componente (en días)
     private WareHouse wareHouse; //Almacen de la compania
     private Semaphore storageSemaphore; // Semaforo para controlar el acceso al almacén
     private int dayDuration;
+
     private int dayCounter;
+    private int totalSalary;
 
     public Worker(int type, WareHouse wareHouse, int dayDuration) {
         this.tipe = type;
         this.storageSemaphore = wareHouse.getSemaphoreByType(type);
         this.dayDuration = dayDuration;
-        this.dayCounter = 0;
+        this.totalSalary = 0;
 
         // Configurar los valores dependiendo del tipo: USANDO X=9
         switch (type) {
@@ -57,10 +59,17 @@ public class Worker extends Thread {
 
     @Override
     public void run() {
+
+        this.work();
+
+    }
+
+    public void work() {
         try {
             while (true) {
+
                 // Simulacion del tiempo de producción (en días)
-                Thread.sleep(this.getProductionTime() * this.dayDuration); // Por simplicidad, un día = 1000 ms en la simulacion
+                Thread.sleep(this.getProductionTime() * this.dayDuration);
 
                 // Intentar acceder al almacen (usando el semaforo)
                 this.getStorageSemaphore().acquire();
@@ -71,17 +80,27 @@ public class Worker extends Thread {
                         this.increment();
                         System.out.println("Trabajador de tipo " + getType() + " ha producido un componente. Stock actual: " + getCurrentStock());
                     }
-                    this.dayCounter++;
+
                 } else {
                     System.out.println("Almacen de tipo " + getType() + " lleno. No se puede producir mas");
-                    this.dayCounter++;
+
                 }
+                this.dayCounter+= getProductionTime();
                 
                 this.getStorageSemaphore().release();
             }
         } catch (InterruptedException e) {
             System.out.println("Produccion interrumpida para el trabajador de tipo " + getType());
         }
+
+    }
+    
+    public void payMe(){
+        int payment = this.dayCounter * (24 * this.salaryPerHour);
+        this.totalSalary = payment;
+        
+        
+        
     }
 
     public void increment() throws InterruptedException {
@@ -124,7 +143,7 @@ public class Worker extends Thread {
     /**
      * @param salaryPerHour the salaryPerHour to set
      */
-    public void setSalaryPerHour(float salaryPerHour) {
+    public void setSalaryPerHour(int salaryPerHour) {
         this.salaryPerHour = salaryPerHour;
     }
 
@@ -168,6 +187,14 @@ public class Worker extends Thread {
      */
     public void setStorageSemaphore(Semaphore storageSemaphore) {
         this.storageSemaphore = storageSemaphore;
+    }
+
+    public void setDayCounter(int dayCounter) {
+        this.dayCounter = dayCounter;
+    }
+
+    public void setTotalOperationCost(int totalOperationCost) {
+        this.totalSalary = totalOperationCost;
     }
 
 }

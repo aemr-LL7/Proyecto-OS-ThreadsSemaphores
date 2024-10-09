@@ -11,13 +11,6 @@ package WorkingClasses;
 public class Company {
 
     private String companyName;
-
-    private int MOBOWorkersAmmount;
-    private int CPUWorkersAmmount;
-    private int RAMWorkersAmmount;
-    private int PSUWorkersAmmount;
-    private int GPUWorkersAmmount;
-
     private int operationCost;
 
     private WareHouse inventoryWareHouse;
@@ -27,11 +20,6 @@ public class Company {
 
     public Company(String companyName, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, WareHouse inventoryWareHouse, int daysTillShipement) {
         this.companyName = companyName;
-        this.MOBOWorkersAmmount = MOBOWorkersAmmount;
-        this.CPUWorkersAmmount = CPUWorkersAmmount;
-        this.RAMWorkersAmmount = RAMWorkersAmmount;
-        this.PSUWorkersAmmount = PSUWorkersAmmount;
-        this.GPUWorkersAmmount = GPUWorkersAmmount;
         this.inventoryWareHouse = inventoryWareHouse;
         this.daysTillShipement = daysTillShipement;
         this.operationCost = 0;

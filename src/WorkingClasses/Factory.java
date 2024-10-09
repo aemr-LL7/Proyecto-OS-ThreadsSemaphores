@@ -9,38 +9,50 @@ package WorkingClasses;
  * @author B-St
  */
 public class Factory extends Thread {
-    
-    private int dayDuration;
-    private Workers MOBO;
-    private Workers CPU;
-    private Workers RAM;
-    private Workers PSU;
-    private Workers GPU;
-    
-    private Company company;
-    
-    private WareHouse wareHouse; 
 
-    public Factory(int dayDuration, Company company) {
+    private int dayDuration;
+
+    private Workers[] MOBO;
+    private Workers[] CPU;
+    private Workers[] RAM;
+    private Workers[] PSU;
+    private Workers[] GPU;
+
+    private Company company;
+
+    private WareHouse wareHouse;
+
+    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, Company company, WareHouse wareHouse) {
         this.dayDuration = dayDuration;
+        this.MOBO = new Workers[MOBOWorkersAmmount];      
+        this.CPU = new Workers[CPUWorkersAmmount];      
+        this.RAM = new Workers[RAMWorkersAmmount];      
+        this.PSU = new Workers[PSUWorkersAmmount];      
+        this.GPU = new Workers[GPUWorkersAmmount];      
+        
         this.company = company;
+        this.wareHouse = wareHouse;
     }
-    
-    private void createWorkers(WareHouse warehouse, int dayDuration){
-        this.MOBO = new Workers(0, this.wareHouse, this.dayDuration); 
-        this.CPU = new Workers(1, this.wareHouse, this.dayDuration); 
-        this.RAM = new Workers(2, this.wareHouse, this.dayDuration); 
-        this.PSU = new Workers(3, this.wareHouse, this.dayDuration); 
-        this.GPU = new Workers(4, this.wareHouse, this.dayDuration); 
+
+    private void createWorkers(WareHouse warehouse, int dayDuration) {
+        
     }
-    
-    private void createWarehouse(){
+
+    private void startWorkers() {
+
+        for (int i = 0; i < this.MOBOWorkersAmmount; i++) {
+
+        }
+
+    }
+
+    private void createWarehouse() {
         this.wareHouse = new WareHouse(this.company.getCompanyName());
     }
-    
+
     @Override
-    public void run(){
+    public void run() {
         System.out.println("estoy funcionando");
     }
-    
+
 }

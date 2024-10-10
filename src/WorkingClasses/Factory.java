@@ -25,9 +25,9 @@ public class Factory extends Thread {
     
     private Company company;
     private static final Semaphore dayCountSemaphote = new Semaphore(1);
-    private Warehouse wareHouse;
+    private WareHouse wareHouse;
 
-    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, Warehouse wareHouse) {
+    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, WareHouse wareHouse) {
         this.dayDuration = dayDuration;
         this.MOBO = new Workers[MOBOWorkersAmmount];
         this.CPU = new Workers[CPUWorkersAmmount];
@@ -85,7 +85,7 @@ public class Factory extends Thread {
     }
 
     private void createWarehouse() {
-        this.wareHouse = new Warehouse(this.company.getCompanyName());
+        this.wareHouse = new WareHouse(this.company.getCompanyName());
     }
 
     public void registerCosts() throws InterruptedException {

@@ -17,12 +17,12 @@ public class Workers extends Thread {
     private int tipe; // Identifica el tipo de trabajador: 0=Placa Base, 1=CPU, 2=RAM, 3=Fuente, 4=Tarjeta Grafica
     private int salaryPerHour;
     private int productionTime; // Tiempo necesario para producir un componente (en días)
-    private Warehouse wareHouse; //Almacen de la compania
+    private WareHouse wareHouse; //Almacen de la compania
     private Semaphore storageSemaphore; // Semaforo para controlar el acceso al almacén
     private Semaphore paymentSemaphore;
     private int dayDuration;
 
-    public Workers(int type, Warehouse wareHouse, int dayDuration) {
+    public Workers(int type, WareHouse wareHouse, int dayDuration) {
         this.tipe = type;
         this.storageSemaphore = wareHouse.getSemaphoreByType(type);
         this.paymentSemaphore = wareHouse.getPaymentSemaphore();

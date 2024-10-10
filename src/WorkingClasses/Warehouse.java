@@ -12,7 +12,7 @@ import java.util.concurrent.Semaphore;
  * capacidad será limitada. El acceso sera controlado mediante semaforos para no
  * sobrepasar la capacidad al producir nuevos elementos
  */
-public class Warehouse {
+public class WareHouse {
 
     private String companyName;
 
@@ -42,7 +42,7 @@ public class Warehouse {
     
     private int accumulatedProductionCost;
 
-    public Warehouse(String company) {
+    public WareHouse(String company) {
         this.companyName = company;
         this.MOBO_Count = 0;
         this.CPU_Count = 0;

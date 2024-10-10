@@ -7,7 +7,7 @@ package FileManager;
 import GUI.Home;
 import WorkingClasses.Company;
 import WorkingClasses.Factory;
-import WorkingClasses.Warehouse;
+import WorkingClasses.WareHouse;
 import WorkingClasses.Workers;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -232,7 +232,7 @@ public class FileManager {
         }
 
         // Crear el almacen correspondiente
-        Warehouse warehouseInstance = new Warehouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
+        WareHouse warehouseInstance = new WareHouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
         
         Company companyInstance = new Company(
                 company == 0 ? "HP" : "MSI", // Nombre de la company

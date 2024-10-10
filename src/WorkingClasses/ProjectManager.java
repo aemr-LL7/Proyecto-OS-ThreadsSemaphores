@@ -32,7 +32,6 @@ public class ProjectManager extends Thread {
         this.watchingAnime = false;
         this.dayDuration = dayDuration;
         this.accumulatedSalary = 0;
-        this.elapsedDays = 0;
         this.productionTime = 1;
 
         this.dayCounterSemaphore = this.wareHouse.getDaysRemainigSemaphore();

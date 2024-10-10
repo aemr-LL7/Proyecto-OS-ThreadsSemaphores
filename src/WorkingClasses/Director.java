@@ -14,7 +14,8 @@ import java.util.concurrent.Semaphore;
 public class Director extends Thread {
 
     private ProjectManager PM; // Referencia al Project Manager
-    private boolean hasCheckedThePm;
+    private boolean hasCheckedThePM;
+    private String status;
 
     private int dayDuration;
 
@@ -22,59 +23,62 @@ public class Director extends Thread {
     private int totalRevenue; // Ganancias totales por las computadoras enviadas
     private static int SALARY_PER_HOUR = 60;
 
-    private WareHouse wareHouse;
-
-    private Semaphore penaltySemaphore;
+    private final WareHouse wareHouse;
 
     private Random random = new Random();
 
     public Director(ProjectManager pm, WareHouse wareHouse, int dayDuration) {
-        this.hasCheckedThePm = false;
+        this.hasCheckedThePM = false;
 
         this.PM = pm;
         this.wareHouse = wareHouse;
         this.dayDuration = dayDuration;
         this.PM = pm;
 
-        this.penaltySemaphore = this.PM.getPenaltySemaphore();
     }
 
     @Override
     public void run() {
-        int randomHourToCheckPM = this.random.nextInt(24)+1; // Hora aleatoria en la que Director revisara al PM
 
         while (true) {
+            int randomHourToCheckPM = this.random.nextInt(24) + 1; // Hora aleatoria en la que Director revisara al PM
+            this.status = "Administrating";
             try {
-                for (int i = 0 ; i<24; i++){
-                    Thread.sleep(this.dayDuration/24);
-                    this.work(randomHourToCheckPM, i);
+                for (int i = 0; i < 24; i++) {
+                    this.hasCheckedThePM = false;
+                    if (this.getPm().getRemainingDays() == 0) {
+                        Thread.sleep(this.dayDuration / 24);
+                        this.status = "Sending";
+                        this.getPm().getDayCounterSemaphore().acquire();
+                        // Enviar computadoras a las distribuidoras (toma 24 horas)
+                        this.sendComputers();
+                        // Reiniciar el contador de días restantes
+                        this.resetDaysCounter();
+                        // Salir del ciclo ya que se enviaron computadoras
+                        this.getPm().getDayCounterSemaphore().release();
+                        this.status = "Administraring";
+                    } else if (randomHourToCheckPM == i) {
+
+                        this.status = "Checking PM";
+                        Thread.sleep((long) ((this.dayDuration / 24) * 0.58));//35/60 == 0.58 como estamos dividiendo el dia en horas, podemos usar este calculo
+                        this.checkProjectManager();
+                        this.status = "Administraring";
+
+                    } else {
+                        this.status = "Administrating";
+                    }
                 }
-                
+
             } catch (InterruptedException e) {
+                System.out.println("Error en el director");
             }
         }
 
-    }
-
-    private void work(int checkHour, int currentTime) throws InterruptedException {
-
-        if (this.getPm().getRemainingDays() == 0) {
-            this.getPm().getDayCounterSemaphore().acquire();
-            // Enviar computadoras a las distribuidoras (toma 24 horas)
-            this.sendComputers();
-            // Reiniciar el contador de días restantes
-            this.resetDaysCounter();
-            // Salir del ciclo ya que se enviaron computadoras
-            this.getPm().getDayCounterSemaphore().release();
-        } else {
-            if (checkHour == currentTime){
-                //joderPM
-            }
-        }
     }
 
     // Metodo para enviar las computadoras a las distribuidoras
     private void sendComputers() throws InterruptedException {
+        
         this.wareHouse.getSemaphoreByType(5).acquire();
         System.out.println("Director esta enviando computadoras a las distribuidoras...");
         this.totalRevenue += this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE; // Registrar las ganancias
@@ -91,20 +95,19 @@ public class Director extends Thread {
         this.getPm().resetDayCount();
     }
 
-    // Metodo para realizar labores administrativas
-    private void performAdministrativeTasks() {
-        System.out.println("Director está realizando tareas administrativas");
-    }
-
     // Metodo para revisar al PM
-    private void checkProjectManager() {
-        System.out.println("Director esta revisando al Project Manager...");
-        // Verificar si el PM esta viendo anime
-        if (this.PM.isWatchingAnime()) {
-            System.out.println("¡Falta! El PM fue descubierto viendo anime");
-
-        } else {
-            System.out.println("El PM esta trabajando correctamente");
+    private void checkProjectManager() throws InterruptedException {
+        if (!this.hasCheckedThePM) {
+            System.out.println("Director esta revisando al Project Manager...");
+            // Verificar si el PM esta viendo anime
+            if (this.PM.isWatchingAnime()) {
+                System.out.println("¡Falta! El PM fue descubierto viendo anime!");
+                this.hasCheckedThePM = true;
+                this.PM.incrementPenaltyCounter();
+                this.status = "Administrating";
+            } else {
+                System.out.println("El PM esta trabajando correctamente");
+            }
         }
     }
 
@@ -113,37 +116,6 @@ public class Director extends Thread {
         return getSALARY_PER_HOUR() * 24; // 24 horas trabajadas al dia
     }
 
-    /**
-     * @return the remainingDays
-     */
-    public int getRemainingDays() {
-        return remainingDays;
-    }
-
-    /**
-     * @param remainingDays the remainingDays to set
-     */
-    public void setRemainingDays(int remainingDays) {
-        this.remainingDays = remainingDays;
-    }
-
-    /**
-     * @return the completedComputers
-     */
-    public int getCompletedComputers() {
-        return completedComputers;
-    }
-
-    /**
-     * @param completedComputers the completedComputers to set
-     */
-    public void setCompletedComputers(int completedComputers) {
-        this.completedComputers = completedComputers;
-    }
-
-    /**
-     * @return the totalRevenue
-     */
     public int getTotalRevenue() {
         return totalRevenue;
     }

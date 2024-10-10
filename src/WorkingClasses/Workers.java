@@ -80,6 +80,9 @@ public class Workers extends Thread {
         if (this.getCurrentStock() < this.getStorageCapacity()) {
             if (this.tipe == 3) {
                 this.wareHouse.incrementPSUCounter();
+            } else if (this.tipe == 5) {
+                this.makeCompter();
+                System.out.println("Se ensamblo una computadora para: " + this.wareHouse.getCompany());
             } else {
                 this.increment();
                 System.out.println("Trabajador de tipo " + getType() + " ha producido un componente. Stock actual: " + getCurrentStock());
@@ -92,9 +95,19 @@ public class Workers extends Thread {
         this.getStorageSemaphore().release();
     }
 
+    public void makeCompter() throws InterruptedException {
+
+        // Intentar acceder al almacen (usando el semaforo)
+        this.getStorageSemaphore().acquire();
+        if (this.wareHouse.isReadyForPcConstruction()) {
+            this.wareHouse.addComputer();
+        }
+        this.getStorageSemaphore().release();
+    }
+
     public void payMe() throws InterruptedException {
         this.getPaymentSemaphore().acquire();
-        int payment = this.productionTime  * (24 * this.salaryPerHour);        
+        int payment = this.productionTime * (24 * this.salaryPerHour);
         this.wareHouse.addCost(payment);
         this.getPaymentSemaphore().release();
     }
@@ -189,6 +202,4 @@ public class Workers extends Thread {
         return paymentSemaphore;
     }
 
-    
-    
 }

@@ -87,6 +87,13 @@ public class WareHouse {
         return false;
     }
 
+    public boolean isReadyForPcConstruction(){
+        if (MOBO_Count > 0 && CPU_Count > 0 && RAM_Count > 0 && PSU_Count > 0){
+            return true;
+        }
+        
+        return false;
+    }
     public void incrementCounterByType(int counterType) throws InterruptedException {
         Semaphore semaphoreToUse = null;
 
@@ -333,5 +340,8 @@ public class WareHouse {
         return COMPUTER_Count;
     }
 
+    public void addComputer(){
+        this.COMPUTER_Count ++;
+    }
     
 }

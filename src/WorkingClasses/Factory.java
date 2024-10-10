@@ -55,6 +55,9 @@ public class Factory extends Thread {
         for (int i = 0; i < this.GPU.length; i++) {
             GPU[i] = new Workers(4, this.wareHouse, this.dayDuration);
         }
+        for (int i = 0; i < this.ASMBLY.length; i++) {
+            ASMBLY[i] = new Workers(5, this.wareHouse, this.dayDuration);
+        }
     }
 
     private void startWorkers() {
@@ -72,6 +75,9 @@ public class Factory extends Thread {
         }
         for (int i = 0; i < this.GPU.length; i++) {
             GPU[i].start();
+        }
+        for (int i = 0; i < this.ASMBLY.length; i++) {
+            ASMBLY[i].start();
         }
 
     }

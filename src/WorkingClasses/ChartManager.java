@@ -82,8 +82,8 @@ public class ChartManager {
 
     public void updateChartData() {
         // Se obtienen las nuevas ganancias (más recientes de las factories)
-        double hpProfit = Home.getFactory0().getProfit();
-        double msiProfit = Home.getFactory0().getProfit();
+        double hpProfit = Home.getFactory0();
+        double msiProfit = Home.getFactory0();
         int newTimePoint = this.SERIES_HP.getItemCount() + 1;
 
         this.SERIES_HP.addOrUpdate(newTimePoint, hpProfit);

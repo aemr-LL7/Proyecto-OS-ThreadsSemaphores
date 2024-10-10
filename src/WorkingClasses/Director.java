@@ -41,24 +41,23 @@ public class Director extends Thread {
 
     @Override
     public void run() {
-        int hoursWorked = 0;
-        int randomHourToCheckPM = this.random.nextInt(24); // Hora aleatoria en la que Director revisara al PM
+        int randomHourToCheckPM = this.random.nextInt(24)+1; // Hora aleatoria en la que Director revisara al PM
 
         while (true) {
             try {
-                
+                for (int i = 0 ; i<24; i++){
+                    Thread.sleep(this.dayDuration/24);
+                    this.work(randomHourToCheckPM, i);
+                }
 
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
 
-        System.out.println("Dia completo para el Director");
     }
 
-    private void work() throws InterruptedException {
+    private void work(int checkHour, int currentTime) throws InterruptedException {
 
-        Thread.sleep(this.dayDuration);
         if (this.getPm().getRemainingDays() == 0) {
             this.getPm().getDayCounterSemaphore().acquire();
             // Enviar computadoras a las distribuidoras (toma 24 horas)
@@ -67,21 +66,10 @@ public class Director extends Thread {
             this.resetDaysCounter();
             // Salir del ciclo ya que se enviaron computadoras
             this.getPm().getDayCounterSemaphore().release();
-            
         } else {
-
-            // Realizar labores administrativas
-            this.performAdministrativeTasks();
-
-            // Revisar al Project Manager en una hora aleatoria del dia
-            if (!hasCheckedPM && hoursWorked == randomHourToCheckPM) {
-                this.checkProjectManager();
-                hasCheckedPM = true; // Solo revisa al PM una vez al dia
+            if (checkHour == currentTime){
+                //joderPM
             }
-
-            // Incrementar horas trabajadas y simular una hora de trabajo
-            hoursWorked++;
-            Thread.sleep(1000); // Simulacion de 1 hora
         }
     }
 
@@ -94,6 +82,8 @@ public class Director extends Thread {
         System.out.println("Ganancia registrada: $" + (this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE));
         this.wareHouse.setCOMPUTER_Count(0); // Reiniciar el num de pcs completadas
         this.wareHouse.getSemaphoreByType(5).release();
+
+        Thread.sleep(this.dayDuration);
     }
 
     // Metodo para reiniciar el contador de días restantes
@@ -122,7 +112,7 @@ public class Director extends Thread {
     public int calculateDailySalary() {
         return getSALARY_PER_HOUR() * 24; // 24 horas trabajadas al dia
     }
-    
+
     /**
      * @return the remainingDays
      */
@@ -192,8 +182,8 @@ public class Director extends Thread {
     public static void setCOMPUTER_PRICE(int aCOMPUTER_PRICE) {
         COMPUTER_PRICE = aCOMPUTER_PRICE;
     }
-    
-    private ProjectManager getPm(){
+
+    private ProjectManager getPm() {
         return this.PM;
     }
 

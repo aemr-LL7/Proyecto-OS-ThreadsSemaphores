@@ -92,6 +92,16 @@ public class Factory extends Thread {
         this.wareHouse.cleanHouse();
         this.wareHouse.getPaymentSemaphore().release();
     }
+    
+    public void getWorkersCountByType() {
+        System.out.println("Cantidad de trabajadores presentes:");
+        System.out.println("MOBO: " + MOBO.length);
+        System.out.println("CPU: " + CPU.length);
+        System.out.println("RAM: " + RAM.length);
+        System.out.println("PSU: " + PSU.length);
+        System.out.println("GPU: " + GPU.length);
+        System.out.println("ASMBLY: " + ASMBLY.length);
+    }
 
     @Override
     public void run() {

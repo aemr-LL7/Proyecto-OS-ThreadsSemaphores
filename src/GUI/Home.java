@@ -14,11 +14,16 @@ import javax.swing.JFrame;
  * @author andre
  */
 public class Home extends javax.swing.JFrame {
+
     // General params
     private static int duration;
     private static int deadline;
 
-    // FIle params
+    // General variables
+    private static Company company0; //HP
+    private static Company company1;    //MSI
+
+    // Archivos params
     private static String selectedPath = ".saved//data.txt";
     private static File selectedFile = new File(selectedPath);
     private FileManager fileManager = new FileManager();
@@ -30,10 +35,7 @@ public class Home extends javax.swing.JFrame {
     public static void getInstance() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    private Company company0; //MSI
-    private Company company1; //HP
-    
+
     /**
      * Creates new form Home
      */
@@ -44,6 +46,8 @@ public class Home extends javax.swing.JFrame {
         // Mostrar los valores asignados
         System.out.println("Duration: " + this.getDuration());
         System.out.println("Deadline: " + this.getDeadline());
+        System.out.println("Compañia instanciada: " + this.getCompany0().getCompanyName());
+        System.out.println("Compañia instanciada: " + this.getCompany1().getCompanyName());
 
         //GUI STUFF
         initComponents();
@@ -386,17 +390,17 @@ public class Home extends javax.swing.JFrame {
     }
 
     /**
-     * @return the deadline
-     */
-    public static int getDeadline() {
-        return deadline;
-    }
-
-    /**
      * @param aDuration the duration to set
      */
     public static void setDuration(int aDuration) {
         duration = aDuration;
+    }
+
+    /**
+     * @return the deadline
+     */
+    public static int getDeadline() {
+        return deadline;
     }
 
     /**
@@ -414,10 +418,31 @@ public class Home extends javax.swing.JFrame {
     }
 
     /**
-     * @param aSelectedFile the selectedFile to set
+     * @return the company0
      */
-    public static void setSelectedFile(File aSelectedFile) {
-        selectedFile = aSelectedFile;
+    public static Company getCompany0() {
+        return company0;
     }
-    
+
+    /**
+     * @param aCompany0 the company0 to set
+     */
+    public static void setCompany0(Company aCompany0) {
+        company0 = aCompany0;
+    }
+
+    /**
+     * @return the company1
+     */
+    public static Company getCompany1() {
+        return company1;
+    }
+
+    /**
+     * @param aCompany1 the company1 to set
+     */
+    public static void setCompany1(Company aCompany1) {
+        company1 = aCompany1;
+    }
+
 }

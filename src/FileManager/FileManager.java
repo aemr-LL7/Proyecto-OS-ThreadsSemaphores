@@ -5,6 +5,10 @@
 package FileManager;
 
 import GUI.Home;
+import WorkingClasses.Company;
+import WorkingClasses.Factory;
+import WorkingClasses.WareHouse;
+import WorkingClasses.Workers;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -97,7 +100,8 @@ public class FileManager {
             Home.setDeadline(params[1]);
         }
         // Añadir los parametros de las compañias con HOME
-//        this.createCompany();
+        Home.setCompany0(this.createCompany(0));
+        Home.setCompany1(this.createCompany(1));
     }
 
     private String readFile(File file) {
@@ -178,12 +182,105 @@ public class FileManager {
 
         return generalParams;
     }
-    
+
     // Para HP index = 0 y MSI = 1
-    public void createCompany(){}
-    // Buscar en data.txt los parametros de las etiquetas [HP] y [MSI]
-    public void getCompanyValues(){}
-    
+    private Company createCompany(int company) {
+        // Se obtiene los datos del TXT
+        int[] companyValues = this.getCompanyValues(company);
+
+        // Verificar que se hayan obtenido los valores correctamente
+        if (companyValues.length != 7) {
+            JOptionPane.showMessageDialog(null, "No se pudieron obtener todos los valores de la compañía.", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        // Crear el almacen correspondiente
+        WareHouse warehouse = new WareHouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
+
+        Company companyInstance = new Company(
+                company == 0 ? "HP" : "MSI", // Nombre de la company
+                companyValues[0], // Motherboard workers
+                companyValues[1], // CPU workers
+                companyValues[2], // RAM workers
+                companyValues[3], // PSU workers
+                companyValues[4], // GPU workers
+                warehouse, // almacen
+                Home.getDeadline() // Dias hasta el envio (suponiendo que es el ultimo valor)
+        );
+
+        Factory factory = new Factory(
+                Home.getDuration(), // Duración del día (por ejemplo, 1000 ms)
+                companyValues[0], // Motherboard workers
+                companyValues[1], // CPU workers
+                companyValues[2], // RAM workers
+                companyValues[3], // PSU workers
+                companyValues[4], // GPU workers
+                companyValues[5], // Assembly workers
+                companyInstance, // Instancia de la compañía
+                warehouse // Almacen
+        );
+
+        System.out.println(warehouse.getCompany());
+        factory.getWorkersCountByType();
+        System.out.println("Componentes producidos de la warehouse:");
+        System.out.println("MOBOS:" + warehouse.getMOBO_Count() + "\nCPU:" + warehouse.getCPU_Count() + "\nRAM:" + warehouse.getRAM_Count() + "\nPSU:" + warehouse.getPSU_Count() + "\nGPU:" + warehouse.getGPU_Count());
+        // Devolver la instancia de la compañía
+        return companyInstance;
+    }
+
+    // Buscar en data.txt los parámetros de las etiquetas [HP] y [MSI]
+    public int[] getCompanyValues(int companyIndex) {
+        // Cambia el tamaño del array a 7 para incluir todos los parámetros
+        int[] companyParams = new int[7];
+
+        // Determinamos la etiqueta de la compañía según el índice
+        String companyTag = companyIndex == 0 ? "HP" : "MSI";
+
+        // Leer el archivo
+        String fileData = readFile(Home.getSelectedFile());
+        String[] lines = fileData.split("\n");
+
+        boolean inCompanySection = false;
+
+        for (String line : lines) {
+            line = line.trim();
+
+            if (line.equals("[" + companyTag + "]")) {
+                inCompanySection = true;
+                continue; // Continuamos a la siguiente línea
+            }
+
+            if (line.startsWith("[") && inCompanySection) {
+                // Si encontramos otro tag después de la compañía, salimos
+                break;
+            }
+
+            if (inCompanySection) {
+                if (line.startsWith("Motherboard=")) {
+                    companyParams[0] = Integer.parseInt(line.split("=")[1].trim());
+                } else if (line.startsWith("CPU=")) {
+                    companyParams[1] = Integer.parseInt(line.split("=")[1].trim());
+                } else if (line.startsWith("RAM=")) {
+                    companyParams[2] = Integer.parseInt(line.split("=")[1].trim());
+                } else if (line.startsWith("PSU=")) {
+                    companyParams[3] = Integer.parseInt(line.split("=")[1].trim());
+                } else if (line.startsWith("GPU=")) {
+                    companyParams[4] = Integer.parseInt(line.split("=")[1].trim());
+                } else if (line.startsWith("Assemblers=")) {
+                    companyParams[5] = Integer.parseInt(line.split("=")[1].trim());
+                } else if (line.startsWith("MaxCapacity=")) {
+                    companyParams[6] = Integer.parseInt(line.split("=")[1].trim());
+                }
+            }
+        }
+
+        // Validar los parámetros encontrados
+        if (!inCompanySection) {
+            JOptionPane.showMessageDialog(null, "No se encontró la sección [" + companyTag + "] en el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return companyParams;
+    }
 
 //    private void printLoadedParams() {
 //        System.out.println("Duración del día: " + dayDuration);

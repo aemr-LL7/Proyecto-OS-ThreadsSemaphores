@@ -28,6 +28,7 @@ public class WareHouse {
     private int PSU_Count;
     private int GPU_Count;
     private int COMPUTER_Count;
+    private int SPCOMPUTER_Cout;
 
     // Semaforos para controlar el acceso concurrente
     private final Semaphore moboSemaphore = new Semaphore(1);
@@ -350,7 +351,9 @@ public class WareHouse {
     public Semaphore getDaysRemainigSemaphore() {
         return daysRemainigSemaphore;
     }
-    
-    
+
+    public void setCOMPUTER_Count(int COMPUTER_Count) {
+        this.COMPUTER_Count = COMPUTER_Count;
+    }
     
 }

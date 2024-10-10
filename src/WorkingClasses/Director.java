@@ -14,55 +14,39 @@ import java.util.concurrent.Semaphore;
 public class Director extends Thread {
 
     private ProjectManager PM; // Referencia al Project Manager
-    private int remainingDays;
-    private int completedComputers;
+    private boolean hasCheckedThePm;
+
+    private int dayDuration;
+
+    private static int COMPUTER_PRICE = 1000;
     private int totalRevenue; // Ganancias totales por las computadoras enviadas
     private static int SALARY_PER_HOUR = 60;
-    private static int COMPUTER_PRICE = 1000;
-    private Semaphore semaphore;
+
+    private WareHouse wareHouse;
+
+    private Semaphore penaltySemaphore;
 
     private Random random = new Random();
 
-    public Director(ProjectManager pm, int initialRemainingDays, int initialComputers, Semaphore semaphore) {
+    public Director(ProjectManager pm, WareHouse wareHouse, int dayDuration) {
+        this.hasCheckedThePm = false;
+
         this.PM = pm;
-        this.remainingDays = initialRemainingDays;
-        this.completedComputers = initialComputers;
-        this.totalRevenue = 0;
-        this.semaphore = semaphore;
+        this.wareHouse = wareHouse;
+        this.dayDuration = dayDuration;
+        this.PM = pm;
+
+        this.penaltySemaphore = this.PM.getPenaltySemaphore();
     }
 
-     @Override
+    @Override
     public void run() {
         int hoursWorked = 0;
         int randomHourToCheckPM = this.random.nextInt(24); // Hora aleatoria en la que Director revisara al PM
-        boolean hasCheckedPM = false;
 
-        while (hoursWorked < 24) {
+        while (true) {
             try {
-                this.semaphore.acquire();
-                
-                if (this.remainingDays == 0) {
-                    // Enviar computadoras a las distribuidoras (toma 24 horas)
-                    this.sendComputers();
-                    // Reiniciar el contador de días restantes
-                    this.resetDaysCounter();
-                    // Salir del ciclo ya que se enviaron computadoras
-                    break; 
-                } else {
-                    this.semaphore.release();
-                    // Realizar labores administrativas
-                    this.performAdministrativeTasks();
 
-                    // Revisar al Project Manager en una hora aleatoria del dia
-                    if (!hasCheckedPM && hoursWorked == randomHourToCheckPM) {
-                        this.checkProjectManager();
-                        hasCheckedPM = true; // Solo revisa al PM una vez al dia
-                    }
-
-                    // Incrementar horas trabajadas y simular una hora de trabajo
-                    hoursWorked++;
-                    Thread.sleep(1000); // Simulacion de 1 hora
-                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -71,19 +55,49 @@ public class Director extends Thread {
         System.out.println("Dia completo para el Director");
     }
 
+    private void work() throws InterruptedException {
+
+        Thread.sleep(this.dayDuration);
+        if (this.getPm().getRemainingDays() == 0) {
+            this.getPm().getDayCounterSemaphore().acquire();
+            // Enviar computadoras a las distribuidoras (toma 24 horas)
+            this.sendComputers();
+            // Reiniciar el contador de días restantes
+            this.resetDaysCounter();
+            // Salir del ciclo ya que se enviaron computadoras
+            this.getPm().getDayCounterSemaphore().release();
+            
+        } else {
+
+            // Realizar labores administrativas
+            this.performAdministrativeTasks();
+
+            // Revisar al Project Manager en una hora aleatoria del dia
+            if (!hasCheckedPM && hoursWorked == randomHourToCheckPM) {
+                this.checkProjectManager();
+                hasCheckedPM = true; // Solo revisa al PM una vez al dia
+            }
+
+            // Incrementar horas trabajadas y simular una hora de trabajo
+            hoursWorked++;
+            Thread.sleep(1000); // Simulacion de 1 hora
+        }
+    }
+
     // Metodo para enviar las computadoras a las distribuidoras
-    private void sendComputers() {
+    private void sendComputers() throws InterruptedException {
+        this.wareHouse.getSemaphoreByType(5).acquire();
         System.out.println("Director esta enviando computadoras a las distribuidoras...");
-        this.totalRevenue += this.completedComputers * COMPUTER_PRICE; // Registrar las ganancias
-        
-        System.out.println("Ganancia registrada: $" + (completedComputers * COMPUTER_PRICE));
-        this.completedComputers = 0; // Reiniciar el num de pcs completadas
+        this.totalRevenue += this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE; // Registrar las ganancias
+
+        System.out.println("Ganancia registrada: $" + (this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE));
+        this.wareHouse.setCOMPUTER_Count(0); // Reiniciar el num de pcs completadas
+        this.wareHouse.getSemaphoreByType(5).release();
     }
 
     // Metodo para reiniciar el contador de días restantes
     private void resetDaysCounter() {
-        this.remainingDays = 10; // nuevo plazo es de 10 dias probando (puedes cambiar este valor)
-        System.out.println("Reiniciando contador de dias restantes: " + this.remainingDays);
+        this.getPm().resetDayCount();
     }
 
     // Metodo para realizar labores administrativas
@@ -97,7 +111,7 @@ public class Director extends Thread {
         // Verificar si el PM esta viendo anime
         if (this.PM.isWatchingAnime()) {
             System.out.println("¡Falta! El PM fue descubierto viendo anime");
-            this.PM.setSalaryPenalty(100); // Aplicar penalizacion de $100 al PM
+
         } else {
             System.out.println("El PM esta trabajando correctamente");
         }
@@ -107,21 +121,7 @@ public class Director extends Thread {
     public int calculateDailySalary() {
         return getSALARY_PER_HOUR() * 24; // 24 horas trabajadas al dia
     }
-
-    /**
-     * @return the PM
-     */
-    public ProjectManager getPM() {
-        return PM;
-    }
-
-    /**
-     * @param PM the PM to set
-     */
-    public void setPM(ProjectManager PM) {
-        this.PM = PM;
-    }
-
+    
     /**
      * @return the remainingDays
      */
@@ -190,6 +190,10 @@ public class Director extends Thread {
      */
     public static void setCOMPUTER_PRICE(int aCOMPUTER_PRICE) {
         COMPUTER_PRICE = aCOMPUTER_PRICE;
+    }
+    
+    private ProjectManager getPm(){
+        return this.PM;
     }
 
 }

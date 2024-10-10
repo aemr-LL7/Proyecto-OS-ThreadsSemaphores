@@ -15,22 +15,20 @@ public class ProjectManager extends Thread {
     private int remainingDays; // Contador de dias restantes para la entrega
     private boolean watchingAnime; // Indica si esta viendo anime
     private int daysTillShipement;
-    private int elapsedDays;
     private int dayDuration;
     private int productionTime;
     private int penaltyCounter;
 
-    private static Semaphore penaltySemafore = new Semaphore(1);
+    private static Semaphore penaltySemaphore = new Semaphore(1);
+    private Semaphore dayCounterSemaphore; //semaforo para modificar el contador de dias restantes
 
     private int accumulatedSalary;
 
     private WareHouse wareHouse;
 
-    private Semaphore dayCounterSemaphore;
-
     public ProjectManager(int daysTillShipement, Semaphore semaphore, Company company, int dayDuration, WareHouse wareHouse) {
         this.daysTillShipement = daysTillShipement;
-        this.remainingDays = this.daysTillShipement;
+        this.remainingDays = daysTillShipement;
         this.watchingAnime = false;
         this.dayDuration = dayDuration;
         this.accumulatedSalary = 0;
@@ -77,24 +75,25 @@ public class ProjectManager extends Thread {
 
     private void updateDaysCounter() throws InterruptedException {
 
-        this.elapsedDays++;
-        if (this.remainingDays > 1) {
-            this.remainingDays = (this.daysTillShipement - elapsedDays);
+        this.getDayCounterSemaphore().acquire();
+        if (this.remainingDays >= 1) {
+            this.remainingDays--;
             System.out.println("Project Manager actualizo el contador. Dias restantes: " + this.remainingDays);
         }
+        this.getDayCounterSemaphore().release();
 
     }
 
     private void payMe() throws InterruptedException {
         this.wareHouse.getPaymentSemaphore().acquire();
-        this.getPenaltySemafore().acquire();
+        this.getPenaltySemaphore().acquire();
 
         int payment = this.productionTime * (24 * 40);
         payment -= this.penaltyCounter;
 
         this.wareHouse.addCost(payment);
         this.penaltyCounter = 0;
-        this.getPenaltySemafore().release();
+        this.getPenaltySemaphore().release();
         this.wareHouse.getPaymentSemaphore().release();
     }
 
@@ -126,8 +125,22 @@ public class ProjectManager extends Thread {
         this.watchingAnime = watchingAnime;
     }
 
-    public static Semaphore getPenaltySemafore() {
-        return penaltySemafore;
+    public static Semaphore getPenaltySemaphore() {
+        return penaltySemaphore;
+    }
+
+    public Semaphore getDayCounterSemaphore() {
+        return dayCounterSemaphore;
+    }
+    
+    public void incrementPenaltyCounter() throws InterruptedException{
+        this.getPenaltySemaphore().acquire();
+        this.penaltyCounter += 100;
+        this.getPenaltySemaphore().release();
+    }
+
+    public void resetDayCount() {
+        this.remainingDays = this.daysTillShipement;
     }
 
 }

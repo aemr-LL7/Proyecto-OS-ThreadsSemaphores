@@ -97,34 +97,38 @@ public class Workers extends Thread {
 
     public void makeCompter() throws InterruptedException {
 
-        // Intentar acceder al almacen (usando el semaforo)
-        this.getStorageSemaphore().acquire();
-        if (this.wareHouse.isReadyForPcConstruction()) {
+        if (this.tipe == 5) {
+            // Intentar acceder al almacen (usando el semaforo)
+            this.getStorageSemaphore().acquire();
+            if (this.wareHouse.isReadyForPcConstruction()) {
+
+                this.wareHouse.getSemaphoreByType(0).acquire();
+                this.wareHouse.getSemaphoreByType(1).acquire();
+                this.wareHouse.getSemaphoreByType(2).acquire();
+                this.wareHouse.getSemaphoreByType(3).acquire();
+                this.wareHouse.getSemaphoreByType(4).acquire();
+                this.wareHouse.getSemaphoreByType(5).acquire();
+
+                this.wareHouse.decrementCounterByType(0);
+                this.wareHouse.decrementCounterByType(1);
+                this.wareHouse.decrementCounterByType(2);
+                this.wareHouse.decrementCounterByType(3);
+                this.wareHouse.decrementCounterByType(4);
+                this.wareHouse.decrementCounterByType(5);
+
+                this.wareHouse.addComputer();
+
+                this.wareHouse.getSemaphoreByType(0).release();
+                this.wareHouse.getSemaphoreByType(1).release();
+                this.wareHouse.getSemaphoreByType(2).release();
+                this.wareHouse.getSemaphoreByType(3).release();
+                this.wareHouse.getSemaphoreByType(4).release();
+                this.wareHouse.getSemaphoreByType(5).release();
+            }
+            this.getStorageSemaphore().release();
+        } else {
             
-            this.wareHouse.getSemaphoreByType(0).acquire();
-            this.wareHouse.getSemaphoreByType(1).acquire();
-            this.wareHouse.getSemaphoreByType(2).acquire();
-            this.wareHouse.getSemaphoreByType(3).acquire();
-            this.wareHouse.getSemaphoreByType(4).acquire();
-            this.wareHouse.getSemaphoreByType(5).acquire();
-            
-            this.wareHouse.decrementCounterByType(0);
-            this.wareHouse.decrementCounterByType(1);
-            this.wareHouse.decrementCounterByType(2);
-            this.wareHouse.decrementCounterByType(3);
-            this.wareHouse.decrementCounterByType(4);
-            this.wareHouse.decrementCounterByType(5);
-            
-            this.wareHouse.addComputer();
-            
-            this.wareHouse.getSemaphoreByType(0).release();
-            this.wareHouse.getSemaphoreByType(1).release();
-            this.wareHouse.getSemaphoreByType(2).release();
-            this.wareHouse.getSemaphoreByType(3).release();
-            this.wareHouse.getSemaphoreByType(4).release();
-            this.wareHouse.getSemaphoreByType(5).release();
         }
-        this.getStorageSemaphore().release();
     }
 
     public void payMe() throws InterruptedException {

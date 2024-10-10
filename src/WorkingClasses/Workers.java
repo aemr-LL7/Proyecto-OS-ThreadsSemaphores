@@ -129,7 +129,7 @@ public class Workers extends Thread {
 
     public void payMe() throws InterruptedException {
         this.getPaymentSemaphore().acquire();
-        int payment = this.productionTime * (24 * this.salaryPerHour);
+        int payment = this.productionTime * (24 * 40);
         this.wareHouse.addCost(payment);
         this.getPaymentSemaphore().release();
     }

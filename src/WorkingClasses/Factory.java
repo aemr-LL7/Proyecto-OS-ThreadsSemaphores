@@ -21,8 +21,10 @@ public class Factory extends Thread {
     private Workers[] GPU;
     private Workers[] ASMBLY;
 
+    private ProjectManager PM;
+    
     private Company company;
-
+    private static final Semaphore dayCountSemaphote = new Semaphore(1);
     private WareHouse wareHouse;
 
     public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, WareHouse wareHouse) {

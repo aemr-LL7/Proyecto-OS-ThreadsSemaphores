@@ -199,7 +199,7 @@ public class HP extends javax.swing.JFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        Dashboard dashboard = Dashboard.getInstance();
+        Dashboard dashboard = Dashboard.getDashBoardInstance();
         dashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked

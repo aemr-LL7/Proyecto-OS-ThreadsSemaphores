@@ -22,13 +22,13 @@ public class Director extends Thread {
     private int totalRevenue; // Ganancias totales por las computadoras enviadas
     private static int SALARY_PER_HOUR = 60;
 
-    private WareHouse wareHouse;
+    private Warehouse wareHouse;
 
     private Semaphore penaltySemaphore;
 
     private Random random = new Random();
 
-    public Director(ProjectManager pm, WareHouse wareHouse, int dayDuration) {
+    public Director(ProjectManager pm, Warehouse wareHouse, int dayDuration) {
         this.hasCheckedThePm = false;
 
         this.PM = pm;
@@ -46,6 +46,7 @@ public class Director extends Thread {
 
         while (true) {
             try {
+                
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -12,12 +12,12 @@ public class Company {
 
     private String companyName;
     private int operationCost;
-    private WareHouse inventoryWareHouse;
+    private Warehouse inventoryWareHouse;
     private int readyComputers;
 
     private int daysTillShipement;
 
-    public Company(String companyName, WareHouse inventoryWareHouse) {
+    public Company(String companyName, Warehouse inventoryWareHouse) {
         this.companyName = companyName;
         this.inventoryWareHouse = inventoryWareHouse;
         this.operationCost = 0;
@@ -44,7 +44,7 @@ public class Company {
         this.operationCost = operationCost;
     }
 
-    public WareHouse getInventoryWareHouse() {
+    public Warehouse getInventoryWareHouse() {
         return inventoryWareHouse;
     }
 

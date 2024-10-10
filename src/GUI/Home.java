@@ -5,6 +5,7 @@
 package GUI;
 
 import FileManager.FileManager;
+import WorkingClasses.ChartManager;
 import WorkingClasses.Company;
 import WorkingClasses.Factory;
 import java.io.File;
@@ -25,6 +26,7 @@ public class Home extends javax.swing.JFrame {
     // General variables
     private static Factory factory0; //HP
     private static Factory factory1;    //MSI
+    private static ChartManager chartManager;
 
     // Archivos params
     private static String selectedPath = ".saved//data.txt";
@@ -46,8 +48,14 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     public Home() {
+        // Leer data.txt en .saved (raiz del proyecto)
         this.fileManager.savedDirectoryExists();
         this.fileManager.loadParamsFromTxt();
+//        chartManager = new ChartManager();
+        
+        // INICIAR SIMULACION
+//        this.getFactory0().run();
+//        this.getFactory1().run();
 
         // Mostrar los valores asignados
         System.out.println("Duration: " + this.getDuration());
@@ -379,7 +387,7 @@ public class Home extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        Dashboard dashboard = Dashboard.getInstance();
+        Dashboard dashboard = Dashboard.getDashBoardInstance();
         dashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
@@ -532,6 +540,20 @@ public class Home extends javax.swing.JFrame {
      */
     public static void setFactory1(Factory aFactory1) {
         factory1 = aFactory1;
+    }
+
+    /**
+     * @return the chartManager
+     */
+    public static ChartManager getChartManager() {
+        return chartManager;
+    }
+
+    /**
+     * @param aChartManager the chartManager to set
+     */
+    public static void setChartManager(ChartManager aChartManager) {
+        chartManager = aChartManager;
     }
 
 }

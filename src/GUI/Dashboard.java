@@ -4,7 +4,11 @@
  */
 package GUI;
 
+import java.awt.Point;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import org.jfree.data.xy.XYSeries;
 
 /**
  *
@@ -12,25 +16,77 @@ import javax.swing.JFrame;
  */
 public class Dashboard extends javax.swing.JFrame {
 
-    private static Dashboard instance;
+    private static Dashboard instanceDashboard;
+
+    private Point initialClick;
+    private XYSeries SERIES_HP;
+    private XYSeries SERIES_MSI;
+    private Timer updateTime;
 
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
-         // properties gui
+        // properties gui
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Dashboard");
+        
+    }
+    
+    private void validateChart(){
+        this.chartPanelVisual.setLayout(new java.awt.BorderLayout());
+        this.chartPanelVisual.add(Home.getChartManager().getChartPanel(), java.awt.BorderLayout.CENTER);
+        this.chartPanelVisual.validate();
+        this.getStarted();
     }
 
-    public static synchronized Dashboard getInstance() {
-        if (instance == null) {
-            instance = new Dashboard();
+    public static synchronized Dashboard getDashBoardInstance() {
+        if (instanceDashboard == null) {
+            instanceDashboard = new Dashboard();
         }
-        return instance;
+        return instanceDashboard;
+    }
+
+    private void getStarted() {
+        Thread update_thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //
+                while (true) {
+                    try {
+                        // Ejecutar las actualizaciones de la UI en el EDT
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                profit1.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning() - (int) app.getNickelodeon().getTotalCost()));
+                                cost1.setText(formatNumberAsK((int) app.getCartoonNetwork().getTotalCost()));
+                                earning1.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning()));
+
+                                profit.setText(formatNumberAsK((int) app.getNickelodeon().getEarning() - (int) app.getNickelodeon().getTotalCost()));
+                                cost2.setText(formatNumberAsK((int) app.getNickelodeon().getTotalCost()));
+                                earning.setText(formatNumberAsK((int) app.getNickelodeon().getEarning()));
+
+                                totalDays.setText(String.valueOf(app.getCartoonNetwork().getTotalDays()));
+                                currentDeadline.setText(String.valueOf(app.getCartoonNetwork().getRemainingDays()));
+
+                            }
+                        });
+
+                        Thread.sleep(Home.getDuration() / 48);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+            }
+        });
+
+        // Iniciar el hilo
+        update_thread.start();
     }
 
     /**
@@ -53,6 +109,27 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        chartPanelVisual = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -153,17 +230,116 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 1280, 70));
 
         jPanel2.setBackground(new java.awt.Color(51, 88, 137));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+        javax.swing.GroupLayout chartPanelVisualLayout = new javax.swing.GroupLayout(chartPanelVisual);
+        chartPanelVisual.setLayout(chartPanelVisualLayout);
+        chartPanelVisualLayout.setHorizontalGroup(
+            chartPanelVisualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 690, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
+        chartPanelVisualLayout.setVerticalGroup(
+            chartPanelVisualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
         );
+
+        jPanel2.add(chartPanelVisual, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 690, 480));
+
+        jLabel8.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Días Transcurridos:");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, -1, 30));
+
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("0");
+        jTextField1.setFocusable(false);
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 520, 100, 30));
+
+        jLabel10.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Días para la Entrega:");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 520, -1, 30));
+
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField2.setText("0");
+        jTextField2.setFocusable(false);
+        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 520, 100, 30));
+
+        jPanel9.setBackground(new java.awt.Color(90, 183, 142));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel12.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel12.setText("Utilidad:");
+        jPanel9.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, 30));
+
+        jLabel13.setFont(new java.awt.Font("HP Simplified", 1, 17)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("MICRO-STAR INTERNATIONAL");
+        jPanel9.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel14.setText("Costos de producción:");
+        jPanel9.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 30));
+
+        jLabel15.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel15.setText("Ganancia Bruta:");
+        jPanel9.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, 30));
+
+        jTextField3.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField3.setText("0");
+        jPanel9.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 190, -1));
+
+        jTextField4.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField4.setText("0");
+        jPanel9.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 190, 30));
+
+        jTextField5.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField5.setText("0");
+        jPanel9.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 190, -1));
+
+        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 270, 490, 190));
+
+        jPanel11.setBackground(new java.awt.Color(90, 183, 142));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel19.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel19.setText("Utilidad:");
+        jPanel11.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, 30));
+
+        jLabel20.setFont(new java.awt.Font("HP Simplified", 1, 17)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("HEWLETT-PACKARD");
+        jPanel11.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jLabel21.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel21.setText("Costos de producción:");
+        jPanel11.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, 30));
+
+        jLabel22.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        jLabel22.setText("Ganancia Bruta:");
+        jPanel11.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, 30));
+
+        jTextField6.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField6.setText("0");
+        jPanel11.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 190, -1));
+
+        jTextField7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField7.setText("0");
+        jPanel11.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 190, 30));
+
+        jTextField8.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField8.setText("0");
+        jPanel11.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 190, -1));
+
+        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 490, 170));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1280, 580));
 
@@ -269,16 +445,28 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel chartPanelVisual;
     private javax.swing.JLabel exitBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -286,5 +474,14 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

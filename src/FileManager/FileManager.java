@@ -104,6 +104,43 @@ public class FileManager {
         Home.setCompany1(this.createCompany(1));
     }
 
+    public void writeData(File inFile) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(inFile))) {
+            // Escribir la seccion de parametros generales
+            writer.write("[General Params]\n");
+            writer.write("Duration=" + Home.getDuration() + "\n");
+            writer.write("Deadline=" + Home.getDeadline() + "\n\n");
+
+            // Escribir la sección de HP
+//            Company hp = Home.getCompany0();
+
+            writer.write("[HP]\n");
+            writer.write("Motherboard=" + 1 + "\n");
+            writer.write("CPU=" + 1 + "\n");
+            writer.write("RAM=" + 1 + "\n");
+            writer.write("PSU=" + 1 + "\n");
+            writer.write("GPU=" + 1 + "\n");
+            writer.write("Assemblers=" + 1 + "\n");
+            writer.write("MaxCapacity=" + 25 + "\n\n");
+
+            // Escribir la sección de MSI
+//            Company msi = Home.getCompany1();
+            writer.write("[MSI]\n");
+            writer.write("Motherboard=" + 1 + "\n");
+            writer.write("CPU=" + 1 + "\n");
+            writer.write("RAM=" + 1 + "\n");
+            writer.write("PSU=" + 1 + "\n");
+            writer.write("GPU=" + 1 + "\n");
+            writer.write("Assemblers=" + 1 + "\n");
+            writer.write("MaxCapacity=" + 25 + "\n");
+
+            System.out.println("==================== Datos escritos correctamente en el archivo");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al escribir los datos en el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private String readFile(File file) {
         String line;
         String data = "";

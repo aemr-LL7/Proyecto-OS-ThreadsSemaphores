@@ -43,7 +43,7 @@ public class Parameters extends javax.swing.JFrame {
     }
     
     private void initValues(){
-        if (Home.getCompany0() != null && Home.getCompany1() != null) {
+        if (Home.getFactory0() != null && Home.getFactory1() != null) {
             this.duration = (int) Home.getDuration() / 1000;
             this.deadline = Home.getDeadline();
             this.durationValue.setText(String.valueOf(duration));

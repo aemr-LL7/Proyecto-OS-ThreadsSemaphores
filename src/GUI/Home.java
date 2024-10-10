@@ -6,6 +6,7 @@ package GUI;
 
 import FileManager.FileManager;
 import WorkingClasses.Company;
+import WorkingClasses.Factory;
 import java.io.File;
 import javax.swing.JFrame;
 
@@ -22,8 +23,8 @@ public class Home extends javax.swing.JFrame {
     private static int deadline;
 
     // General variables
-    private static Company company0; //HP
-    private static Company company1;    //MSI
+    private static Factory factory0; //HP
+    private static Factory factory1;    //MSI
 
     // Archivos params
     private static String selectedPath = ".saved//data.txt";
@@ -51,8 +52,8 @@ public class Home extends javax.swing.JFrame {
         // Mostrar los valores asignados
         System.out.println("Duration: " + this.getDuration());
         System.out.println("Deadline: " + this.getDeadline());
-        System.out.println("Compañia instanciada: " + this.getCompany0().getCompanyName());
-        System.out.println("Compañia instanciada: " + this.getCompany1().getCompanyName());
+        System.out.println("Compañia instanciada: " + this.getFactory0().getName());
+        System.out.println("Compañia instanciada: " + this.getFactory1().getName());
 
         //GUI STUFF
         initComponents();
@@ -506,31 +507,31 @@ public class Home extends javax.swing.JFrame {
     }
 
     /**
-     * @return the company0
+     * @return the factory0
      */
-    public static Company getCompany0() {
-        return company0;
+    public static Factory getFactory0() {
+        return factory0;
     }
 
     /**
-     * @param aCompany0 the company0 to set
+     * @param aFactory0 the factory0 to set
      */
-    public static void setCompany0(Company aCompany0) {
-        company0 = aCompany0;
+    public static void setFactory0(Factory aFactory0) {
+        factory0 = aFactory0;
     }
 
     /**
-     * @return the company1
+     * @return the factory1
      */
-    public static Company getCompany1() {
-        return company1;
+    public static Factory getFactory1() {
+        return factory1;
     }
 
     /**
-     * @param aCompany1 the company1 to set
+     * @param aFactory1 the factory1 to set
      */
-    public static void setCompany1(Company aCompany1) {
-        company1 = aCompany1;
+    public static void setFactory1(Factory aFactory1) {
+        factory1 = aFactory1;
     }
 
 }

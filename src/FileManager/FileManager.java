@@ -100,8 +100,8 @@ public class FileManager {
             Home.setDeadline(params[1]);
         }
         // Añadir los parametros de las compañias con HOME
-        Home.setCompany0(this.createCompany(0));
-        Home.setCompany1(this.createCompany(1));
+        Home.setFactory0(this.createFactory(0));
+        Home.setFactory1(this.createFactory(1));
     }
 
     public void writeData(File inFile) {
@@ -221,7 +221,7 @@ public class FileManager {
     }
 
     // Para HP index = 0 y MSI = 1
-    private Company createCompany(int company) {
+    private Factory createFactory(int company) {
         // Se obtiene los datos del TXT
         int[] companyValues = this.getCompanyValues(company);
 
@@ -232,21 +232,15 @@ public class FileManager {
         }
 
         // Crear el almacen correspondiente
-        WareHouse warehouse = new WareHouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
-
+        WareHouse warehouseInstance = new WareHouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
+        
         Company companyInstance = new Company(
                 company == 0 ? "HP" : "MSI", // Nombre de la company
-                companyValues[0], // Motherboard workers
-                companyValues[1], // CPU workers
-                companyValues[2], // RAM workers
-                companyValues[3], // PSU workers
-                companyValues[4], // GPU workers
-                warehouse, // almacen
-                Home.getDeadline() // Dias hasta el envio (suponiendo que es el ultimo valor)
-        );
+                warehouseInstance
+        );  
 
         Factory factory = new Factory(
-                Home.getDuration(), // Duración del día (por ejemplo, 1000 ms)
+                Home.getDuration(), // Duracion del día (por ejemplo, 1000 ms)
                 companyValues[0], // Motherboard workers
                 companyValues[1], // CPU workers
                 companyValues[2], // RAM workers
@@ -254,15 +248,15 @@ public class FileManager {
                 companyValues[4], // GPU workers
                 companyValues[5], // Assembly workers
                 companyInstance, // Instancia de la compañía
-                warehouse // Almacen
+                warehouseInstance // Almacen
         );
 
-        System.out.println(warehouse.getCompany());
+        System.out.println(warehouseInstance.getCompany());
         factory.getWorkersCountByType();
         System.out.println("Componentes producidos de la warehouse:");
-        System.out.println("MOBOS:" + warehouse.getMOBO_Count() + "\nCPU:" + warehouse.getCPU_Count() + "\nRAM:" + warehouse.getRAM_Count() + "\nPSU:" + warehouse.getPSU_Count() + "\nGPU:" + warehouse.getGPU_Count());
+        System.out.println("MOBOS:" + warehouseInstance.getMOBO_Count() + "\nCPU:" + warehouseInstance.getCPU_Count() + "\nRAM:" + warehouseInstance.getRAM_Count() + "\nPSU:" + warehouseInstance.getPSU_Count() + "\nGPU:" + warehouseInstance.getGPU_Count());
         // Devolver la instancia de la compañía
-        return companyInstance;
+        return factory;
     }
 
     // Buscar en data.txt los parámetros de las etiquetas [HP] y [MSI]

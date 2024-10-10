@@ -27,6 +27,7 @@ public class WareHouse {
     private int RAM_Count;
     private int PSU_Count;
     private int GPU_Count;
+    private int COMPUTER_Count;
 
     // Semaforos para controlar el acceso concurrente
     private final Semaphore moboSemaphore = new Semaphore(1);
@@ -34,7 +35,9 @@ public class WareHouse {
     private final Semaphore ramSemaphore = new Semaphore(1);
     private final Semaphore psuSemaphore = new Semaphore(1);
     private final Semaphore gpuSemaphore = new Semaphore(1);
-    
+    private final Semaphore paymentSemaphore = new Semaphore(1);
+    private final Semaphore computerSemaphore = new Semaphore(1);
+
     private int accumulatedProductionCost;
 
     public WareHouse(String company) {
@@ -44,6 +47,7 @@ public class WareHouse {
         this.RAM_Count = 0;
         this.PSU_Count = 0;
         this.GPU_Count = 0;
+        this.COMPUTER_Count = 0;
         this.accumulatedProductionCost = 0;
     }
 
@@ -74,6 +78,8 @@ public class WareHouse {
                     return true;
                 }
                 break;
+            case 5:
+                return false;
             default:
                 break;
         }
@@ -96,6 +102,8 @@ public class WareHouse {
                 semaphoreToUse = psuSemaphore;
             case 4 ->
                 semaphoreToUse = gpuSemaphore;
+            case 5 ->
+                semaphoreToUse = computerSemaphore;
         }
 
         // Si el semaforo corresponde a un tipo de componente
@@ -115,6 +123,8 @@ public class WareHouse {
                         this.PSU_Count++;
                     case 4 ->
                         this.GPU_Count++;
+                    case 5 ->
+                        this.COMPUTER_Count++;
                 }
                 System.out.println("Se ha incrementado el componente " + counterType + " en la compañia " + this.companyName);
             } else {
@@ -126,24 +136,23 @@ public class WareHouse {
     }
 
     //caso especial PSU, 5 en un dia
-    public void incrementPSUCounter(){
-        
+    public void incrementPSUCounter() {
+
         int difference = this.getCapacityByType(3) - this.getPSU_Count();
-        
+
         if (difference > 5) {
-            for (int i=5; 0<i; i--){
+            for (int i = 5; 0 < i; i--) {
                 this.PSU_Count++;
             }
         } else {
-            for (int i=difference; i>0; i--){
+            for (int i = difference; i > 0; i--) {
                 this.PSU_Count++;
             }
-            System.out.println("Se boto: " + (5-difference) + "PSUs en la ultima produccion de: " + this.companyName);
+            System.out.println("Se boto: " + (5 - difference) + "PSUs en la ultima produccion de: " + this.companyName);
         }
-        
-        
+
     }
-    
+
     public void decrementCounterByType(int counterType) throws InterruptedException {
         Semaphore semaphoreToUse = null;
 
@@ -159,6 +168,8 @@ public class WareHouse {
                 semaphoreToUse = psuSemaphore;
             case 4 ->
                 semaphoreToUse = gpuSemaphore;
+            case 5 ->
+                semaphoreToUse = computerSemaphore;
         }
 
         // Si el semaforo corresponde a un tipo de componente
@@ -168,7 +179,7 @@ public class WareHouse {
             // Verificar si el almacen esta lleno antes de incrementar
             if (this.getStockByType(counterType) == 0) {
                 System.out.println("No se pudo restar el componente " + counterType + " porque el almacen esta vacio");
-                
+
             } else {
 
                 switch (counterType) {
@@ -182,8 +193,10 @@ public class WareHouse {
                         this.PSU_Count--;
                     case 4 ->
                         this.GPU_Count--;
+                    case 5 ->
+                        this.COMPUTER_Count--;    
                 }
-                
+
                 System.out.println("Se ha reducido el componente " + counterType + " en la compañia " + this.companyName);
             }
 
@@ -207,6 +220,8 @@ public class WareHouse {
                 semaphoreToUse = this.psuSemaphore;
             case 4 ->
                 semaphoreToUse = this.gpuSemaphore;
+            case 5 ->
+                semaphoreToUse = this.computerSemaphore;
         }
 
         return semaphoreToUse;
@@ -215,15 +230,17 @@ public class WareHouse {
     public int getCapacityByType(int type) {
 
         if (type == 0) {
-            return this.getMOBO_Count();
+            return this.maxReadyMobos;
         } else if (type == 1) {
-            return this.getCPU_Count();
+            return this.maxReadyCPUs;
         } else if (type == 2) {
-            return this.getRAM_Count();
+            return this.maxReadyRAMs;
         } else if (type == 3) {
-            return this.getPSU_Count();
+            return this.maxReadyPSUs;
         } else if (type == 4) {
-            return this.getGPU_Count();
+            return this.maxReadyGPUs;
+        } else if (type == 5){
+            return 999;
         }
 
         System.out.println("Error al obtener capacidad por tipo");
@@ -243,6 +260,8 @@ public class WareHouse {
             return this.getPSU_Count();
         } else if (type == 4) {
             return this.getGPU_Count();
+        } else if (type == 5){
+            return this.getCOMPUTER_Count();
         }
 
         System.out.println("Error al obtener la cantidad por tipo");
@@ -250,10 +269,10 @@ public class WareHouse {
 
     }
 
-    public void addCost(int cost){
+    public void addCost(int cost) {
         this.accumulatedProductionCost += cost;
     }
-    
+
     public String getCompany() {
         return companyName;
     }
@@ -298,6 +317,21 @@ public class WareHouse {
         return GPU_Count;
     }
 
-    
+    public Semaphore getPaymentSemaphore() {
+        return paymentSemaphore;
+    }
+
+    public int getAccumulatedProductionCost() {
+        return accumulatedProductionCost;
+    }
+
+    void cleanHouse() {
+        this.accumulatedProductionCost = 0;
+    }
+
+    public int getCOMPUTER_Count() {
+        return COMPUTER_Count;
+    }
+
     
 }

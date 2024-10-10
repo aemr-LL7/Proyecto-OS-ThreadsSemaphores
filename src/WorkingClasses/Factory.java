@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package WorkingClasses;
+
 import java.util.concurrent.Semaphore;
 
 /**
@@ -18,18 +19,20 @@ public class Factory extends Thread {
     private Workers[] RAM;
     private Workers[] PSU;
     private Workers[] GPU;
+    private Workers[] ASMBLY;
 
     private Company company;
 
     private WareHouse wareHouse;
 
-    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, Company company, WareHouse wareHouse) {
+    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, WareHouse wareHouse) {
         this.dayDuration = dayDuration;
         this.MOBO = new Workers[MOBOWorkersAmmount];
         this.CPU = new Workers[CPUWorkersAmmount];
         this.RAM = new Workers[RAMWorkersAmmount];
         this.PSU = new Workers[PSUWorkersAmmount];
         this.GPU = new Workers[GPUWorkersAmmount];
+        this.ASMBLY = new Workers[ASMBLYWorkersAmmount];
         this.company = company;
         this.wareHouse = wareHouse;
 
@@ -77,9 +80,24 @@ public class Factory extends Thread {
         this.wareHouse = new WareHouse(this.company.getCompanyName());
     }
 
-    @Override
-    public void run() {
-        System.out.println("estoy funcionando");
+    public void registerCosts() throws InterruptedException {
+        this.wareHouse.getPaymentSemaphore().acquire();
+        this.company.addOperationCost(this.wareHouse.getAccumulatedProductionCost());
+        this.wareHouse.cleanHouse();
+        this.wareHouse.getPaymentSemaphore().release();
     }
 
+    @Override
+    public void run() {
+        this.startWorkers();
+
+        while (true) {
+            try {
+                Thread.sleep(dayDuration); // Esperar un día (simulado)
+                this.registerCosts();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

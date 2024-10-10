@@ -12,19 +12,18 @@ public class Company {
 
     private String companyName;
     private int operationCost;
-
     private WareHouse inventoryWareHouse;
-    private int readyComputers = 0;
+    private int readyComputers;
 
     private int daysTillShipement;
 
-    public Company(String companyName, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, WareHouse inventoryWareHouse, int daysTillShipement) {
+    public Company(String companyName, WareHouse inventoryWareHouse) {
         this.companyName = companyName;
         this.inventoryWareHouse = inventoryWareHouse;
-        this.daysTillShipement = daysTillShipement;
         this.operationCost = 0;
+        this.readyComputers = 0;
     }
-
+    
     public void addOperationCost(int cost) {
         this.operationCost += cost;
     }
@@ -33,6 +32,29 @@ public class Company {
         return companyName;
     }
 
-    
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public int getOperationCost() {
+        return operationCost;
+    }
+
+    public void setOperationCost(int operationCost) {
+        this.operationCost = operationCost;
+    }
+
+    public WareHouse getInventoryWareHouse() {
+        return inventoryWareHouse;
+    }
+
+    public int getReadyComputers() {
+        return readyComputers;
+    }
+
+    public void setReadyComputers(int readyComputers) {
+        this.readyComputers = readyComputers;
+    }
+
     
 }

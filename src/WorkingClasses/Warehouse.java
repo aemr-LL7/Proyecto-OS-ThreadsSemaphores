@@ -37,7 +37,8 @@ public class WareHouse {
     private final Semaphore gpuSemaphore = new Semaphore(1);
     private final Semaphore paymentSemaphore = new Semaphore(1);
     private final Semaphore computerSemaphore = new Semaphore(1);
-
+    private final Semaphore daysRemainigSemaphore = new Semaphore(1);
+    
     private int accumulatedProductionCost;
 
     public WareHouse(String company) {
@@ -49,6 +50,7 @@ public class WareHouse {
         this.GPU_Count = 0;
         this.COMPUTER_Count = 0;
         this.accumulatedProductionCost = 0;
+        
     }
 
     public boolean isCounterTypeFull(int counterType) {
@@ -94,6 +96,7 @@ public class WareHouse {
         
         return false;
     }
+    
     public void incrementCounterByType(int counterType) throws InterruptedException {
         Semaphore semaphoreToUse = null;
 
@@ -343,5 +346,11 @@ public class WareHouse {
     public void addComputer(){
         this.COMPUTER_Count ++;
     }
+
+    public Semaphore getDaysRemainigSemaphore() {
+        return daysRemainigSemaphore;
+    }
+    
+    
     
 }

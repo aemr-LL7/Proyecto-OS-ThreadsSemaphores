@@ -14,17 +14,30 @@ public class ProjectManager extends Thread {
 
     private int remainingDays; // Contador de dias restantes para la entrega
     private boolean watchingAnime; // Indica si esta viendo anime
-    private static int SALARY_PER_HOUR = 40;
-    private int salaryPenalty = 0;
-    private Semaphore semaphore; // Semáforo para sincronización
-    
-    private Company company; 
+    private int daysTillShipement;
+    private int elapsedDays;
+    private int dayDuration;
+    private int productionTime;
+    private int penaltyCounter;
 
-    public ProjectManager(int initialRemainingDays, Semaphore semaphore, Company company) {
-        this.remainingDays = initialRemainingDays;
+    private static Semaphore penaltySemafore = new Semaphore(1);
+
+    private int accumulatedSalary;
+
+    private WareHouse wareHouse;
+
+    private Semaphore dayCounterSemaphore;
+
+    public ProjectManager(int daysTillShipement, Semaphore semaphore, Company company, int dayDuration, WareHouse wareHouse) {
+        this.daysTillShipement = daysTillShipement;
+        this.remainingDays = this.daysTillShipement;
         this.watchingAnime = false;
-        this.semaphore = semaphore;
-        this.company = company;
+        this.dayDuration = dayDuration;
+        this.accumulatedSalary = 0;
+        this.elapsedDays = 0;
+        this.productionTime = 1;
+
+        this.dayCounterSemaphore = this.wareHouse.getDaysRemainigSemaphore();
     }
 
     @Override
@@ -39,39 +52,50 @@ public class ProjectManager extends Thread {
                 }
                 // Trabaja las últimas 8 horas actualizando el contador de días
                 this.updateDaysCounter();
-                
-                hoursWorked += 24;
+                this.payMe();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     private void watchAnime() throws InterruptedException {
-        this.semaphore.acquire();
+
         this.watchingAnime = true;
         System.out.println("Project Manager esta viendo anime...");
-        Thread.sleep(500); // Simula 30 minutos viendo anime
-        this.semaphore.release();
+        Thread.sleep((this.dayDuration / 24) / 2); // Simula 30 minutos viendo anime
+
     }
 
     private void work() throws InterruptedException {
-        this.semaphore.acquire();
+
         this.watchingAnime = false;
         System.out.println("Project Manager esta trabajando");
-        Thread.sleep(500); // Simula 30 minutos trabajando
-        this.semaphore.release();
+        Thread.sleep((this.dayDuration / 24) / 2);
+
     }
 
     private void updateDaysCounter() throws InterruptedException {
-        this.semaphore.acquire();
-        this.remainingDays--;
-        System.out.println("Project Manager actualizo el contador. Dias restantes: " + this.remainingDays);
-        this.semaphore.release();
+
+        this.elapsedDays++;
+        if (this.remainingDays > 1) {
+            this.remainingDays = (this.daysTillShipement - elapsedDays);
+            System.out.println("Project Manager actualizo el contador. Dias restantes: " + this.remainingDays);
+        }
+
     }
 
-    public int calculateDailySalary() {
-        return (SALARY_PER_HOUR * 24) - this.salaryPenalty;
+    private void payMe() throws InterruptedException {
+        this.wareHouse.getPaymentSemaphore().acquire();
+        this.getPenaltySemafore().acquire();
+
+        int payment = this.productionTime * (24 * 40);
+        payment -= this.penaltyCounter;
+
+        this.wareHouse.addCost(payment);
+        this.penaltyCounter = 0;
+        this.getPenaltySemafore().release();
+        this.wareHouse.getPaymentSemaphore().release();
     }
 
     /**
@@ -102,33 +126,8 @@ public class ProjectManager extends Thread {
         this.watchingAnime = watchingAnime;
     }
 
-    /**
-     * @return the SALARY_PER_HOUR
-     */
-    public static int getSALARY_PER_HOUR() {
-        return SALARY_PER_HOUR;
-    }
-
-    /**
-     * @param aSALARY_PER_HOUR the SALARY_PER_HOUR to set
-     */
-    public static void setSALARY_PER_HOUR(int aSALARY_PER_HOUR) {
-        SALARY_PER_HOUR = aSALARY_PER_HOUR;
-    }
-
-    /**
-     * @return the salaryPenalty
-     */
-    public int getSalaryPenalty() {
-        return salaryPenalty;
-    }
-
-    /**
-     * @param amount the salaryPenalty to set
-     */
-    public void setSalaryPenalty(int amount) {
-        this.salaryPenalty += amount;
-        System.out.println("Penalizacion aplicada: $" + amount);
+    public static Semaphore getPenaltySemafore() {
+        return penaltySemafore;
     }
 
 }

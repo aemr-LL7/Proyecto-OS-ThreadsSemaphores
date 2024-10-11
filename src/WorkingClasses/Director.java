@@ -12,6 +12,8 @@ import java.util.concurrent.Semaphore;
  * @author andre Director se encarga de la administración general
  */
 public class Director extends Thread {
+    
+    private Company company;
 
     private ProjectManager PM; // Referencia al Project Manager
     private boolean hasCheckedThePM;
@@ -19,7 +21,7 @@ public class Director extends Thread {
 
     private int dayDuration;
 
-    private static int COMPUTER_PRICE = 1000;
+    private static int COMPUTER_PRICE;
     private int totalRevenue; // Ganancias totales por las computadoras enviadas
     private static int SALARY_PER_HOUR = 60;
 
@@ -27,10 +29,12 @@ public class Director extends Thread {
 
     private Random random = new Random();
 
-    public Director(ProjectManager pm, WareHouse wareHouse, int dayDuration) {
+    public Director(ProjectManager pm, WareHouse wareHouse, int dayDuration, Company company) {
         this.hasCheckedThePM = false;
-
+        
         this.PM = pm;
+        this.company = company;
+        this.COMPUTER_PRICE = company.getCOMPUTERPrice();
         this.wareHouse = wareHouse;
         this.dayDuration = dayDuration;
         this.PM = pm;
@@ -81,7 +85,7 @@ public class Director extends Thread {
         
         this.wareHouse.getSemaphoreByType(5).acquire();
         System.out.println("Director esta enviando computadoras a las distribuidoras...");
-        this.totalRevenue += this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE; // Registrar las ganancias
+        this.company.addBrute(this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE); // Registrar las ganancias
 
         System.out.println("Ganancia registrada: $" + (this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE));
         this.wareHouse.setCOMPUTER_Count(0); // Reiniciar el num de pcs completadas

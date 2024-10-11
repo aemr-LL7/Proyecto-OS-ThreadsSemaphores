@@ -14,14 +14,23 @@ public class Company {
     private int operationCost;
     private WareHouse inventoryWareHouse;
     private int readyComputers;
+    
+    private int brute;
 
     private int daysTillShipement;
+    private int COMPUTERPrice;
 
-    public Company(String companyName, WareHouse inventoryWareHouse) {
+    public Company(String companyName, WareHouse inventoryWareHouse, int COMPUTERPRICE) {
         this.companyName = companyName;
         this.inventoryWareHouse = inventoryWareHouse;
         this.operationCost = 0;
         this.readyComputers = 0;
+        this.brute = 0;
+        this.COMPUTERPrice = COMPUTERPRICE;
+    }
+    
+    public void addBrute(int newGains){
+        this.brute += newGains;
     }
     
     public void addOperationCost(int cost) {
@@ -54,6 +63,10 @@ public class Company {
 
     public void setReadyComputers(int readyComputers) {
         this.readyComputers = readyComputers;
+    }
+
+    public int getCOMPUTERPrice() {
+        return this.COMPUTERPrice;
     }
 
     

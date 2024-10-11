@@ -54,7 +54,7 @@ public class Home extends javax.swing.JFrame {
 //        chartManager = new ChartManager();
         
         // INICIAR SIMULACION
-//        this.getFactory0().run();
+        this.getFactory0().start();
 //        this.getFactory1().run();
 
         // Mostrar los valores asignados

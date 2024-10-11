@@ -1,5 +1,5 @@
 [General Params]
-Duration=6000
+Duration=500
 Deadline=25
 
 [HP]

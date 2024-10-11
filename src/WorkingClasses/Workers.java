@@ -78,41 +78,28 @@ public class Workers extends Thread {
     public void work() throws InterruptedException {
 
         // Intentar acceder al almacen (usando el semaforo)
-        this.getStorageSemaphore().acquire();
         if (this.getCurrentStock() < this.getStorageCapacity()) {
             if (this.tipe == 3) {
-                System.out.println("=======================Trabajando en PSU");
                 this.wareHouse.incrementPSUCounter();
             } else if (this.tipe == 5) {
                 this.makeCompter();
-                System.out.println("Se ensamblo una computadora para: " + this.wareHouse.getCompany());
+                System.out.println("Se ensamblo una computadora para: " + this.wareHouse.getCompany() + "Total: " + this.wareHouse.getCOMPUTER_Count());
             } else {
-                System.out.println("=========================Trabajando en algo bonito");
                 this.increment();
-                System.out.println("Trabajador de tipo " + getType() + " ha producido un componente. Stock actual: " + getCurrentStock());
             }
 
         } else {
             System.out.println("Almacen de tipo " + getType() + " lleno. No se puede producir mas");
 
         }
-        this.getStorageSemaphore().release();
+
     }
 
     public void makeCompter() throws InterruptedException {
 
         if (this.tipe == 5) {
             // Intentar acceder al almacen (usando el semaforo)
-            this.getStorageSemaphore().acquire();
-            System.out.println("============================ SEMAFORO ENSAMBLADOR");
             if (this.wareHouse.isReadyForPcConstruction()) {
-
-                this.wareHouse.getSemaphoreByType(0).acquire();
-                this.wareHouse.getSemaphoreByType(1).acquire();
-                this.wareHouse.getSemaphoreByType(2).acquire();
-                this.wareHouse.getSemaphoreByType(3).acquire();
-                this.wareHouse.getSemaphoreByType(4).acquire();
-                this.wareHouse.getSemaphoreByType(5).acquire();
 
                 this.wareHouse.decrementCounterByType(0);
                 this.wareHouse.decrementCounterByType(1);
@@ -122,17 +109,9 @@ public class Workers extends Thread {
                 this.wareHouse.decrementCounterByType(5);
 
                 this.wareHouse.addComputer();
-
-                this.wareHouse.getSemaphoreByType(0).release();
-                this.wareHouse.getSemaphoreByType(1).release();
-                this.wareHouse.getSemaphoreByType(2).release();
-                this.wareHouse.getSemaphoreByType(3).release();
-                this.wareHouse.getSemaphoreByType(4).release();
-                this.wareHouse.getSemaphoreByType(5).release();
             }
-            this.getStorageSemaphore().release();
         } else {
-            
+            System.out.println("No se pudo ensamblar computadora");
         }
     }
 
@@ -215,13 +194,12 @@ public class Workers extends Thread {
         return this.wareHouse.getStockByType(this.tipe);
     }
 
-    /**
-     * @return the storageSemaphore
-     */
-    public Semaphore getStorageSemaphore() {
-        return storageSemaphore;
-    }
-
+//    /**
+//     * @return the storageSemaphore
+//     */
+//    public Semaphore getStorageSemaphore() {
+//        return storageSemaphore;
+//    }
     /**
      * @param storageSemaphore the storageSemaphore to set
      */

@@ -39,7 +39,7 @@ public class Warehouse {
     private final Semaphore paymentSemaphore = new Semaphore(1);
     private final Semaphore computerSemaphore = new Semaphore(1);
     private final Semaphore daysRemainigSemaphore = new Semaphore(1);
-    
+
     private int accumulatedProductionCost;
 
     public Warehouse(String company) {
@@ -51,7 +51,6 @@ public class Warehouse {
         this.GPU_Count = 0;
         this.COMPUTER_Count = 0;
         this.accumulatedProductionCost = 0;
-        
     }
 
     public boolean isCounterTypeFull(int counterType) {
@@ -90,64 +89,61 @@ public class Warehouse {
         return false;
     }
 
-    public boolean isReadyForPcConstruction(){
-        if (MOBO_Count > 0 && CPU_Count > 0 && RAM_Count > 0 && PSU_Count > 0){
+    public boolean isReadyForPcConstruction() {
+        if (MOBO_Count > 0 && CPU_Count > 0 && RAM_Count > 0 && PSU_Count > 0) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     public void incrementCounterByType(int counterType) throws InterruptedException {
-        Semaphore semaphoreToUse = null;
-
-        // Determinamos el semaforo a utilizar segun el tipo de componente
-        switch (counterType) {
-            case 0 ->
-                semaphoreToUse = moboSemaphore;
-            case 1 ->
-                semaphoreToUse = cpuSemaphore;
-            case 2 ->
-                semaphoreToUse = ramSemaphore;
-            case 3 ->
-                semaphoreToUse = psuSemaphore;
-            case 4 ->
-                semaphoreToUse = gpuSemaphore;
-            case 5 ->
-                semaphoreToUse = computerSemaphore;
-        }
-
+        Semaphore semaphoreToUse = this.getSemaphoreByType(counterType);
+        
         // Si el semaforo corresponde a un tipo de componente
         if (semaphoreToUse != null) {
+
             semaphoreToUse.acquire(); // Asegurar exclusion mutua
+            System.out.println("Semaforo tomado por trabajador tipo: " + counterType + " permits: " + semaphoreToUse.availablePermits());
 
             // Verificar si el almacen esta lleno antes de incrementar
             if (!isCounterTypeFull(counterType)) {
+
                 switch (counterType) {
-                    case 0 ->
+                    case 0:
                         this.MOBO_Count++;
-                    case 1 ->
+                        
+                    case 1:
                         this.CPU_Count++;
-                    case 2 ->
+                        
+                    case 2:
                         this.RAM_Count++;
-                    case 3 ->
+                        
+                    case 3:
                         this.PSU_Count++;
-                    case 4 ->
+                        
+                    case 4:
                         this.GPU_Count++;
-                    case 5 ->
+                        
+                    case 5:
                         this.COMPUTER_Count++;
+                        
                 }
+
                 System.out.println("Se ha incrementado el componente " + counterType + " en la compañia " + this.companyName);
             } else {
                 System.out.println("No se pudo incrementar el componente " + counterType + " porque el almacen esta lleno");
             }
 
             semaphoreToUse.release(); // Liberar despues de actualizar
+            System.out.println("Soltando Semaforo del trabajador tipo: " +counterType+ "permits: " + semaphoreToUse.availablePermits());
         }
     }
 
     //caso especial PSU, 5 en un dia
-    public void incrementPSUCounter() {
+    public void incrementPSUCounter() throws InterruptedException {
+
+        this.psuSemaphore.acquire();
 
         int difference = this.getCapacityByType(3) - this.getPSU_Count();
 
@@ -159,8 +155,10 @@ public class Warehouse {
             for (int i = difference; i > 0; i--) {
                 this.PSU_Count++;
             }
-            System.out.println("Se boto: " + (5 - difference) + "PSUs en la ultima produccion de: " + this.companyName);
+            System.out.println("Se botaron: " + (5 - difference) + "PSUs en la ultima produccion de: " + this.companyName);
         }
+
+        this.psuSemaphore.release();
 
     }
 
@@ -205,7 +203,7 @@ public class Warehouse {
                     case 4 ->
                         this.GPU_Count--;
                     case 5 ->
-                        this.COMPUTER_Count--;    
+                        this.COMPUTER_Count--;
                 }
 
                 System.out.println("Se ha reducido el componente " + counterType + " en la compañia " + this.companyName);
@@ -250,7 +248,7 @@ public class Warehouse {
             return this.maxReadyPSUs;
         } else if (type == 4) {
             return this.maxReadyGPUs;
-        } else if (type == 5){
+        } else if (type == 5) {
             return 999;
         }
 
@@ -271,7 +269,7 @@ public class Warehouse {
             return this.getPSU_Count();
         } else if (type == 4) {
             return this.getGPU_Count();
-        } else if (type == 5){
+        } else if (type == 5) {
             return this.getCOMPUTER_Count();
         }
 
@@ -344,8 +342,8 @@ public class Warehouse {
         return COMPUTER_Count;
     }
 
-    public void addComputer(){
-        this.COMPUTER_Count ++;
+    public void addComputer() {
+        this.COMPUTER_Count++;
     }
 
     public Semaphore getDaysRemainigSemaphore() {
@@ -355,5 +353,11 @@ public class Warehouse {
     public void setCOMPUTER_Count(int COMPUTER_Count) {
         this.COMPUTER_Count = COMPUTER_Count;
     }
+
+    public int getSPCOMPUTER_Cout() {
+        return SPCOMPUTER_Cout;
+    }
     
+    
+
 }

@@ -55,7 +55,37 @@ public class Dashboard extends javax.swing.JFrame {
             @Override
             public void run() {
                 //
+<<<<<<< HEAD
+                while (true) {
+                    try {
+                        // Ejecutar las actualizaciones de la UI en el EDT
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+
+//                                profit1.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning() - (int) app.getNickelodeon().getTotalCost()));
+//                                cost1.setText(formatNumberAsK((int) app.getCartoonNetwork().getTotalCost()));
+//                                earning1.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning()));
+//
+//                                profit.setText(formatNumberAsK((int) app.getNickelodeon().getEarning() - (int) app.getNickelodeon().getTotalCost()));
+//                                cost2.setText(formatNumberAsK((int) app.getNickelodeon().getTotalCost()));
+//                                earning.setText(formatNumberAsK((int) app.getNickelodeon().getEarning()));
+//
+//                                totalDays.setText(String.valueOf(app.getCartoonNetwork().getTotalDays()));
+//                                currentDeadline.setText(String.valueOf(app.getCartoonNetwork().getRemainingDays()));
+
+                            }
+                        });
+
+                        Thread.sleep(Home.getDuration() / 48);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+=======
                 
+>>>>>>> d7167de1d535c803337987c481d308575d0b4453
             }
         });
 

@@ -11,22 +11,23 @@ package WorkingClasses;
 public class Company {
 
     private String companyName;
-    private int operationCost;
+    
     private WareHouse inventoryWareHouse;
-    private int readyComputers;
     
     private int brute;
+    private int operationCost;
+    private int netWins;
+    
 
-    private int daysTillShipement;
     private int COMPUTERPrice;
 
     public Company(String companyName, WareHouse inventoryWareHouse, int COMPUTERPRICE) {
         this.companyName = companyName;
         this.inventoryWareHouse = inventoryWareHouse;
         this.operationCost = 0;
-        this.readyComputers = 0;
         this.brute = 0;
         this.COMPUTERPrice = COMPUTERPRICE;
+        this.netWins = 0;
     }
     
     public void addBrute(int newGains){
@@ -57,17 +58,12 @@ public class Company {
         return inventoryWareHouse;
     }
 
-    public int getReadyComputers() {
-        return readyComputers;
-    }
-
-    public void setReadyComputers(int readyComputers) {
-        this.readyComputers = readyComputers;
-    }
-
     public int getCOMPUTERPrice() {
         return this.COMPUTERPrice;
     }
 
+    void calculateNetWins() {
+        this.netWins = (this.brute - this.operationCost);//No necesitamos mutex porque el unico hilo que modifica esto es factory
+    }
     
 }

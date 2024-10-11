@@ -12,7 +12,7 @@ import java.util.concurrent.Semaphore;
  * @author andre Director se encarga de la administración general
  */
 public class Director extends Thread {
-    
+
     private Company company;
 
     private ProjectManager PM; // Referencia al Project Manager
@@ -31,7 +31,7 @@ public class Director extends Thread {
 
     public Director(ProjectManager pm, WareHouse wareHouse, int dayDuration, Company company) {
         this.hasCheckedThePM = false;
-        
+
         this.PM = pm;
         this.company = company;
         this.COMPUTER_PRICE = company.getCOMPUTERPrice();
@@ -73,6 +73,8 @@ public class Director extends Thread {
                     }
                 }
 
+                this.payMe();
+
             } catch (InterruptedException e) {
                 System.out.println("Error en el director");
             }
@@ -82,7 +84,7 @@ public class Director extends Thread {
 
     // Metodo para enviar las computadoras a las distribuidoras
     private void sendComputers() throws InterruptedException {
-        
+
         this.wareHouse.getSemaphoreByType(5).acquire();
         System.out.println("Director esta enviando computadoras a las distribuidoras...");
         this.company.addBrute(this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE); // Registrar las ganancias
@@ -161,6 +163,13 @@ public class Director extends Thread {
 
     private ProjectManager getPm() {
         return this.PM;
+    }
+
+    private void payMe() throws InterruptedException {
+        this.wareHouse.getPaymentSemaphore().acquire();
+        int payment = (24 * 60);
+        this.wareHouse.addCost(payment);
+        this.wareHouse.getPaymentSemaphore().release();
     }
 
 }

@@ -12,6 +12,7 @@ import java.util.concurrent.Semaphore;
  */
 public class Factory extends Thread {
 
+    private int daysTillShipement;
     private int dayDuration;
 
     private Workers[] MOBO;
@@ -22,13 +23,15 @@ public class Factory extends Thread {
     private Workers[] ASMBLY;
 
     private ProjectManager PM;
-    
+    private Director director;
+
     private Company company;
     private static final Semaphore dayCountSemaphote = new Semaphore(1);
     private WareHouse wareHouse;
 
-    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, WareHouse wareHouse) {
+    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, int daysTillShipement) {
         this.dayDuration = dayDuration;
+        this.daysTillShipement = daysTillShipement;
         this.MOBO = new Workers[MOBOWorkersAmmount];
         this.CPU = new Workers[CPUWorkersAmmount];
         this.RAM = new Workers[RAMWorkersAmmount];
@@ -36,7 +39,10 @@ public class Factory extends Thread {
         this.GPU = new Workers[GPUWorkersAmmount];
         this.ASMBLY = new Workers[ASMBLYWorkersAmmount];
         this.company = company;
-        this.wareHouse = wareHouse;
+        
+        this.wareHouse = this.createWarehouse();
+        this.PM = new ProjectManager(this.daysTillShipement, this.company, this.dayDuration, this.wareHouse);
+        this.director = new Director(this.PM, this.wareHouse, this.dayDuration, this.company);
 
         this.populateWorkers();
     }
@@ -83,9 +89,15 @@ public class Factory extends Thread {
         }
 
     }
+    
+    private void startExecutives(){
+        this.PM.start();
+        this.director.start();
+    }
 
-    private void createWarehouse() {
-        this.wareHouse = new WareHouse(this.company.getCompanyName());
+    private WareHouse createWarehouse() {
+        return this.wareHouse = new WareHouse(this.company.getCompanyName());
+
     }
 
     public void registerCosts() throws InterruptedException {
@@ -94,7 +106,7 @@ public class Factory extends Thread {
         this.wareHouse.cleanHouse();
         this.wareHouse.getPaymentSemaphore().release();
     }
-    
+
     public void getWorkersCountByType() {
         System.out.println("Cantidad de trabajadores presentes:");
         System.out.println("MOBO: " + MOBO.length);
@@ -108,11 +120,13 @@ public class Factory extends Thread {
     @Override
     public void run() {
         this.startWorkers();
+        this.startExecutives();
 
         while (true) {
             try {
                 Thread.sleep(dayDuration); // Esperar un día (simulado)
-                this.registerCosts();
+                this.registerCosts(); //agregamos los gastos de los workers, el sistema de control de las entradas las lleva el director.
+                this.company.calculateNetWins();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

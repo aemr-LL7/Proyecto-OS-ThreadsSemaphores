@@ -26,7 +26,7 @@ public class ProjectManager extends Thread {
 
     private WareHouse wareHouse;
 
-    public ProjectManager(int daysTillShipement, Semaphore semaphore, Company company, int dayDuration, WareHouse wareHouse) {
+    public ProjectManager(int daysTillShipement, Company company, int dayDuration, WareHouse wareHouse) {
         this.daysTillShipement = daysTillShipement;
         this.remainingDays = daysTillShipement;
         this.watchingAnime = false;

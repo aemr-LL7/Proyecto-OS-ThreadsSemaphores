@@ -55,6 +55,7 @@ public class Dashboard extends javax.swing.JFrame {
             @Override
             public void run() {
                 //
+<<<<<<< HEAD
                 while (true) {
                     try {
                         // Ejecutar las actualizaciones de la UI en el EDT
@@ -82,6 +83,9 @@ public class Dashboard extends javax.swing.JFrame {
                         break;
                     }
                 }
+=======
+                
+>>>>>>> d7167de1d535c803337987c481d308575d0b4453
             }
         });
 

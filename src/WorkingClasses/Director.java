@@ -104,15 +104,15 @@ public class Director extends Thread {
     // Metodo para revisar al PM
     private void checkProjectManager() throws InterruptedException {
         if (!this.hasCheckedThePM) {
-            System.out.println("Director esta revisando al Project Manager...");
+//            System.out.println("Director esta revisando al Project Manager...");
             // Verificar si el PM esta viendo anime
             if (this.PM.isWatchingAnime()) {
-                System.out.println("¡Falta! El PM fue descubierto viendo anime!");
+//                System.out.println("¡Falta! El PM fue descubierto viendo anime!");
                 this.hasCheckedThePM = true;
                 this.PM.incrementPenaltyCounter();
                 this.status = "Administrating";
             } else {
-                System.out.println("El PM esta trabajando correctamente");
+//                System.out.println("El PM esta trabajando correctamente");
             }
         }
     }

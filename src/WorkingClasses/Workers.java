@@ -53,6 +53,7 @@ public class Workers extends Thread {
             case 5: // ensamblador
                 this.salaryPerHour = 50;
                 this.productionTime = 2;
+                System.out.println("Heyy soy ensamblador de mips");
                 break;
             default:
                 throw new IllegalArgumentException("Tipo de trabajador no valido");
@@ -80,11 +81,13 @@ public class Workers extends Thread {
         this.getStorageSemaphore().acquire();
         if (this.getCurrentStock() < this.getStorageCapacity()) {
             if (this.tipe == 3) {
+                System.out.println("=======================Trabajando en PSU");
                 this.wareHouse.incrementPSUCounter();
             } else if (this.tipe == 5) {
                 this.makeCompter();
                 System.out.println("Se ensamblo una computadora para: " + this.wareHouse.getCompany());
             } else {
+                System.out.println("=========================Trabajando en algo bonito");
                 this.increment();
                 System.out.println("Trabajador de tipo " + getType() + " ha producido un componente. Stock actual: " + getCurrentStock());
             }
@@ -101,6 +104,7 @@ public class Workers extends Thread {
         if (this.tipe == 5) {
             // Intentar acceder al almacen (usando el semaforo)
             this.getStorageSemaphore().acquire();
+            System.out.println("============================ SEMAFORO ENSAMBLADOR");
             if (this.wareHouse.isReadyForPcConstruction()) {
 
                 this.wareHouse.getSemaphoreByType(0).acquire();

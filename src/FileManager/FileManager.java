@@ -254,11 +254,11 @@ public class FileManager {
                 Home.getDeadline() // Almacen
         );
 
-        System.out.println(warehouseInstance.getCompany());
-        factory.getWorkersCountByType();
-        System.out.println("Componentes producidos de la warehouse:");
-        System.out.println("MOBOS:" + warehouseInstance.getMOBO_Count() + "\nCPU:" + warehouseInstance.getCPU_Count() + "\nRAM:" + warehouseInstance.getRAM_Count() + "\nPSU:" + warehouseInstance.getPSU_Count() + "\nGPU:" + warehouseInstance.getGPU_Count());
-        // Devolver la instancia de la compañía
+//        System.out.println(warehouseInstance.getCompany());
+//        factory.getWorkersCountByType();
+//        System.out.println("Componentes producidos de la warehouse:");
+//        System.out.println("MOBOS:" + warehouseInstance.getMOBO_Count() + "\nCPU:" + warehouseInstance.getCPU_Count() + "\nRAM:" + warehouseInstance.getRAM_Count() + "\nPSU:" + warehouseInstance.getPSU_Count() + "\nGPU:" + warehouseInstance.getGPU_Count());
+//        // Devolver la instancia de la compañía
         return factory;
     }
 

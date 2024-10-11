@@ -61,7 +61,7 @@ public class ProjectManager extends Thread {
     private void watchAnime() throws InterruptedException {
 
         this.watchingAnime = true;
-        System.out.println("Project Manager esta viendo anime...");
+//        System.out.println("Project Manager esta viendo anime...");
         Thread.sleep((this.dayDuration / 24) / 2); // Simula 30 minutos viendo anime
 
     }
@@ -69,7 +69,7 @@ public class ProjectManager extends Thread {
     private void work() throws InterruptedException {
 
         this.watchingAnime = false;
-        System.out.println("Project Manager esta trabajando");
+//        System.out.println("Project Manager esta trabajando");
         Thread.sleep((this.dayDuration / 24) / 2);
 
     }

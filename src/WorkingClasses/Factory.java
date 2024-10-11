@@ -45,7 +45,7 @@ public class Factory extends Thread {
         this.director = new Director(this.PM, this.wareHouse, this.dayDuration, this.company);
 
         this.populateWorkers();
-        this.start();//Corremos esta mierda si o k hpta 
+//        this.start();//Corremos esta mierda si o k hpta 
     }
 
     private void populateWorkers() {
@@ -123,6 +123,7 @@ public class Factory extends Thread {
                 Thread.sleep(dayDuration); // Esperar un día (simulado)
                 this.registerCosts(); //agregamos los gastos de los workers, el sistema de control de las entradas las lleva el director.
                 this.company.calculateNetWins();
+                System.out.println("==================================================PASO UN PINSHY DIA");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

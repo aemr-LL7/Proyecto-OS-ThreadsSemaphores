@@ -4,7 +4,10 @@
  */
 package GUI;
 
+import FileManager.FileManager;
+import java.io.File;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -12,16 +15,109 @@ import javax.swing.JFrame;
  */
 public class MSI extends javax.swing.JFrame {
 
+    private int maxWorkers;
+    private int actualWorkers;
+    private File selectedFile = Home.getSelectedFile();
+    private FileManager fileManager = new FileManager();
+
     /**
      * Creates new form MSI
      */
     public MSI() {
         initComponents();
-         // properties gui
+        // properties gui
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("MSI Module");
+    }
+
+    // Metodo para mostrar la cantidad de trabajadores actuales
+    private void initMSIValues() {
+        if (Home.getFactory1() != null) {
+            
+        }
+    }
+    
+    private void start() {
+        // Crear un nuevo hilo para el bucle infinito
+        Thread updateThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        // Ejecutar las actualizaciones de la GUI
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Variables placeholder de las actualizaciones de la GUI
+                                scriptDrive
+                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[0]));
+                                scenaryDrive
+                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[1]));
+                                animationDrive
+                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[2]));
+                                dubbingDrive
+                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[3]));
+                                plotTwistDrive
+                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[4]));
+                                assemblerDrive
+                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[5]));
+
+                                this.statusPM.setText(app.getCartoonNetwork().getProjectManagerInstance().getCurrentState());
+
+                                currentDeadline.setText(
+                                        String.valueOf(app.getCartoonNetwork().getRemainingDays()));
+
+                                totalDays.setText(String.valueOf(app.getCartoonNetwork().getTotalDays()));
+
+                                strikeCounter.setText(String
+                                        .valueOf(app.getCartoonNetwork().getProjectManagerInstance().getStrikes()));
+                                cashPenality.setText(String.valueOf(Integer.parseInt(strikeCounter.getText()) * 100));
+                                directorStatus.setText(app.getCartoonNetwork().getDirectorInstance().getStatus());
+
+                                totalChapters.setText(
+                                        String.valueOf(app.getCartoonNetwork().getNumChapters()));
+                                standardChapters.setText(
+                                        String.valueOf(app.getCartoonNetwork().getNumNormalChapters()));
+
+                                plotTwistChapters.setText(
+                                        String.valueOf(app.getCartoonNetwork().getNumChaptersWithPlotTwist()));
+
+                                standardChaptes2.setText(
+                                        String.valueOf(app.getCartoonNetwork().getActualNumNormalChapters())
+                                );
+                                plotTwistChapters2.setText(
+                                        String.valueOf(app.getCartoonNetwork().getActualNumChaptersWithPlotTwist())
+                                );
+
+                                standardChaptes1.setText(
+                                        String.valueOf(app.getCartoonNetwork().getLastNumNormalChapters())
+                                );
+                                plotTwistChapters1.setText(
+                                        String.valueOf(app.getCartoonNetwork().getLastNumChaptersWithPlotTwist())
+                                );
+
+                                profit.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning() -  (int) app.getCartoonNetwork().getTotalCost()));
+                                cost.setText(formatNumberAsK((int) app.getCartoonNetwork().getTotalCost()));
+                                earning.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning()));
+                                batchLastProfit.setText(
+                                        formatNumberAsK((int) app.getCartoonNetwork().getBatchLastProfit()));
+                            }
+                        });
+
+                        // Pausar el hilo separado, no el EDT
+                        Thread.sleep(app.getDayDuration() / 48);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+            }
+        });
+
+        // Iniciar el hilo
+        updateThread.start();
     }
 
     /**
@@ -43,7 +139,7 @@ public class MSI extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         penaltyPM = new javax.swing.JTextField();
-        statusPM = new javax.swing.JTextField();
+        statusProjectManager = new javax.swing.JTextField();
         infractionPM = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         statusDirector = new javax.swing.JTextField();
@@ -161,10 +257,10 @@ public class MSI extends javax.swing.JFrame {
         penaltyPM.setText("0");
         jPanel10.add(penaltyPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 90, -1));
 
-        statusPM.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        statusPM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        statusPM.setText("(En espera)");
-        jPanel10.add(statusPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 150, -1));
+        statusProjectManager.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        statusProjectManager.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        statusProjectManager.setText("(En espera)");
+        jPanel10.add(statusProjectManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 150, -1));
 
         infractionPM.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
         infractionPM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -744,7 +840,7 @@ public class MSI extends javax.swing.JFrame {
     private javax.swing.JTextField penaltyPM;
     private javax.swing.JLabel saveConfigBtn1;
     private javax.swing.JTextField statusDirector;
-    private javax.swing.JTextField statusPM;
+    private javax.swing.JTextField statusProjectManager;
     private javax.swing.JTextField totalProfitMSI;
     // End of variables declaration//GEN-END:variables
 }

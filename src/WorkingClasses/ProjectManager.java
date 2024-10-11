@@ -18,10 +18,10 @@ public class ProjectManager extends Thread {
     private int dayDuration;
     private int productionTime;
     private int penaltyCounter;
-    
+
     private Company company;
     private Warehouse wareHouse;
-    
+
     private static Semaphore penaltySemaphore = new Semaphore(1);
     private Semaphore dayCounterSemaphore; //semaforo para modificar el contador de dias restantes
 
@@ -41,16 +41,26 @@ public class ProjectManager extends Thread {
 
     @Override
     public void run() {
-        int hoursWorked = 0;
-        while (hoursWorked < 24) {
+        while (true) {
             try {
-                // Ciclo de 30 minutos viendo anime y 30 minutos trabajando
-                for (int i = 0; i < 16; i++) {
-                    this.watchAnime(); // Ver anime por 30 minutos
-                    this.work(); // Trabajar por 30 minutos
+                for (int i = 0; i <= 24; i++) {
+                    // Ciclo de 30 minutos viendo anime y 30 minutos trabajando
+                    if (i < 16){
+                        this.watchAnime(); // Ver anime por 30 minutos
+                        this.work(); // Trabajar por 30 minutos
+                    }
+                    
+                    if (i>16 && i<24){
+                        this.work();
+                        this.work();
+                    }
+                    
+                    if (i == 24){
+                        this.updateDaysCounter();
+                    }
+                    
                 }
                 // Trabaja las últimas 8 horas actualizando el contador de días
-                this.updateDaysCounter();
                 this.payMe();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -133,8 +143,8 @@ public class ProjectManager extends Thread {
     public Semaphore getDayCounterSemaphore() {
         return dayCounterSemaphore;
     }
-    
-    public void incrementPenaltyCounter() throws InterruptedException{
+
+    public void incrementPenaltyCounter() throws InterruptedException {
         this.getPenaltySemaphore().acquire();
         this.penaltyCounter += 100;
         this.getPenaltySemaphore().release();

@@ -25,11 +25,11 @@ public class Director extends Thread {
     private int totalRevenue; // Ganancias totales por las computadoras enviadas
     private static int SALARY_PER_HOUR = 60;
 
-    private final WareHouse wareHouse;
+    private final Warehouse wareHouse;
 
     private Random random = new Random();
 
-    public Director(ProjectManager pm, WareHouse wareHouse, int dayDuration, Company company) {
+    public Director(ProjectManager pm, Warehouse wareHouse, int dayDuration, Company company) {
         this.hasCheckedThePM = false;
 
         this.PM = pm;

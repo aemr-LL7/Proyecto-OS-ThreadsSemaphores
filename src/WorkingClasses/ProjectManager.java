@@ -18,22 +18,24 @@ public class ProjectManager extends Thread {
     private int dayDuration;
     private int productionTime;
     private int penaltyCounter;
-
+    
+    private Company company;
+    private Warehouse wareHouse;
+    
     private static Semaphore penaltySemaphore = new Semaphore(1);
     private Semaphore dayCounterSemaphore; //semaforo para modificar el contador de dias restantes
 
     private int accumulatedSalary;
 
-    private WareHouse wareHouse;
-
-    public ProjectManager(int daysTillShipement, Company company, int dayDuration, WareHouse wareHouse) {
+    public ProjectManager(int daysTillShipement, Company company, int dayDuration) {
         this.daysTillShipement = daysTillShipement;
         this.remainingDays = daysTillShipement;
         this.watchingAnime = false;
         this.dayDuration = dayDuration;
         this.accumulatedSalary = 0;
         this.productionTime = 1;
-
+        this.company = company;
+        this.wareHouse = company.getInventoryWareHouse();
         this.dayCounterSemaphore = this.wareHouse.getDaysRemainigSemaphore();
     }
 

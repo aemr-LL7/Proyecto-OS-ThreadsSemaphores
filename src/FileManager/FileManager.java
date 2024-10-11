@@ -7,7 +7,7 @@ package FileManager;
 import GUI.Home;
 import WorkingClasses.Company;
 import WorkingClasses.Factory;
-import WorkingClasses.WareHouse;
+import WorkingClasses.Warehouse;
 import WorkingClasses.Workers;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -113,7 +113,6 @@ public class FileManager {
 
             // Escribir la sección de HP
 //            Company hp = Home.getCompany0();
-
             writer.write("[HP]\n");
             writer.write("Motherboard=" + 1 + "\n");
             writer.write("CPU=" + 1 + "\n");
@@ -225,19 +224,23 @@ public class FileManager {
         // Se obtiene los datos del TXT
         int[] companyValues = this.getCompanyValues(company);
 
+        int priceByCompany;
+        if (company == 0) {
+            priceByCompany = 14000; // HP
+        } else {
+            priceByCompany = 180000; // MSI
+        }
+
         // Verificar que se hayan obtenido los valores correctamente
         if (companyValues.length != 7) {
             JOptionPane.showMessageDialog(null, "No se pudieron obtener todos los valores de la compañía.", "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
 
-        // Crear el almacen correspondiente
-        WareHouse warehouseInstance = new WareHouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
-        
-        Company companyInstance = new Company(
-                company == 0 ? "HP" : "MSI", // Nombre de la company
-                warehouseInstance
-        );  
+//        // Crear el almacen correspondiente
+        Warehouse warehouseInstance = new Warehouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
+
+        Company companyInstance = new Company(company == 0 ? "HP" : "MSI", priceByCompany);
 
         Factory factory = new Factory(
                 Home.getDuration(), // Duracion del día (por ejemplo, 1000 ms)
@@ -248,7 +251,7 @@ public class FileManager {
                 companyValues[4], // GPU workers
                 companyValues[5], // Assembly workers
                 companyInstance, // Instancia de la compañía
-                warehouseInstance // Almacen
+                Home.getDeadline() // Almacen
         );
 
         System.out.println(warehouseInstance.getCompany());

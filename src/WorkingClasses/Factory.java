@@ -27,7 +27,7 @@ public class Factory extends Thread {
 
     private Company company;
 
-    private WareHouse wareHouse;
+    private Warehouse wareHouse;
 
     public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, int daysTillShipement) {
         this.dayDuration = dayDuration;
@@ -41,7 +41,7 @@ public class Factory extends Thread {
         this.company = company;
         
         this.wareHouse = this.company.getInventoryWareHouse();
-        this.PM = new ProjectManager(this.daysTillShipement, this.company, this.dayDuration, this.wareHouse);
+        this.PM = new ProjectManager(this.daysTillShipement, this.company, this.dayDuration);
         this.director = new Director(this.PM, this.wareHouse, this.dayDuration, this.company);
 
         this.populateWorkers();

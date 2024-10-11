@@ -12,7 +12,7 @@ public class Company {
 
     private String companyName;
 
-    private WareHouse inventoryWareHouse;
+    private Warehouse inventoryWareHouse;
 
     private int brute;
     private int operationCost;
@@ -29,8 +29,9 @@ public class Company {
         this.netWins = 0;
     }
 
-    private WareHouse createWarehouse() {
-        return new WareHouse(this.companyName);
+    private Warehouse createWarehouse() {
+        Warehouse wa = new Warehouse(this.companyName);
+        return wa;
     }
 
     public void addBrute(int newGains) {
@@ -57,8 +58,8 @@ public class Company {
         this.operationCost = operationCost;
     }
 
-    public WareHouse getInventoryWareHouse() {
-        return inventoryWareHouse;
+    public Warehouse getInventoryWareHouse() {
+        return this.inventoryWareHouse;
     }
 
     public int getCOMPUTERPrice() {

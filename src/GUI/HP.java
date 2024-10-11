@@ -37,6 +37,76 @@ public class HP extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        decreaseMOBO2 = new javax.swing.JButton();
+        jTextField7 = new javax.swing.JTextField();
+        increaseMOBO2 = new javax.swing.JButton();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        decreaseCPU2 = new javax.swing.JButton();
+        jTextField8 = new javax.swing.JTextField();
+        increaseCPU2 = new javax.swing.JButton();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        decreaseRAM2 = new javax.swing.JButton();
+        jTextField9 = new javax.swing.JTextField();
+        increaseRAM2 = new javax.swing.JButton();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        decreasePSU2 = new javax.swing.JButton();
+        jTextField10 = new javax.swing.JTextField();
+        increasePSU2 = new javax.swing.JButton();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        decreaseGPU2 = new javax.swing.JButton();
+        jTextField11 = new javax.swing.JTextField();
+        increaseGPU2 = new javax.swing.JButton();
+        jPanel23 = new javax.swing.JPanel();
+        saveConfigBtn1 = new javax.swing.JLabel();
+        maxCapacityHP = new javax.swing.JTextField();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField13 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jTextField14 = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jTextField15 = new javax.swing.JTextField();
+        jTextField16 = new javax.swing.JTextField();
+        jTextField17 = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jTextField24 = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel25 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jTextField19 = new javax.swing.JTextField();
+        jPanel26 = new javax.swing.JPanel();
+        jTextField22 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
+        jTextField18 = new javax.swing.JTextField();
+        jPanel28 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jTextField20 = new javax.swing.JTextField();
+        jPanel29 = new javax.swing.JPanel();
+        jLabel31 = new javax.swing.JLabel();
+        jTextField21 = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        jPanel30 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        jTextField23 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -74,17 +144,397 @@ public class HP extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 650, 1200, 70));
 
         jPanel2.setBackground(new java.awt.Color(51, 88, 137));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-        );
+        jPanel12.setBackground(new java.awt.Color(222, 222, 242));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("HP Simplified", 1, 18)); // NOI18N
+        jLabel11.setText("Hewlett-Packard");
+        jPanel12.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 210, -1));
+
+        jLabel12.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel12.setText("Máximo:");
+        jPanel12.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 90, -1));
+
+        jPanel18.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel18.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel22.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Trabajador Placa Base:");
+        jPanel18.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        decreaseMOBO2.setBackground(new java.awt.Color(214, 125, 178));
+        decreaseMOBO2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        decreaseMOBO2.setForeground(new java.awt.Color(255, 255, 255));
+        decreaseMOBO2.setText("-");
+        decreaseMOBO2.setBorder(null);
+        decreaseMOBO2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel18.add(decreaseMOBO2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
+
+        jTextField7.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField7.setText("0");
+        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField7.setFocusable(false);
+        jPanel18.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+
+        increaseMOBO2.setBackground(new java.awt.Color(214, 125, 178));
+        increaseMOBO2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        increaseMOBO2.setForeground(new java.awt.Color(255, 255, 255));
+        increaseMOBO2.setText("+");
+        increaseMOBO2.setBorder(null);
+        increaseMOBO2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel18.add(increaseMOBO2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
+
+        jPanel12.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 350, 40));
+
+        jPanel19.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel23.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("Trabajador CPU:");
+        jPanel19.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        decreaseCPU2.setBackground(new java.awt.Color(214, 125, 178));
+        decreaseCPU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        decreaseCPU2.setForeground(new java.awt.Color(255, 255, 255));
+        decreaseCPU2.setText("-");
+        decreaseCPU2.setBorder(null);
+        decreaseCPU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel19.add(decreaseCPU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
+
+        jTextField8.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField8.setText("0");
+        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField8.setFocusable(false);
+        jPanel19.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+
+        increaseCPU2.setBackground(new java.awt.Color(214, 125, 178));
+        increaseCPU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        increaseCPU2.setForeground(new java.awt.Color(255, 255, 255));
+        increaseCPU2.setText("+");
+        increaseCPU2.setBorder(null);
+        increaseCPU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel19.add(increaseCPU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
+
+        jPanel12.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 350, 40));
+
+        jPanel20.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel24.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Trabajador RAM:");
+        jPanel20.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        decreaseRAM2.setBackground(new java.awt.Color(214, 125, 178));
+        decreaseRAM2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        decreaseRAM2.setForeground(new java.awt.Color(255, 255, 255));
+        decreaseRAM2.setText("-");
+        decreaseRAM2.setBorder(null);
+        decreaseRAM2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel20.add(decreaseRAM2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
+
+        jTextField9.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField9.setText("0");
+        jTextField9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField9.setFocusable(false);
+        jPanel20.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+
+        increaseRAM2.setBackground(new java.awt.Color(214, 125, 178));
+        increaseRAM2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        increaseRAM2.setForeground(new java.awt.Color(255, 255, 255));
+        increaseRAM2.setText("+");
+        increaseRAM2.setBorder(null);
+        increaseRAM2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel20.add(increaseRAM2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
+
+        jPanel12.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 350, 40));
+
+        jPanel21.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel25.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("Trabajador Fuente:");
+        jPanel21.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        decreasePSU2.setBackground(new java.awt.Color(214, 125, 178));
+        decreasePSU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        decreasePSU2.setForeground(new java.awt.Color(255, 255, 255));
+        decreasePSU2.setText("-");
+        decreasePSU2.setBorder(null);
+        decreasePSU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel21.add(decreasePSU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
+
+        jTextField10.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField10.setText("0");
+        jTextField10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField10.setFocusable(false);
+        jPanel21.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+
+        increasePSU2.setBackground(new java.awt.Color(214, 125, 178));
+        increasePSU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        increasePSU2.setForeground(new java.awt.Color(255, 255, 255));
+        increasePSU2.setText("+");
+        increasePSU2.setBorder(null);
+        increasePSU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel21.add(increasePSU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
+
+        jPanel12.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 350, 40));
+
+        jPanel22.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel26.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Trabajador Gráfica:");
+        jPanel22.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        decreaseGPU2.setBackground(new java.awt.Color(214, 125, 178));
+        decreaseGPU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        decreaseGPU2.setForeground(new java.awt.Color(255, 255, 255));
+        decreaseGPU2.setText("-");
+        decreaseGPU2.setBorder(null);
+        decreaseGPU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel22.add(decreaseGPU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
+
+        jTextField11.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField11.setText("0");
+        jTextField11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField11.setFocusable(false);
+        jPanel22.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+
+        increaseGPU2.setBackground(new java.awt.Color(214, 125, 178));
+        increaseGPU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        increaseGPU2.setForeground(new java.awt.Color(255, 255, 255));
+        increaseGPU2.setText("+");
+        increaseGPU2.setBorder(null);
+        increaseGPU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel22.add(increaseGPU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
+
+        jPanel12.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 350, 40));
+
+        jPanel23.setBackground(new java.awt.Color(122, 122, 220));
+        jPanel23.setBorder(javax.swing.BorderFactory.createEmptyBorder(45, 45, 45, 45));
+        jPanel23.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        saveConfigBtn1.setFont(new java.awt.Font("Lucida Bright", 1, 24)); // NOI18N
+        saveConfigBtn1.setForeground(new java.awt.Color(255, 255, 255));
+        saveConfigBtn1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        saveConfigBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/ribbon_icon.png"))); // NOI18N
+        saveConfigBtn1.setText(" Guardar");
+        saveConfigBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveConfigBtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveConfigBtn1MouseClicked(evt);
+            }
+        });
+        jPanel23.add(saveConfigBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 30));
+
+        jPanel12.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 180, 50));
+
+        maxCapacityHP.setBackground(new java.awt.Color(222, 222, 242));
+        maxCapacityHP.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        maxCapacityHP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        maxCapacityHP.setText("0");
+        jPanel12.add(maxCapacityHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 150, -1));
+
+        jPanel2.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 380, 460));
+
+        jPanel24.setBackground(new java.awt.Color(222, 222, 242));
+        jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setFont(new java.awt.Font("HP Simplified", 1, 18)); // NOI18N
+        jLabel8.setText("DIRECTOR");
+        jPanel24.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, -1));
+
+        jLabel10.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel10.setText("Penalizacion ($):");
+        jPanel24.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
+
+        jLabel13.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel13.setText("Estado:");
+        jPanel24.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, -1));
+
+        jLabel14.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel14.setText("Faltas:");
+        jPanel24.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, -1));
+
+        jTextField1.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("0");
+        jPanel24.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 90, -1));
+
+        jTextField13.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField13.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField13.setText("0");
+        jPanel24.add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 150, -1));
+
+        jLabel16.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel16.setText("Estado:");
+        jPanel24.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 90, -1));
+
+        jTextField14.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField14.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField14.setText("0");
+        jPanel24.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 150, -1));
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel18.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel18.setText("Ganancia neta: ");
+        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 140, -1));
+
+        jLabel19.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel19.setText("Costos operativos:");
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 170, -1));
+
+        jLabel20.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel20.setText("Ganancia bruta:");
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 140, -1));
+
+        jTextField15.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField15.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField15.setText("0");
+        jPanel4.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 150, -1));
+
+        jTextField16.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField16.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField16.setText("0");
+        jPanel4.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 150, -1));
+
+        jTextField17.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField17.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField17.setText("0");
+        jPanel4.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 150, -1));
+
+        jLabel21.setFont(new java.awt.Font("HP Simplified", 3, 19)); // NOI18N
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("COSTOS DE PRODUCCIÓN / GANANCIAS");
+        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 310, -1));
+
+        jPanel24.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 410, 460));
+
+        jLabel17.setFont(new java.awt.Font("HP Simplified", 3, 19)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Estado del PROJECT MANAGER");
+        jPanel24.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 250, -1));
+
+        jTextField24.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField24.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField24.setText("(En espera)");
+        jPanel24.add(jTextField24, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 150, -1));
+
+        jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 710, 320));
+
+        jPanel5.setBackground(new java.awt.Color(143, 126, 169));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel25.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel25.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel27.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Placa Base:");
+        jPanel25.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        jTextField19.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField19.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField19.setText("0");
+        jPanel25.add(jTextField19, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 110, -1));
+
+        jPanel5.add(jPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, 40));
+
+        jPanel26.setBackground(new java.awt.Color(171, 151, 220));
+        jPanel26.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField22.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField22.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField22.setText("(En espera)");
+        jPanel26.add(jTextField22, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 150, -1));
+
+        jLabel15.setFont(new java.awt.Font("HP Simplified", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("ESTADO ALMACÉN:");
+        jPanel26.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, -1));
+
+        jPanel5.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 320, 40));
+
+        jPanel27.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel27.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel29.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("RAM:");
+        jPanel27.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        jTextField18.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField18.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField18.setText("0");
+        jPanel27.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, -1));
+
+        jPanel5.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 260, 40));
+
+        jPanel28.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel28.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel30.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("Fuente:");
+        jPanel28.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        jTextField20.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField20.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField20.setText("0");
+        jPanel28.add(jTextField20, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 110, -1));
+
+        jPanel5.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, 40));
+
+        jPanel29.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel29.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel31.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setText("Tarjeta Gráfica");
+        jPanel29.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        jTextField21.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField21.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField21.setText("0");
+        jPanel29.add(jTextField21, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 110, -1));
+
+        jPanel5.add(jPanel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 280, 40));
+
+        jLabel32.setFont(new java.awt.Font("HP Simplified", 3, 19)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("DISPONIBILIDAD ACTUAL");
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 310, -1));
+
+        jPanel30.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel30.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel33.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("CPU:");
+        jPanel30.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        jTextField23.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        jTextField23.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField23.setText("0");
+        jPanel30.add(jTextField23, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, -1));
+
+        jPanel5.add(jPanel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 260, 40));
+
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 710, 260));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 1200, 650));
 
@@ -204,6 +654,10 @@ public class HP extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
+    private void saveConfigBtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveConfigBtn1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveConfigBtn1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -240,18 +694,88 @@ public class HP extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton decreaseCPU2;
+    private javax.swing.JButton decreaseGPU2;
+    private javax.swing.JButton decreaseMOBO2;
+    private javax.swing.JButton decreasePSU2;
+    private javax.swing.JButton decreaseRAM2;
     private javax.swing.JLabel exitBtn;
+    private javax.swing.JButton increaseCPU2;
+    private javax.swing.JButton increaseGPU2;
+    private javax.swing.JButton increaseMOBO2;
+    private javax.swing.JButton increasePSU2;
+    private javax.swing.JButton increaseRAM2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel30;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField13;
+    private javax.swing.JTextField jTextField14;
+    private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
+    private javax.swing.JTextField jTextField17;
+    private javax.swing.JTextField jTextField18;
+    private javax.swing.JTextField jTextField19;
+    private javax.swing.JTextField jTextField20;
+    private javax.swing.JTextField jTextField21;
+    private javax.swing.JTextField jTextField22;
+    private javax.swing.JTextField jTextField23;
+    private javax.swing.JTextField jTextField24;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField maxCapacityHP;
+    private javax.swing.JLabel saveConfigBtn1;
     // End of variables declaration//GEN-END:variables
 }

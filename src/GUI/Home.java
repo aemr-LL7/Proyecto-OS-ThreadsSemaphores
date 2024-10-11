@@ -58,10 +58,10 @@ public class Home extends javax.swing.JFrame {
 //        this.getFactory1().run();
 
         // Mostrar los valores asignados
-        System.out.println("Duration: " + this.getDuration());
-        System.out.println("Deadline: " + this.getDeadline());
-        System.out.println("Compañia instanciada: " + this.getFactory0().getName());
-        System.out.println("Compañia instanciada: " + this.getFactory1().getName());
+//        System.out.println("Duration: " + this.getDuration());
+//        System.out.println("Deadline: " + this.getDeadline());
+//        System.out.println("Compañia instanciada: " + this.getFactory0().getName());
+//        System.out.println("Compañia instanciada: " + this.getFactory1().getName());
 
         //GUI STUFF
         initComponents();

@@ -93,17 +93,17 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        totalProfitMSI = new javax.swing.JTextField();
+        costsMSI = new javax.swing.JTextField();
+        bruteProfitMSI = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        totalProfitHP = new javax.swing.JTextField();
+        costsHP = new javax.swing.JTextField();
+        bruteProfitHP = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -261,20 +261,20 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel15.setText("Ganancia Bruta:");
         jPanel9.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, 30));
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("0");
-        jPanel9.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 190, -1));
+        totalProfitMSI.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        totalProfitMSI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        totalProfitMSI.setText("0");
+        jPanel9.add(totalProfitMSI, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 190, -1));
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("0");
-        jPanel9.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 190, 30));
+        costsMSI.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        costsMSI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        costsMSI.setText("0");
+        jPanel9.add(costsMSI, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 190, 30));
 
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("0");
-        jPanel9.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 190, -1));
+        bruteProfitMSI.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        bruteProfitMSI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        bruteProfitMSI.setText("0");
+        jPanel9.add(bruteProfitMSI, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 190, -1));
 
         jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 270, 490, 190));
 
@@ -298,20 +298,20 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel22.setText("Ganancia Bruta:");
         jPanel11.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, 30));
 
-        jTextField6.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("0");
-        jPanel11.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 190, -1));
+        totalProfitHP.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        totalProfitHP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        totalProfitHP.setText("0");
+        jPanel11.add(totalProfitHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 190, -1));
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setText("0");
-        jPanel11.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 190, 30));
+        costsHP.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        costsHP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        costsHP.setText("0");
+        jPanel11.add(costsHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 190, 30));
 
-        jTextField8.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setText("0");
-        jPanel11.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 190, -1));
+        bruteProfitHP.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        bruteProfitHP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        bruteProfitHP.setText("0");
+        jPanel11.add(bruteProfitHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 190, -1));
 
         jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 490, 170));
 
@@ -419,7 +419,11 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField bruteProfitHP;
+    private javax.swing.JTextField bruteProfitMSI;
     private javax.swing.JPanel chartPanelVisual;
+    private javax.swing.JTextField costsHP;
+    private javax.swing.JTextField costsMSI;
     private javax.swing.JLabel exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -451,11 +455,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField totalProfitHP;
+    private javax.swing.JTextField totalProfitMSI;
     // End of variables declaration//GEN-END:variables
 }

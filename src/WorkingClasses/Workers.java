@@ -19,7 +19,7 @@ public class Workers extends Thread {
     private int productionTime; // Tiempo necesario para producir un componente (en días)
     private WareHouse wareHouse; //Almacen de la compania
     private Semaphore storageSemaphore; // Semaforo para controlar el acceso al almacén
-    private Semaphore paymentSemaphore;
+    private Semaphore paymentSemaphore; //semaforo para registrar costos
     private int dayDuration;
 
     public Workers(int type, WareHouse wareHouse, int dayDuration) {

@@ -11,29 +11,32 @@ package WorkingClasses;
 public class Company {
 
     private String companyName;
-    
+
     private WareHouse inventoryWareHouse;
-    
+
     private int brute;
     private int operationCost;
     private int netWins;
-    
 
     private int COMPUTERPrice;
 
-    public Company(String companyName, WareHouse inventoryWareHouse, int COMPUTERPRICE) {
+    public Company(String companyName, int COMPUTERPRICE) {
         this.companyName = companyName;
-        this.inventoryWareHouse = inventoryWareHouse;
+        this.inventoryWareHouse = this.createWarehouse();
         this.operationCost = 0;
         this.brute = 0;
         this.COMPUTERPrice = COMPUTERPRICE;
         this.netWins = 0;
     }
-    
-    public void addBrute(int newGains){
+
+    private WareHouse createWarehouse() {
+        return new WareHouse(this.companyName);
+    }
+
+    public void addBrute(int newGains) {
         this.brute += newGains;
     }
-    
+
     public void addOperationCost(int cost) {
         this.operationCost += cost;
     }
@@ -66,4 +69,6 @@ public class Company {
         this.netWins = (this.brute - this.operationCost);//No necesitamos mutex porque el unico hilo que modifica esto es factory
     }
     
+    
+
 }

@@ -15,6 +15,8 @@ import javax.swing.SwingUtilities;
  */
 public class MSI extends javax.swing.JFrame {
 
+    private int duration;
+    private int deadline;
     private int maxWorkers;
     private int actualWorkers;
     private File selectedFile = Home.getSelectedFile();
@@ -30,15 +32,18 @@ public class MSI extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("MSI Module");
+        this.initMSIValues();
+        this.start();
     }
 
     // Metodo para mostrar la cantidad de trabajadores actuales
     private void initMSIValues() {
         if (Home.getFactory1() != null) {
-            
+            this.duration = (int) Home.getDuration() / 1000;
+            this.deadline = Home.getDeadline();
         }
     }
-    
+
     private void start() {
         // Crear un nuevo hilo para el bucle infinito
         Thread updateThread = new Thread(new Runnable() {
@@ -46,68 +51,43 @@ public class MSI extends javax.swing.JFrame {
             public void run() {
                 while (true) {
                     try {
-                        // Ejecutar las actualizaciones de la GUI
+                        // Ejecutar las actualizaciones de la UI en el EDT
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
+
+//                                System.out.println("===================================================== Buenas simulacion ");
                                 // Variables placeholder de las actualizaciones de la GUI
-                                scriptDrive
-                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[0]));
-                                scenaryDrive
-                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[1]));
-                                animationDrive
-                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[2]));
-                                dubbingDrive
-                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[3]));
-                                plotTwistDrive
-                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[4]));
-                                assemblerDrive
-                                        .setText(String.valueOf(app.getCartoonNetwork().getDrive().getSections()[5]));
+                                //
+                                // Estados del PM
+                                if (Home.getFactory1().getPM().isWatchingAnime() == true) {
+                                    statusProjectManager.setText("Project Manager esta viendo anime...");
+                                } else {
+                                    statusProjectManager.setText("Trabajando!");
+                                }
+                                currentDay.setText(String.valueOf(Home.getFactory1().getPM().getRemainingDays()));
+                                currentDeadline.setText(String.valueOf(Home.getFactory1().getPM().getDaysTillShipement()));
+                                infractionPM.setText(String
+                                        .valueOf(Home.getFactory1().getPM().getPenaltyCounter() / 100));
+                                penaltyPM.setText(String.valueOf(Home.getFactory1().getPM().getPenaltyCounter()));
+                                // Director
+                                statusDirector.setText(Home.getFactory1().getDirector().getStatus());
+                                // Cantidades del almacen
+                                MOBO_QTY.setText(String.valueOf(Home.getFactory1().getWareHouse().getMOBO_Count()));
+                                CPU_QTY.setText(String.valueOf(Home.getFactory1().getWareHouse().getCPU_Count()));
+                                RAM_QTY.setText(String.valueOf(Home.getFactory1().getWareHouse().getRAM_Count()));
+                                PSU_QTY.setText(String.valueOf(Home.getFactory1().getWareHouse().getPSU_Count()));
+                                GPU_QTY.setText(String.valueOf(Home.getFactory1().getWareHouse().getGPU_Count()));
+                                // Ganacias - produccion
+                                costsMSI.setText(String.valueOf((Home.getFactory1().getCompany().getOperationCost())));
+                                bruteProfitMSI.setText(String.valueOf((Home.getFactory1().getCompany().getBrute())));
+                                totalProfitMSI1.setText(String.valueOf((Home.getFactory1().getCompany().getNetWins())));
 
-                                this.statusPM.setText(app.getCartoonNetwork().getProjectManagerInstance().getCurrentState());
-
-                                currentDeadline.setText(
-                                        String.valueOf(app.getCartoonNetwork().getRemainingDays()));
-
-                                totalDays.setText(String.valueOf(app.getCartoonNetwork().getTotalDays()));
-
-                                strikeCounter.setText(String
-                                        .valueOf(app.getCartoonNetwork().getProjectManagerInstance().getStrikes()));
-                                cashPenality.setText(String.valueOf(Integer.parseInt(strikeCounter.getText()) * 100));
-                                directorStatus.setText(app.getCartoonNetwork().getDirectorInstance().getStatus());
-
-                                totalChapters.setText(
-                                        String.valueOf(app.getCartoonNetwork().getNumChapters()));
-                                standardChapters.setText(
-                                        String.valueOf(app.getCartoonNetwork().getNumNormalChapters()));
-
-                                plotTwistChapters.setText(
-                                        String.valueOf(app.getCartoonNetwork().getNumChaptersWithPlotTwist()));
-
-                                standardChaptes2.setText(
-                                        String.valueOf(app.getCartoonNetwork().getActualNumNormalChapters())
-                                );
-                                plotTwistChapters2.setText(
-                                        String.valueOf(app.getCartoonNetwork().getActualNumChaptersWithPlotTwist())
-                                );
-
-                                standardChaptes1.setText(
-                                        String.valueOf(app.getCartoonNetwork().getLastNumNormalChapters())
-                                );
-                                plotTwistChapters1.setText(
-                                        String.valueOf(app.getCartoonNetwork().getLastNumChaptersWithPlotTwist())
-                                );
-
-                                profit.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning() -  (int) app.getCartoonNetwork().getTotalCost()));
-                                cost.setText(formatNumberAsK((int) app.getCartoonNetwork().getTotalCost()));
-                                earning.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning()));
-                                batchLastProfit.setText(
-                                        formatNumberAsK((int) app.getCartoonNetwork().getBatchLastProfit()));
                             }
                         });
 
                         // Pausar el hilo separado, no el EDT
-                        Thread.sleep(app.getDayDuration() / 48);
+                        Thread.sleep(Home.getDuration() / 48);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                         break;
@@ -147,10 +127,14 @@ public class MSI extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        totalProfitMSI = new javax.swing.JTextField();
+        currentDeadline = new javax.swing.JTextField();
         bruteProfitMSI = new javax.swing.JTextField();
         costsMSI = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabelDay = new javax.swing.JLabel();
+        totalProfitMSI1 = new javax.swing.JTextField();
+        currentDay = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -287,13 +271,13 @@ public class MSI extends javax.swing.JFrame {
         jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 170, -1));
 
         jLabel20.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
-        jLabel20.setText("Ganancia bruta:");
-        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 140, -1));
+        jLabel20.setText("Dias para la entrega:");
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 170, -1));
 
-        totalProfitMSI.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        totalProfitMSI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        totalProfitMSI.setText("0");
-        jPanel4.add(totalProfitMSI, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 150, -1));
+        currentDeadline.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        currentDeadline.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        currentDeadline.setText("0");
+        jPanel4.add(currentDeadline, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 50, -1));
 
         bruteProfitMSI.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
         bruteProfitMSI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -309,6 +293,24 @@ public class MSI extends javax.swing.JFrame {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("COSTOS DE PRODUCCIÓN / GANANCIAS");
         jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 310, -1));
+
+        jLabel28.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel28.setText("Ganancia bruta:");
+        jPanel4.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 140, -1));
+
+        jLabelDay.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabelDay.setText("Dia:");
+        jPanel4.add(jLabelDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 50, -1));
+
+        totalProfitMSI1.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        totalProfitMSI1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        totalProfitMSI1.setText("0");
+        jPanel4.add(totalProfitMSI1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 150, -1));
+
+        currentDay.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        currentDay.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        currentDay.setText("0");
+        jPanel4.add(currentDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 50, -1));
 
         jPanel10.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 410, 460));
 
@@ -769,6 +771,8 @@ public class MSI extends javax.swing.JFrame {
     private javax.swing.JTextField RAM_QTY;
     private javax.swing.JTextField bruteProfitMSI;
     private javax.swing.JTextField costsMSI;
+    private javax.swing.JTextField currentDay;
+    private javax.swing.JTextField currentDeadline;
     private javax.swing.JButton decreaseCPU2;
     private javax.swing.JButton decreaseGPU2;
     private javax.swing.JButton decreaseMOBO2;
@@ -800,6 +804,7 @@ public class MSI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -809,6 +814,7 @@ public class MSI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelDay;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
@@ -841,6 +847,6 @@ public class MSI extends javax.swing.JFrame {
     private javax.swing.JLabel saveConfigBtn1;
     private javax.swing.JTextField statusDirector;
     private javax.swing.JTextField statusProjectManager;
-    private javax.swing.JTextField totalProfitMSI;
+    private javax.swing.JTextField totalProfitMSI1;
     // End of variables declaration//GEN-END:variables
 }

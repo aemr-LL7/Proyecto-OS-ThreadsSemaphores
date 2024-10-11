@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 public class Home extends javax.swing.JFrame {
 
     private static Home home_main;
-    
+
     // General params
     private static int duration;
     private static int deadline;
@@ -51,12 +51,12 @@ public class Home extends javax.swing.JFrame {
         // Leer data.txt en .saved (raiz del proyecto)
         this.fileManager.savedDirectoryExists();
         this.fileManager.loadParamsFromTxt();
-//        chartManager = new ChartManager();
-        
+
         // INICIAR SIMULACION
         this.getFactory0().start();
-//        this.getFactory1().run();
-
+        this.getFactory1().start();
+        chartManager = new ChartManager();
+        
         // Mostrar los valores asignados
 //        System.out.println("Duration: " + this.getDuration());
 //        System.out.println("Deadline: " + this.getDeadline());

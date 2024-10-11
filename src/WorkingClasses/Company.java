@@ -69,6 +69,14 @@ public class Company {
     void calculateNetWins() {
         this.netWins = (this.brute - this.operationCost);//No necesitamos mutex porque el unico hilo que modifica esto es factory
     }
+
+    public int getBrute() {
+        return brute;
+    }
+
+    public int getNetWins() {
+        return netWins;
+    }
     
     
 

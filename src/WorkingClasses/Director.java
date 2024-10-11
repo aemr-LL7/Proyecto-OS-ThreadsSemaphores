@@ -32,6 +32,7 @@ public class Director extends Thread {
     public Director(ProjectManager pm, Warehouse wareHouse, int dayDuration, Company company) {
         this.hasCheckedThePM = false;
 
+        this.status = "Administrating";
         this.PM = pm;
         this.company = company;
         this.COMPUTER_PRICE = company.getCOMPUTERPrice();
@@ -49,6 +50,7 @@ public class Director extends Thread {
             this.status = "Administrating";
             try {
                 for (int i = 0; i < 24; i++) {
+                    
                     this.hasCheckedThePM = false;
                     if (this.getPm().getRemainingDays() == 0) {
                         Thread.sleep(this.dayDuration / 24);
@@ -66,11 +68,13 @@ public class Director extends Thread {
                         this.status = "Checking PM";
                         Thread.sleep((long) ((this.dayDuration / 24) * 0.58));//35/60 == 0.58 como estamos dividiendo el dia en horas, podemos usar este calculo
                         this.checkProjectManager();
-                        this.status = "Administraring";
+                        
 
                     } else {
                         this.status = "Administrating";
                     }
+                    
+                    this.status = "Administraring";
                 }
 
                 this.payMe();
@@ -104,15 +108,15 @@ public class Director extends Thread {
     // Metodo para revisar al PM
     private void checkProjectManager() throws InterruptedException {
         if (!this.hasCheckedThePM) {
-            System.out.println("Director esta revisando al Project Manager...");
+//            System.out.println("Director esta revisando al Project Manager...");
             // Verificar si el PM esta viendo anime
             if (this.PM.isWatchingAnime()) {
-                System.out.println("¡Falta! El PM fue descubierto viendo anime!");
+//                System.out.println("¡Falta! El PM fue descubierto viendo anime!");
                 this.hasCheckedThePM = true;
                 this.PM.incrementPenaltyCounter();
                 this.status = "Administrating";
             } else {
-                System.out.println("El PM esta trabajando correctamente");
+//                System.out.println("El PM esta trabajando correctamente");
             }
         }
     }
@@ -170,6 +174,10 @@ public class Director extends Thread {
         int payment = (24 * 60);
         this.wareHouse.addCost(payment);
         this.wareHouse.getPaymentSemaphore().release();
+    }
+
+    public String getStatus() {
+        return status;
     }
 
 }

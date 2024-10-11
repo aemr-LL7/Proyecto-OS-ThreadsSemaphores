@@ -1,6 +1,6 @@
 [General Params]
-Duration=500
-Deadline=25
+Duration=1000
+Deadline=5
 
 [HP]
 Motherboard=1

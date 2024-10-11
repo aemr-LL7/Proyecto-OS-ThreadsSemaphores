@@ -4,7 +4,10 @@
  */
 package GUI;
 
+import FileManager.FileManager;
+import java.io.File;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -12,16 +15,89 @@ import javax.swing.JFrame;
  */
 public class HP extends javax.swing.JFrame {
 
+    private int duration;
+    private int deadline;
+    private int maxWorkers;
+    private int actualWorkers;
+    private File selectedFile = Home.getSelectedFile();
+    private FileManager fileManager = new FileManager();
+
     /**
      * Creates new form HP
      */
     public HP() {
         initComponents();
-         // properties gui
+        // properties gui
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("HP Module");
+        this.initHPValues();
+        this.start();
+    }
+
+    // Metodo para mostrar la cantidad de trabajadores actuales
+    private void initHPValues() {
+        if (Home.getFactory0() != null) {
+            this.duration = (int) Home.getDuration() / 1000;
+            this.deadline = Home.getDeadline();
+        }
+    }
+
+    private void start() {
+        // Crear un nuevo hilo para el bucle infinito
+        Thread updateThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        // Ejecutar las actualizaciones de la UI en el EDT
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+
+//                                System.out.println("===================================================== Buenas simulacion ");
+                                // Variables placeholder de las actualizaciones de la GUI
+                                //
+                                // Estados del PM
+                                if (Home.getFactory0().getPM().isWatchingAnime() == true) {
+                                    statusProjectManager.setText("Project Manager esta viendo anime...");
+                                } else {
+                                    statusProjectManager.setText("Trabajando!");
+                                }
+                                currentDay.setText(String.valueOf(Home.getFactory0().getPM().getRemainingDays()));
+                                currentDeadline.setText(String.valueOf(Home.getFactory0().getPM().getDaysTillShipement()));
+                                infractionPM.setText(String
+                                        .valueOf(Home.getFactory0().getPM().getPenaltyCounter() / 100));
+                                penaltyPM.setText(String.valueOf(Home.getFactory0().getPM().getPenaltyCounter()));
+                                // Director
+                                statusDirector.setText(Home.getFactory0().getDirector().getStatus());
+                                // Cantidades del almacen
+                                MOBO_QTY.setText(String.valueOf(Home.getFactory0().getWareHouse().getMOBO_Count()));
+                                CPU_QTY.setText(String.valueOf(Home.getFactory0().getWareHouse().getCPU_Count()));
+                                RAM_QTY.setText(String.valueOf(Home.getFactory0().getWareHouse().getRAM_Count()));
+                                PSU_QTY.setText(String.valueOf(Home.getFactory0().getWareHouse().getPSU_Count()));
+                                GPU_QTY.setText(String.valueOf(Home.getFactory0().getWareHouse().getGPU_Count()));
+                                // Ganacias - produccion
+                                costsMSI.setText(String.valueOf((Home.getFactory0().getCompany().getOperationCost())));
+                                bruteProfitMSI.setText(String.valueOf((Home.getFactory0().getCompany().getBrute())));
+                                totalProfitMSI1.setText(String.valueOf((Home.getFactory0().getCompany().getNetWins())));
+
+                            }
+                        });
+
+                        // Pausar el hilo separado, no el EDT
+                        Thread.sleep(Home.getDuration() / 48);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+            }
+        });
+
+        // Iniciar el hilo
+        updateThread.start();
     }
 
     /**
@@ -68,12 +144,13 @@ public class HP extends javax.swing.JFrame {
         jPanel23 = new javax.swing.JPanel();
         saveConfigBtn1 = new javax.swing.JLabel();
         maxCapacityHP = new javax.swing.JTextField();
-        jPanel24 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         penaltyPM = new javax.swing.JTextField();
+        statusProjectManager = new javax.swing.JTextField();
         infractionPM = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         statusDirector = new javax.swing.JTextField();
@@ -81,29 +158,32 @@ public class HP extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        totalProfitHP = new javax.swing.JTextField();
-        bruteProfitHP = new javax.swing.JTextField();
-        costsHP = new javax.swing.JTextField();
+        currentDeadline = new javax.swing.JTextField();
+        bruteProfitMSI = new javax.swing.JTextField();
+        costsMSI = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabelDay = new javax.swing.JLabel();
+        totalProfitMSI1 = new javax.swing.JTextField();
+        currentDay = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        statusPM = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jPanel25 = new javax.swing.JPanel();
+        jPanel24 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
-        jTextField19 = new javax.swing.JTextField();
-        jPanel27 = new javax.swing.JPanel();
+        MOBO_QTY = new javax.swing.JTextField();
+        jPanel26 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
-        jTextField18 = new javax.swing.JTextField();
-        jPanel28 = new javax.swing.JPanel();
+        RAM_QTY = new javax.swing.JTextField();
+        jPanel27 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
-        jTextField20 = new javax.swing.JTextField();
-        jPanel29 = new javax.swing.JPanel();
+        PSU_QTY = new javax.swing.JTextField();
+        jPanel28 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
-        jTextField21 = new javax.swing.JTextField();
+        GPU_QTY = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        jPanel30 = new javax.swing.JPanel();
+        jPanel29 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
-        jTextField23 = new javax.swing.JTextField();
+        CPU_QTY = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -346,43 +426,48 @@ public class HP extends javax.swing.JFrame {
 
         jPanel2.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 380, 460));
 
-        jPanel24.setBackground(new java.awt.Color(222, 222, 242));
-        jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel11.setBackground(new java.awt.Color(222, 222, 242));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("HP Simplified", 1, 18)); // NOI18N
         jLabel8.setText("DIRECTOR");
-        jPanel24.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, -1));
+        jPanel11.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 250, -1));
 
         jLabel10.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
         jLabel10.setText("Penalizacion ($):");
-        jPanel24.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
+        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, -1));
 
         jLabel13.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
         jLabel13.setText("Estado:");
-        jPanel24.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, -1));
+        jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, -1));
 
         jLabel14.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
         jLabel14.setText("Faltas:");
-        jPanel24.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, -1));
+        jPanel11.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, -1));
 
         penaltyPM.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
         penaltyPM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         penaltyPM.setText("0");
-        jPanel24.add(penaltyPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 90, -1));
+        jPanel11.add(penaltyPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 90, -1));
+
+        statusProjectManager.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        statusProjectManager.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        statusProjectManager.setText("(En espera)");
+        jPanel11.add(statusProjectManager, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 150, -1));
 
         infractionPM.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
         infractionPM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         infractionPM.setText("0");
-        jPanel24.add(infractionPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 150, -1));
+        jPanel11.add(infractionPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 150, -1));
 
         jLabel16.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
         jLabel16.setText("Estado:");
-        jPanel24.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 90, -1));
+        jPanel11.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 90, -1));
 
         statusDirector.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
         statusDirector.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         statusDirector.setText("0");
-        jPanel24.add(statusDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 150, -1));
+        jPanel11.add(statusDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 150, -1));
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -395,126 +480,139 @@ public class HP extends javax.swing.JFrame {
         jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 170, -1));
 
         jLabel20.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
-        jLabel20.setText("Ganancia bruta:");
-        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 140, -1));
+        jLabel20.setText("Dias para la entrega:");
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 170, -1));
 
-        totalProfitHP.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        totalProfitHP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        totalProfitHP.setText("0");
-        jPanel4.add(totalProfitHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 150, -1));
+        currentDeadline.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        currentDeadline.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        currentDeadline.setText("0");
+        jPanel4.add(currentDeadline, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 50, -1));
 
-        bruteProfitHP.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        bruteProfitHP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        bruteProfitHP.setText("0");
-        jPanel4.add(bruteProfitHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 150, -1));
+        bruteProfitMSI.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        bruteProfitMSI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        bruteProfitMSI.setText("0");
+        jPanel4.add(bruteProfitMSI, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 150, -1));
 
-        costsHP.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        costsHP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        costsHP.setText("0");
-        jPanel4.add(costsHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 150, -1));
+        costsMSI.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        costsMSI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        costsMSI.setText("0");
+        jPanel4.add(costsMSI, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 150, -1));
 
         jLabel21.setFont(new java.awt.Font("HP Simplified", 3, 19)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("COSTOS DE PRODUCCIÓN / GANANCIAS");
         jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 310, -1));
 
-        jPanel24.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 410, 460));
+        jLabel28.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel28.setText("Ganancia bruta:");
+        jPanel4.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 140, -1));
+
+        jLabelDay.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabelDay.setText("Dia:");
+        jPanel4.add(jLabelDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 50, -1));
+
+        totalProfitMSI1.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        totalProfitMSI1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        totalProfitMSI1.setText("0");
+        jPanel4.add(totalProfitMSI1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 150, -1));
+
+        currentDay.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        currentDay.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        currentDay.setText("0");
+        jPanel4.add(currentDay, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 50, -1));
+
+        jPanel11.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 410, 460));
 
         jLabel17.setFont(new java.awt.Font("HP Simplified", 3, 19)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Estado del PROJECT MANAGER");
-        jPanel24.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 250, -1));
+        jPanel11.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 250, -1));
 
-        statusPM.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        statusPM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        statusPM.setText("(En espera)");
-        jPanel24.add(statusPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 150, -1));
-
-        jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 710, 320));
+        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 710, 320));
 
         jPanel5.setBackground(new java.awt.Color(143, 126, 169));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel25.setBackground(new java.awt.Color(109, 86, 164));
-        jPanel25.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel24.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel27.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setText("Placa Base:");
-        jPanel25.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+        jPanel24.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        jTextField19.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        jTextField19.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField19.setText("0");
-        jPanel25.add(jTextField19, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 110, -1));
+        MOBO_QTY.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        MOBO_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        MOBO_QTY.setText("0");
+        jPanel24.add(MOBO_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 110, -1));
 
-        jPanel5.add(jPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, 40));
+        jPanel5.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 280, 40));
 
-        jPanel27.setBackground(new java.awt.Color(109, 86, 164));
-        jPanel27.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel26.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel26.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel29.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setText("RAM:");
-        jPanel27.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+        jPanel26.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        jTextField18.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        jTextField18.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField18.setText("0");
-        jPanel27.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, -1));
+        RAM_QTY.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        RAM_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        RAM_QTY.setText("0");
+        jPanel26.add(RAM_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, -1));
 
-        jPanel5.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 260, 40));
+        jPanel5.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 260, 40));
 
-        jPanel28.setBackground(new java.awt.Color(109, 86, 164));
-        jPanel28.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel27.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel27.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel30.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setText("Fuente:");
-        jPanel28.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+        jPanel27.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        jTextField20.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        jTextField20.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField20.setText("0");
-        jPanel28.add(jTextField20, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 110, -1));
+        PSU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        PSU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        PSU_QTY.setText("0");
+        jPanel27.add(PSU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 110, -1));
 
-        jPanel5.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, 40));
+        jPanel5.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, 40));
 
-        jPanel29.setBackground(new java.awt.Color(109, 86, 164));
-        jPanel29.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel28.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel28.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel31.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("Tarjeta Gráfica");
-        jPanel29.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+        jPanel28.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        jTextField21.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        jTextField21.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField21.setText("0");
-        jPanel29.add(jTextField21, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 110, -1));
+        GPU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        GPU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        GPU_QTY.setText("0");
+        jPanel28.add(GPU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 110, -1));
 
-        jPanel5.add(jPanel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 280, 40));
+        jPanel5.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 280, 40));
 
         jLabel32.setFont(new java.awt.Font("HP Simplified", 3, 19)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(255, 255, 255));
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setText("DISPONIBILIDAD ACTUAL");
-        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 310, -1));
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 210, -1));
 
-        jPanel30.setBackground(new java.awt.Color(109, 86, 164));
-        jPanel30.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel29.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel29.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel33.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(255, 255, 255));
         jLabel33.setText("CPU:");
-        jPanel30.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+        jPanel29.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        jTextField23.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
-        jTextField23.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField23.setText("0");
-        jPanel30.add(jTextField23, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, -1));
+        CPU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 13)); // NOI18N
+        CPU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        CPU_QTY.setText("0");
+        jPanel29.add(CPU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, -1));
 
-        jPanel5.add(jPanel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 260, 40));
+        jPanel5.add(jPanel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 260, 40));
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 710, 260));
 
@@ -676,8 +774,15 @@ public class HP extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField bruteProfitHP;
-    private javax.swing.JTextField costsHP;
+    private javax.swing.JTextField CPU_QTY;
+    private javax.swing.JTextField GPU_QTY;
+    private javax.swing.JTextField MOBO_QTY;
+    private javax.swing.JTextField PSU_QTY;
+    private javax.swing.JTextField RAM_QTY;
+    private javax.swing.JTextField bruteProfitMSI;
+    private javax.swing.JTextField costsMSI;
+    private javax.swing.JTextField currentDay;
+    private javax.swing.JTextField currentDeadline;
     private javax.swing.JButton decreaseCPU2;
     private javax.swing.JButton decreaseGPU2;
     private javax.swing.JButton decreaseMOBO2;
@@ -709,6 +814,7 @@ public class HP extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -718,8 +824,10 @@ public class HP extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelDay;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
@@ -729,12 +837,11 @@ public class HP extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
-    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -742,11 +849,6 @@ public class HP extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
@@ -754,7 +856,7 @@ public class HP extends javax.swing.JFrame {
     private javax.swing.JTextField penaltyPM;
     private javax.swing.JLabel saveConfigBtn1;
     private javax.swing.JTextField statusDirector;
-    private javax.swing.JTextField statusPM;
-    private javax.swing.JTextField totalProfitHP;
+    private javax.swing.JTextField statusProjectManager;
+    private javax.swing.JTextField totalProfitMSI1;
     // End of variables declaration//GEN-END:variables
 }

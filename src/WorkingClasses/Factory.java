@@ -130,4 +130,31 @@ public class Factory extends Thread {
             }
         }
     }
+
+    public ProjectManager getPM() {
+        return PM;
+    }
+
+    public int getDaysTillShipement() {
+        return daysTillShipement;
+    }
+
+    public int getDayDuration() {
+        return dayDuration;
+    }
+
+    public Director getDirector() {
+        return director;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public Warehouse getWareHouse() {
+        return wareHouse;
+    }
+    
+    
+    
 }

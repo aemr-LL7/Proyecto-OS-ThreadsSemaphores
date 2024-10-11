@@ -17,7 +17,8 @@ import org.jfree.data.xy.XYSeries;
 public class Dashboard extends javax.swing.JFrame {
 
     private static Dashboard instanceDashboard;
-
+    private final Home homeInstance = Home.getHomeInstance();
+    
     private Point initialClick;
     private XYSeries SERIES_HP;
     private XYSeries SERIES_MSI;
@@ -33,14 +34,13 @@ public class Dashboard extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Dashboard");
-        
-    }
-    
-    private void validateChart(){
+
+        //
         this.chartPanelVisual.setLayout(new java.awt.BorderLayout());
-        this.chartPanelVisual.add(Home.getChartManager().getChartPanel(), java.awt.BorderLayout.CENTER);
+        this.chartPanelVisual.add(homeInstance.getChartManager().getChartPanel(), java.awt.BorderLayout.CENTER);
         this.chartPanelVisual.validate();
         this.getStarted();
+
     }
 
     public static synchronized Dashboard getDashBoardInstance() {
@@ -55,7 +55,6 @@ public class Dashboard extends javax.swing.JFrame {
             @Override
             public void run() {
                 //
-<<<<<<< HEAD
                 while (true) {
                     try {
                         // Ejecutar las actualizaciones de la UI en el EDT
@@ -73,7 +72,6 @@ public class Dashboard extends javax.swing.JFrame {
 //
 //                                totalDays.setText(String.valueOf(app.getCartoonNetwork().getTotalDays()));
 //                                currentDeadline.setText(String.valueOf(app.getCartoonNetwork().getRemainingDays()));
-
                             }
                         });
 
@@ -83,9 +81,6 @@ public class Dashboard extends javax.swing.JFrame {
                         break;
                     }
                 }
-=======
-                
->>>>>>> d7167de1d535c803337987c481d308575d0b4453
             }
         });
 

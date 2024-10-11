@@ -53,7 +53,6 @@ public class Workers extends Thread {
             case 5: // ensamblador
                 this.salaryPerHour = 50;
                 this.productionTime = 2;
-                System.out.println("Heyy soy ensamblador de mips");
                 break;
             default:
                 throw new IllegalArgumentException("Tipo de trabajador no valido");
@@ -99,17 +98,25 @@ public class Workers extends Thread {
 
         if (this.tipe == 5) {
             // Intentar acceder al almacen (usando el semaforo)
-            if (this.wareHouse.isReadyForPcConstruction()) {
 
+            if (this.wareHouse.getCompany().equals("MSI") && this.wareHouse.getMOBO_Count() > 2 && this.wareHouse.getCPU_Count() > 3 && this.wareHouse.getRAM_Count() > 4 && this.wareHouse.getPSU_Count() > 6) {
                 this.wareHouse.decrementCounterByType(0);
                 this.wareHouse.decrementCounterByType(1);
                 this.wareHouse.decrementCounterByType(2);
                 this.wareHouse.decrementCounterByType(3);
                 this.wareHouse.decrementCounterByType(4);
                 this.wareHouse.decrementCounterByType(5);
-
-                this.wareHouse.addComputer();
+            } else if (this.wareHouse.getCompany().equals("HP") && this.wareHouse.getMOBO_Count() > 1 && this.wareHouse.getCPU_Count() > 1 && this.wareHouse.getRAM_Count() > 2 && this.wareHouse.getPSU_Count() > 4) {
+                this.wareHouse.decrementCounterByType(0);
+                this.wareHouse.decrementCounterByType(1);
+                this.wareHouse.decrementCounterByType(2);
+                this.wareHouse.decrementCounterByType(3);
+                this.wareHouse.decrementCounterByType(4);
+                this.wareHouse.decrementCounterByType(5);
             }
+
+            this.wareHouse.addComputer();
+
         } else {
             System.out.println("No se pudo ensamblar computadora");
         }

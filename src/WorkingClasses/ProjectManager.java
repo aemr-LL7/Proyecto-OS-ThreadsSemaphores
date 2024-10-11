@@ -33,6 +33,7 @@ public class ProjectManager extends Thread {
         this.watchingAnime = false;
         this.dayDuration = dayDuration;
         this.accumulatedSalary = 0;
+        this.penaltyCounter = 0;
         this.productionTime = 1;
         this.company = company;
         this.wareHouse = company.getInventoryWareHouse();
@@ -153,5 +154,36 @@ public class ProjectManager extends Thread {
     public void resetDayCount() {
         this.remainingDays = this.daysTillShipement;
     }
+
+    public int getDaysTillShipement() {
+        return daysTillShipement;
+    }
+
+    public int getDayDuration() {
+        return dayDuration;
+    }
+
+    public int getProductionTime() {
+        return productionTime;
+    }
+
+    public int getPenaltyCounter() {
+        return penaltyCounter;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public Warehouse getWareHouse() {
+        return wareHouse;
+    }
+
+    public int getAccumulatedSalary() {
+        return accumulatedSalary;
+    }
+    
+    
+    
 
 }

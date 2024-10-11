@@ -226,7 +226,7 @@ public class FileManager {
 
         int priceByCompany;
         if (company == 0) {
-            priceByCompany = 14000; // HP
+            priceByCompany = 140000; // HP
         } else {
             priceByCompany = 180000; // MSI
         }

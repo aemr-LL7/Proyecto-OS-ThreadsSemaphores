@@ -3,25 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/B-St/Downloads/septiembre%202024/SOP/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/ChartManager.java</file>
-            <file>file:/C:/Users/B-St/Downloads/septiembre%202024/SOP/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Company.java</file>
-=======
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/EDD/SimpleNode.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/FileManager/FileManager.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/EDD/SimpleList.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Company.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/ChartManager.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Factory.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/GUI/Parameters.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/ProjectManager.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Warehouse.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/GUI/Home.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Workers.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/EDD/Queue.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/GUI/Dashboard.java</file>
-            <file>file:/C:/Users/andre/Desktop/Proyecto%201%20Operativos/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Director.java</file>
->>>>>>> 8ac7a7dabe4465e8fe98a5944187034ab8a02905
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Workers.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/GUI/Home.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/GUI/Dashboard.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/FileManager/FileManager.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/ChartManager.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Director.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/ProjectManager.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/Main/Main.java</file>
+            <file>file:/C:/Users/HP-Probook/Desktop/Proyectos%20Operativos/Proyecto%201/Proyecto-OS-ThreadsSemaphores/src/WorkingClasses/Warehouse.java</file>
         </group>
     </open-files>
 </project-private>

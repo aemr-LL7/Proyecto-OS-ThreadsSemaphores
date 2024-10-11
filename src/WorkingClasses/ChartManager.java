@@ -24,7 +24,6 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class ChartManager {
 
-    private final Home homeInstance = Home.getHomeInstance();
     private XYSeries SERIES_HP;
     private XYSeries SERIES_MSI;
     private XYSeriesCollection DATASET;
@@ -48,9 +47,6 @@ public class ChartManager {
         DATASET.addSeries(SERIES_MSI);
     }
 
-    /**
-     * Crea el gráfico XY Line usando JFreeChart y configura la apariencia.
-     */
     private void createChart() {
         this.XY_LINES = ChartFactory.createXYLineChart(
                 "Tiempo vs Utilidad", // Titulo del grafico
@@ -75,15 +71,15 @@ public class ChartManager {
     }
 
     private void startUpdateTimer() {
-        int delay = homeInstance.getDuration();
+        int delay = Home.getDuration();
         this.updateTime = new Timer(delay, e -> this.updateChartData());
         this.updateTime.start();
     }
 
     public void updateChartData() {
         // Se obtienen las nuevas ganancias (más recientes de las factories)
-        double hpProfit = Home.getFactory0();
-        double msiProfit = Home.getFactory0();
+        double hpProfit = Home.getFactory0().getCompany().getNetWins();
+        double msiProfit = Home.getFactory1().getCompany().getNetWins();
         int newTimePoint = this.SERIES_HP.getItemCount() + 1;
 
         this.SERIES_HP.addOrUpdate(newTimePoint, hpProfit);

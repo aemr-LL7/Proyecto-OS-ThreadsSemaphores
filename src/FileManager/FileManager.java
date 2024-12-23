@@ -4,7 +4,7 @@
  */
 package FileManager;
 
-import GUI.Home;
+import Main.App;
 import WorkingClasses.Company;
 import WorkingClasses.Factory;
 import WorkingClasses.Warehouse;
@@ -93,26 +93,26 @@ public class FileManager {
     }
 
     public void loadParamsFromTxt() {
-        String fileWithData = this.readFile(Home.getSelectedFile());
+        String fileWithData = this.readFile(App.getSelectedFile());
         int[] params = this.getGeneralParams(fileWithData);
         if (params != null && params.length >= 2) {
-            Home.setDuration(params[0]);
-            Home.setDeadline(params[1]);
+            App.setDayDuration(params[0]);
+            App.setDeadline(params[1]);
         }
-        // Añadir los parametros de las compañias con HOME
-        Home.setFactory0(this.createFactory(0));
-        Home.setFactory1(this.createFactory(1));
+        // Añadir los parametros de las compañias con App
+        App.setFactory0(this.createFactory(0));
+        App.setFactory1(this.createFactory(1));
     }
 
-    public void writeData(File inFile) {
+    public void writeData(File inFile, String[] company0, String[] company1) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(inFile))) {
             // Escribir la seccion de parametros generales
             writer.write("[General Params]\n");
-            writer.write("Duration=" + Home.getDuration() + "\n");
-            writer.write("Deadline=" + Home.getDeadline() + "\n\n");
+            writer.write("Duration=" + App.getDayDuration() + "\n");
+            writer.write("Deadline=" + App.getDeadline() + "\n\n");
 
             // Escribir la sección de HP
-//            Company hp = Home.getCompany0();
+//            Company hp = App.getCompany0();
             writer.write("[HP]\n");
             writer.write("Motherboard=" + 1 + "\n");
             writer.write("CPU=" + 1 + "\n");
@@ -123,7 +123,7 @@ public class FileManager {
             writer.write("MaxCapacity=" + 25 + "\n\n");
 
             // Escribir la sección de MSI
-//            Company msi = Home.getCompany1();
+//            Company msi = App.getCompany1();
             writer.write("[MSI]\n");
             writer.write("Motherboard=" + 1 + "\n");
             writer.write("CPU=" + 1 + "\n");
@@ -224,11 +224,14 @@ public class FileManager {
         // Se obtiene los datos del TXT
         int[] companyValues = this.getCompanyValues(company);
 
-        int priceByCompany;
+        int standardPriceByCompany;
+        int gpuPriceByCompany;
         if (company == 0) {
-            priceByCompany = 140000; // HP
+            standardPriceByCompany = 90000; // HP
+            gpuPriceByCompany = 140000;
         } else {
-            priceByCompany = 180000; // MSI
+            standardPriceByCompany = 180000; // MSI  
+            gpuPriceByCompany = 250000;
         }
 
         // Verificar que se hayan obtenido los valores correctamente
@@ -240,18 +243,19 @@ public class FileManager {
 //        // Crear el almacen correspondiente
         Warehouse warehouseInstance = new Warehouse(company == 0 ? "HP Warehouse" : "MSI Warehouse");
 
-        Company companyInstance = new Company(company == 0 ? "HP" : "MSI", priceByCompany);
+        Company companyInstance = new Company(company == 0 ? "HP" : "MSI", standardPriceByCompany, gpuPriceByCompany);
 
         Factory factory = new Factory(
-                Home.getDuration(), // Duracion del día (por ejemplo, 1000 ms)
+                App.getDayDuration(), // Duracion del día (por ejemplo, 1000 ms)
                 companyValues[0], // Motherboard workers
                 companyValues[1], // CPU workers
                 companyValues[2], // RAM workers
                 companyValues[3], // PSU workers
                 companyValues[4], // GPU workers
                 companyValues[5], // Assembly workers
+                companyValues[6], // MAX CAPACITY
                 companyInstance, // Instancia de la compañía
-                Home.getDeadline() // Almacen
+                App.getDeadline() // Almacen
         );
 
 //        System.out.println(warehouseInstance.getCompany());
@@ -271,7 +275,7 @@ public class FileManager {
         String companyTag = companyIndex == 0 ? "HP" : "MSI";
 
         // Leer el archivo
-        String fileData = readFile(Home.getSelectedFile());
+        String fileData = readFile(App.getSelectedFile());
         String[] lines = fileData.split("\n");
 
         boolean inCompanySection = false;

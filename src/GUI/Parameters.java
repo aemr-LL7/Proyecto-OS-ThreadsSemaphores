@@ -5,6 +5,7 @@
 package GUI;
 
 import FileManager.FileManager;
+import Main.App;
 import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,43 +15,56 @@ import javax.swing.JOptionPane;
  * @author andre
  */
 public class Parameters extends javax.swing.JFrame {
-
+    private JFrame parentWindow;
     private static Parameters configuration;
 //    private final Home homeInstance = Home.getHomeInstance();
     private int duration;
     private int deadline;
-    private File selectedFile = Home.getSelectedFile();
+    private File selectedFile = App.getSelectedFile();
     private FileManager fileManager = new FileManager();
+
     /**
      * Creates new form Parameters
      */
     public Parameters() {
+        
         initComponents();
-         // properties gui
+        // properties gui
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setTitle("Params");
+        //this.setAlwaysOnTop(true);
+        this.setTitle("Parameters");
         // Inicializar los valores de HOME
         this.initValues();
     }
-    
-    public static synchronized Parameters getInstance() {
+
+    public static synchronized Parameters getParamsWindInstance() {
         if (configuration == null) {
             configuration = new Parameters();
         }
         return configuration;
     }
-    
-    private void initValues(){
-        if (Home.getFactory0() != null && Home.getFactory1() != null) {
-            this.duration = (int) Home.getDuration() / 1000;
-            this.deadline = Home.getDeadline();
+
+    private void initValues() {
+        if (App.getFactory0() != null && App.getFactory1() != null) {
+            this.duration = (int) App.getDayDuration() / 1000;
+            this.deadline = App.getDeadline();
             this.durationValue.setText(String.valueOf(duration));
             this.deadlineValue.setText(String.valueOf(deadline));
         }
     }
     
+     public void loadParentWindow(JFrame parentWindow) {
+        this.parentWindow = parentWindow;
+        this.setVisible(true);
+    }
+
+    public void returnToParentWindow() {
+        this.dispose();
+        parentWindow.setVisible(true);
+    }
+
     private void updateBtnParams() {
         if (this.duration == 1) {
             this.decreaseDayValue.setEnabled(false);
@@ -68,11 +82,15 @@ public class Parameters extends javax.swing.JFrame {
             this.decreaseDeadlineValue.setFocusable(true);
         }
     }
-    
+
+    private void updateCompaniesParams() {
+
+    }
+
     private boolean canDecreaseDayBtn() {
         return this.duration > 1;
     }
-    
+
     private boolean canDecreaseDeadlineBtn() {
         return this.deadline > 1;
     }
@@ -98,60 +116,72 @@ public class Parameters extends javax.swing.JFrame {
         decreaseDeadlineValue = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         decreaseMOBO0 = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
+        MSI_MOBO_QTY = new javax.swing.JTextField();
         increaseMOBO0 = new javax.swing.JButton();
         jPanel19 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         decreaseCPU0 = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
+        MSI_CPU_QTY = new javax.swing.JTextField();
         increaseCPU0 = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         decreaseRAM0 = new javax.swing.JButton();
-        jTextField9 = new javax.swing.JTextField();
+        MSI_RAM_QTY = new javax.swing.JTextField();
         increaseRAM0 = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         decreasePSU0 = new javax.swing.JButton();
-        jTextField10 = new javax.swing.JTextField();
+        MSI_PSU_QTY = new javax.swing.JTextField();
         increasePSU0 = new javax.swing.JButton();
         jPanel22 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         decreaseGPU0 = new javax.swing.JButton();
-        jTextField11 = new javax.swing.JTextField();
+        MSI_ASM_QTY = new javax.swing.JTextField();
         increaseGPU0 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        maxMSIWorkersValueLabel = new javax.swing.JTextField();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        decreaseGPU2 = new javax.swing.JButton();
+        MSI_GPU_QTY1 = new javax.swing.JTextField();
+        increaseGPU2 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         decreaseMOBO1 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        HP_MOBO_QTY = new javax.swing.JTextField();
         increaseMOBO1 = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         decreaseCPU1 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        HP_CPU_QTY = new javax.swing.JTextField();
         increaseCPU1 = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         decreaseRAM1 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        HP_RAM_QTY = new javax.swing.JTextField();
         increaseRAM1 = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         decreasePSU1 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
+        HP_PSU_QTY = new javax.swing.JTextField();
         increasePSU1 = new javax.swing.JButton();
         jPanel17 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         decreaseGPU1 = new javax.swing.JButton();
-        jTextField6 = new javax.swing.JTextField();
+        HP_GPU_QTY = new javax.swing.JTextField();
         increaseGPU1 = new javax.swing.JButton();
+        maxHPWorkersValueLabel = new javax.swing.JTextField();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        decreaseGPU3 = new javax.swing.JButton();
+        HP_ASM_QTY = new javax.swing.JTextField();
+        increaseGPU3 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -257,10 +287,6 @@ public class Parameters extends javax.swing.JFrame {
         jLabel5.setText("Micro-Star International");
         jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 210, -1));
 
-        jLabel9.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
-        jLabel9.setText("Máximo:");
-        jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 100, 20));
-
         jPanel18.setBackground(new java.awt.Color(109, 86, 164));
         jPanel18.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -277,12 +303,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseMOBO0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel18.add(decreaseMOBO0, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField7.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setText("0");
-        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField7.setFocusable(false);
-        jPanel18.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        MSI_MOBO_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        MSI_MOBO_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        MSI_MOBO_QTY.setText("0");
+        MSI_MOBO_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MSI_MOBO_QTY.setFocusable(false);
+        jPanel18.add(MSI_MOBO_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseMOBO0.setBackground(new java.awt.Color(214, 125, 178));
         increaseMOBO0.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -310,12 +336,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseCPU0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel19.add(decreaseCPU0, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField8.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setText("0");
-        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField8.setFocusable(false);
-        jPanel19.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        MSI_CPU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        MSI_CPU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        MSI_CPU_QTY.setText("0");
+        MSI_CPU_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MSI_CPU_QTY.setFocusable(false);
+        jPanel19.add(MSI_CPU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseCPU0.setBackground(new java.awt.Color(214, 125, 178));
         increaseCPU0.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -343,12 +369,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseRAM0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel20.add(decreaseRAM0, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField9.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField9.setText("0");
-        jTextField9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField9.setFocusable(false);
-        jPanel20.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        MSI_RAM_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        MSI_RAM_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        MSI_RAM_QTY.setText("0");
+        MSI_RAM_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MSI_RAM_QTY.setFocusable(false);
+        jPanel20.add(MSI_RAM_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseRAM0.setBackground(new java.awt.Color(214, 125, 178));
         increaseRAM0.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -376,12 +402,12 @@ public class Parameters extends javax.swing.JFrame {
         decreasePSU0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel21.add(decreasePSU0, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField10.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField10.setText("0");
-        jTextField10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField10.setFocusable(false);
-        jPanel21.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        MSI_PSU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        MSI_PSU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        MSI_PSU_QTY.setText("0");
+        MSI_PSU_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MSI_PSU_QTY.setFocusable(false);
+        jPanel21.add(MSI_PSU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increasePSU0.setBackground(new java.awt.Color(214, 125, 178));
         increasePSU0.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -398,7 +424,7 @@ public class Parameters extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Trabajador Gráfica:");
+        jLabel26.setText("Trabajador Ensamblador:");
         jPanel22.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
         decreaseGPU0.setBackground(new java.awt.Color(214, 125, 178));
@@ -409,12 +435,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseGPU0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel22.add(decreaseGPU0, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField11.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField11.setText("0");
-        jTextField11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField11.setFocusable(false);
-        jPanel22.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        MSI_ASM_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        MSI_ASM_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        MSI_ASM_QTY.setText("0");
+        MSI_ASM_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MSI_ASM_QTY.setFocusable(false);
+        jPanel22.add(MSI_ASM_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseGPU0.setBackground(new java.awt.Color(214, 125, 178));
         increaseGPU0.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -424,9 +450,51 @@ public class Parameters extends javax.swing.JFrame {
         increaseGPU0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel22.add(increaseGPU0, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
 
-        jPanel5.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 360, 40));
+        jPanel5.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 360, 40));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 380, 420));
+        jLabel10.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
+        jLabel10.setText("Máximo:");
+        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 80, 20));
+
+        maxMSIWorkersValueLabel.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        maxMSIWorkersValueLabel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        maxMSIWorkersValueLabel.setText("0");
+        jPanel5.add(maxMSIWorkersValueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
+
+        jPanel23.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel23.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel27.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Trabajador Gráfica:");
+        jPanel23.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        decreaseGPU2.setBackground(new java.awt.Color(214, 125, 178));
+        decreaseGPU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        decreaseGPU2.setForeground(new java.awt.Color(255, 255, 255));
+        decreaseGPU2.setText("-");
+        decreaseGPU2.setBorder(null);
+        decreaseGPU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel23.add(decreaseGPU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
+
+        MSI_GPU_QTY1.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        MSI_GPU_QTY1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        MSI_GPU_QTY1.setText("0");
+        MSI_GPU_QTY1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MSI_GPU_QTY1.setFocusable(false);
+        jPanel23.add(MSI_GPU_QTY1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+
+        increaseGPU2.setBackground(new java.awt.Color(214, 125, 178));
+        increaseGPU2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        increaseGPU2.setForeground(new java.awt.Color(255, 255, 255));
+        increaseGPU2.setText("+");
+        increaseGPU2.setBorder(null);
+        increaseGPU2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel23.add(increaseGPU2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
+
+        jPanel5.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 360, 40));
+
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 380, 460));
 
         jPanel6.setBackground(new java.awt.Color(222, 222, 242));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -437,7 +505,7 @@ public class Parameters extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Lucida Bright", 1, 16)); // NOI18N
         jLabel8.setText("Máximo:");
-        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 90, -1));
+        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 80, -1));
 
         jPanel13.setBackground(new java.awt.Color(109, 86, 164));
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -455,12 +523,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseMOBO1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel13.add(decreaseMOBO1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField2.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setText("0");
-        jTextField2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField2.setFocusable(false);
-        jPanel13.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        HP_MOBO_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        HP_MOBO_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        HP_MOBO_QTY.setText("0");
+        HP_MOBO_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        HP_MOBO_QTY.setFocusable(false);
+        jPanel13.add(HP_MOBO_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseMOBO1.setBackground(new java.awt.Color(214, 125, 178));
         increaseMOBO1.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -488,12 +556,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseCPU1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel14.add(decreaseCPU1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField3.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("0");
-        jTextField3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField3.setFocusable(false);
-        jPanel14.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        HP_CPU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        HP_CPU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        HP_CPU_QTY.setText("0");
+        HP_CPU_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        HP_CPU_QTY.setFocusable(false);
+        jPanel14.add(HP_CPU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseCPU1.setBackground(new java.awt.Color(214, 125, 178));
         increaseCPU1.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -521,12 +589,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseRAM1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel15.add(decreaseRAM1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField4.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("0");
-        jTextField4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField4.setFocusable(false);
-        jPanel15.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        HP_RAM_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        HP_RAM_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        HP_RAM_QTY.setText("0");
+        HP_RAM_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        HP_RAM_QTY.setFocusable(false);
+        jPanel15.add(HP_RAM_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseRAM1.setBackground(new java.awt.Color(214, 125, 178));
         increaseRAM1.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -554,12 +622,12 @@ public class Parameters extends javax.swing.JFrame {
         decreasePSU1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel16.add(decreasePSU1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField5.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("0");
-        jTextField5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField5.setFocusable(false);
-        jPanel16.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        HP_PSU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        HP_PSU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        HP_PSU_QTY.setText("0");
+        HP_PSU_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        HP_PSU_QTY.setFocusable(false);
+        jPanel16.add(HP_PSU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increasePSU1.setBackground(new java.awt.Color(214, 125, 178));
         increasePSU1.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -587,12 +655,12 @@ public class Parameters extends javax.swing.JFrame {
         decreaseGPU1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel17.add(decreaseGPU1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
 
-        jTextField6.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("0");
-        jTextField6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField6.setFocusable(false);
-        jPanel17.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+        HP_GPU_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        HP_GPU_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        HP_GPU_QTY.setText("0");
+        HP_GPU_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        HP_GPU_QTY.setFocusable(false);
+        jPanel17.add(HP_GPU_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
 
         increaseGPU1.setBackground(new java.awt.Color(214, 125, 178));
         increaseGPU1.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
@@ -604,7 +672,45 @@ public class Parameters extends javax.swing.JFrame {
 
         jPanel6.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 350, 40));
 
-        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 380, 420));
+        maxHPWorkersValueLabel.setFont(new java.awt.Font("Lucida Bright", 1, 14)); // NOI18N
+        maxHPWorkersValueLabel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        maxHPWorkersValueLabel.setText("0");
+        jPanel6.add(maxHPWorkersValueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
+
+        jPanel24.setBackground(new java.awt.Color(109, 86, 164));
+        jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel28.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 16)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("Trabajador Ensamblador:");
+        jPanel24.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        decreaseGPU3.setBackground(new java.awt.Color(214, 125, 178));
+        decreaseGPU3.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        decreaseGPU3.setForeground(new java.awt.Color(255, 255, 255));
+        decreaseGPU3.setText("-");
+        decreaseGPU3.setBorder(null);
+        decreaseGPU3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel24.add(decreaseGPU3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 30, 20));
+
+        HP_ASM_QTY.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        HP_ASM_QTY.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        HP_ASM_QTY.setText("0");
+        HP_ASM_QTY.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        HP_ASM_QTY.setFocusable(false);
+        jPanel24.add(HP_ASM_QTY, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 30, -1));
+
+        increaseGPU3.setBackground(new java.awt.Color(214, 125, 178));
+        increaseGPU3.setFont(new java.awt.Font("HP Simplified", 1, 12)); // NOI18N
+        increaseGPU3.setForeground(new java.awt.Color(255, 255, 255));
+        increaseGPU3.setText("+");
+        increaseGPU3.setBorder(null);
+        increaseGPU3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel24.add(increaseGPU3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 30, 20));
+
+        jPanel6.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 350, 40));
+
+        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 380, 460));
 
         jPanel8.setBackground(new java.awt.Color(122, 122, 220));
         jPanel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(45, 45, 45, 45));
@@ -623,7 +729,7 @@ public class Parameters extends javax.swing.JFrame {
         });
         jPanel8.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 40));
 
-        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 170, 60));
+        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 600, 170, 60));
 
         jPanel7.setBackground(new java.awt.Color(122, 122, 220));
         jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(45, 45, 45, 45));
@@ -642,9 +748,9 @@ public class Parameters extends javax.swing.JFrame {
         });
         jPanel7.add(saveConfigBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 40));
 
-        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 550, 180, 60));
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 600, 180, 60));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 850, 630));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 850, 680));
 
         jPanel3.setBackground(new java.awt.Color(34, 34, 107));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -657,7 +763,7 @@ public class Parameters extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel11.setText("Configuración");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 210, 50));
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 250, 50));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 70));
 
@@ -666,28 +772,29 @@ public class Parameters extends javax.swing.JFrame {
 
     private void saveConfigBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveConfigBtnMouseClicked
         // TODO add your handling code here:
+        String[] HP_VALUES = {HP_MOBO_QTY.getText(), HP_CPU_QTY.getText(), HP_RAM_QTY.getText(), HP_PSU_QTY.getText(), HP_GPU_QTY.getText(), maxHPWorkersValueLabel.getText()};
+        String[] MSI_VALUES = {MSI_MOBO_QTY.getText(), MSI_CPU_QTY.getText(), MSI_RAM_QTY.getText(), MSI_PSU_QTY.getText(), MSI_ASM_QTY.getText(), maxMSIWorkersValueLabel.getText()};
+
         try {
-            this.fileManager.writeData(this.selectedFile);
-            JOptionPane.showMessageDialog(this, "El archivo 'data' se guardó correctamente!");
+            this.fileManager.writeData(this.selectedFile, HP_VALUES, MSI_VALUES);
+            JOptionPane.showMessageDialog(this, "El archivo 'data' se guardó correctamente!", "Write Data", 2);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al escribir el archivo");
         }
-        
+
     }//GEN-LAST:event_saveConfigBtnMouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        Home goBack = new Home();
-        goBack.setVisible(true);
-        this.dispose();
+        this.returnToParentWindow();
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void increaseDayValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_increaseDayValueActionPerformed
         // TODO add your handling code here:
         this.duration += 1;
-        Home.setDuration(this.duration * 1000);
-        this.durationValue.setText(String.valueOf(Home.getDuration() / 1000));
+        App.setDayDuration(this.duration * 1000);
+        this.durationValue.setText(String.valueOf(App.getDayDuration() / 1000));
         this.updateBtnParams();
     }//GEN-LAST:event_increaseDayValueActionPerformed
 
@@ -699,8 +806,8 @@ public class Parameters extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (this.canDecreaseDayBtn()) {
             this.duration -= 1;
-            Home.setDuration(duration*1000);
-            this.durationValue.setText(String.valueOf(Home.getDuration() / 1000));
+            App.setDayDuration(duration * 1000);
+            this.durationValue.setText(String.valueOf(App.getDayDuration() / 1000));
         }
         this.updateBtnParams();
     }//GEN-LAST:event_decreaseDayValueActionPerformed
@@ -709,8 +816,8 @@ public class Parameters extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (this.canDecreaseDeadlineBtn()) {
             this.deadline -= 1;
-            Home.setDeadline(deadline);
-            this.deadlineValue.setText(String.valueOf(Home.getDeadline()));
+            App.setDeadline(deadline);
+            this.deadlineValue.setText(String.valueOf(App.getDeadline()));
         }
         this.updateBtnParams();
     }//GEN-LAST:event_decreaseDeadlineValueActionPerformed
@@ -718,8 +825,8 @@ public class Parameters extends javax.swing.JFrame {
     private void increaseDeadlineValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_increaseDeadlineValueActionPerformed
         // TODO add your handling code here:
         this.deadline += 1;
-        Home.setDeadline(this.deadline);
-        this.deadlineValue.setText(String.valueOf(Home.getDeadline()));
+        App.setDeadline(this.deadline);
+        this.deadlineValue.setText(String.valueOf(App.getDeadline()));
         this.updateBtnParams();
     }//GEN-LAST:event_increaseDeadlineValueActionPerformed
 
@@ -759,6 +866,18 @@ public class Parameters extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField HP_ASM_QTY;
+    private javax.swing.JTextField HP_CPU_QTY;
+    private javax.swing.JTextField HP_GPU_QTY;
+    private javax.swing.JTextField HP_MOBO_QTY;
+    private javax.swing.JTextField HP_PSU_QTY;
+    private javax.swing.JTextField HP_RAM_QTY;
+    private javax.swing.JTextField MSI_ASM_QTY;
+    private javax.swing.JTextField MSI_CPU_QTY;
+    private javax.swing.JTextField MSI_GPU_QTY1;
+    private javax.swing.JTextField MSI_MOBO_QTY;
+    private javax.swing.JTextField MSI_PSU_QTY;
+    private javax.swing.JTextField MSI_RAM_QTY;
     private javax.swing.JTextField deadlineValue;
     private javax.swing.JButton decreaseCPU0;
     private javax.swing.JButton decreaseCPU1;
@@ -766,6 +885,8 @@ public class Parameters extends javax.swing.JFrame {
     private javax.swing.JButton decreaseDeadlineValue;
     private javax.swing.JButton decreaseGPU0;
     private javax.swing.JButton decreaseGPU1;
+    private javax.swing.JButton decreaseGPU2;
+    private javax.swing.JButton decreaseGPU3;
     private javax.swing.JButton decreaseMOBO0;
     private javax.swing.JButton decreaseMOBO1;
     private javax.swing.JButton decreasePSU0;
@@ -779,6 +900,8 @@ public class Parameters extends javax.swing.JFrame {
     private javax.swing.JButton increaseDeadlineValue;
     private javax.swing.JButton increaseGPU0;
     private javax.swing.JButton increaseGPU1;
+    private javax.swing.JButton increaseGPU2;
+    private javax.swing.JButton increaseGPU3;
     private javax.swing.JButton increaseMOBO0;
     private javax.swing.JButton increaseMOBO1;
     private javax.swing.JButton increasePSU0;
@@ -786,6 +909,7 @@ public class Parameters extends javax.swing.JFrame {
     private javax.swing.JButton increaseRAM0;
     private javax.swing.JButton increaseRAM1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -797,13 +921,14 @@ public class Parameters extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -816,21 +941,15 @@ public class Parameters extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField maxHPWorkersValueLabel;
+    private javax.swing.JTextField maxMSIWorkersValueLabel;
     private javax.swing.JLabel saveConfigBtn;
     // End of variables declaration//GEN-END:variables
 }

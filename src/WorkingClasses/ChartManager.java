@@ -4,7 +4,7 @@
  */
 package WorkingClasses;
 
-import GUI.Home;
+import Main.App;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import javax.swing.Timer;
@@ -71,15 +71,15 @@ public class ChartManager {
     }
 
     private void startUpdateTimer() {
-        int delay = Home.getDuration();
+        int delay = App.getDayDuration();
         this.updateTime = new Timer(delay, e -> this.updateChartData());
         this.updateTime.start();
     }
 
     public void updateChartData() {
         // Se obtienen las nuevas ganancias (más recientes de las factories)
-        double hpProfit = Home.getFactory0().getCompany().getNetWins();
-        double msiProfit = Home.getFactory1().getCompany().getNetWins();
+        double hpProfit = App.getFactory0().getCompany().getNetWins();
+        double msiProfit = App.getFactory1().getCompany().getNetWins();
         int newTimePoint = this.SERIES_HP.getItemCount() + 1;
 
         this.SERIES_HP.addOrUpdate(newTimePoint, hpProfit);

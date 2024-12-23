@@ -61,70 +61,67 @@ public class Workers extends Thread {
 
     @Override
     public void run() {
-
         while (true) {
             try {
-                this.payMe();
-                this.work();
-                // Simulacion del tiempo de producción (en días)
-                Thread.sleep(this.getProductionTime() * this.dayDuration);
+                this.payMe(); // Cobro fijo por el período de ensamblaje
+                this.work();  // Intentar ensamblar una computadora
+                Thread.sleep(this.dayDuration * this.productionTime); // Simular los 2 dias de ensamblaje
             } catch (InterruptedException e) {
-                System.out.println("Produccion interrumpida para el trabajador de tipo " + getType());
+                System.out.println("Producción interrumpida para el ensamblador.");
             }
         }
     }
 
     public void work() throws InterruptedException {
-
-        // Intentar acceder al almacen (usando el semaforo)
-        if (this.getCurrentStock() < this.getStorageCapacity()) {
-            if (this.tipe == 3) {
-                this.wareHouse.incrementPSUCounter();
-            } else if (this.tipe == 5) {
-                this.makeCompter();
-                System.out.println("Se ensamblo una computadora para: " + this.wareHouse.getCompany() + "Total: " + this.wareHouse.getCOMPUTER_Count());
+        if (this.tipe == 5) { // Ensamblador
+            boolean success = this.wareHouse.tryToAssembleComputer();
+            if (success) {
+                System.out.println("Ensamblador creo una computadora para " + this.wareHouse.getCompanyName() + " Cantidad NORMAL: " + this.wareHouse.getCOMPUTER_Count() + " Cantidad CON GPU: " + this.wareHouse.getGPUCOMPUTER_Count());
+                
             } else {
+                System.out.println("Ensamblador no pudo ensamblar una computadora: recursos insuficientes.");
+            }
+        } else { // Productores
+            if (this.getCurrentStock() < this.getStorageCapacity()) {
                 this.increment();
+            } else {
+                System.out.println("Almacen lleno para tipo " + getType() + ". No se puede producir mas.");
             }
-
-        } else {
-            System.out.println("Almacen de tipo " + getType() + " lleno. No se puede producir mas");
-
         }
-
+        
     }
 
-    public void makeCompter() throws InterruptedException {
-
-        if (this.tipe == 5) {
-            // Intentar acceder al almacen (usando el semaforo)
-
-            if (this.wareHouse.getCompany().equals("MSI") && this.wareHouse.getMOBO_Count() > 2 && this.wareHouse.getCPU_Count() > 3 && this.wareHouse.getRAM_Count() > 4 && this.wareHouse.getPSU_Count() > 6) {
-                this.wareHouse.decrementCounterByType(0);
-                this.wareHouse.decrementCounterByType(1);
-                this.wareHouse.decrementCounterByType(2);
-                this.wareHouse.decrementCounterByType(3);
-                this.wareHouse.decrementCounterByType(4);
-                this.wareHouse.decrementCounterByType(5);
-            } else if (this.wareHouse.getCompany().equals("HP") && this.wareHouse.getMOBO_Count() > 1 && this.wareHouse.getCPU_Count() > 1 && this.wareHouse.getRAM_Count() > 2 && this.wareHouse.getPSU_Count() > 4) {
-                this.wareHouse.decrementCounterByType(0);
-                this.wareHouse.decrementCounterByType(1);
-                this.wareHouse.decrementCounterByType(2);
-                this.wareHouse.decrementCounterByType(3);
-                this.wareHouse.decrementCounterByType(4);
-                this.wareHouse.decrementCounterByType(5);
-            }
-
-            this.wareHouse.addComputer();
-
-        } else {
-            System.out.println("No se pudo ensamblar computadora");
-        }
-    }
+//    public void makeCompter() throws InterruptedException {
+//
+//        if (this.tipe == 5) {
+//            // Intentar acceder al almacen (usando el semaforo)
+//
+//            if (this.wareHouse.getCompanyName().equals("MSI") && this.wareHouse.getMOBO_Count() > 2 && this.wareHouse.getCPU_Count() > 3 && this.wareHouse.getRAM_Count() > 4 && this.wareHouse.getPSU_Count() > 6) {
+//                this.wareHouse.decrementCounterByType(0);
+//                this.wareHouse.decrementCounterByType(1);
+//                this.wareHouse.decrementCounterByType(2);
+//                this.wareHouse.decrementCounterByType(3);
+//                this.wareHouse.decrementCounterByType(4);
+//                this.wareHouse.decrementCounterByType(5);
+//            } else if (this.wareHouse.getCompanyName().equals("HP") && this.wareHouse.getMOBO_Count() > 1 && this.wareHouse.getCPU_Count() > 1 && this.wareHouse.getRAM_Count() > 2 && this.wareHouse.getPSU_Count() > 4) {
+//                this.wareHouse.decrementCounterByType(0);
+//                this.wareHouse.decrementCounterByType(1);
+//                this.wareHouse.decrementCounterByType(2);
+//                this.wareHouse.decrementCounterByType(3);
+//                this.wareHouse.decrementCounterByType(4);
+//                this.wareHouse.decrementCounterByType(5);
+//            }
+//
+//            this.wareHouse.addComputer();
+//
+//        } else {
+//            System.out.println("No se pudo ensamblar computadora");
+//        }
+//    }
 
     public void payMe() throws InterruptedException {
         this.getPaymentSemaphore().acquire();
-        int payment = this.productionTime * (24 * 40);
+        int payment = this.salaryPerHour * 24 * this.productionTime; // Cobro fijo por el tiempo de produccion
         this.wareHouse.addCost(payment);
         this.getPaymentSemaphore().release();
     }
@@ -133,9 +130,9 @@ public class Workers extends Thread {
         this.wareHouse.incrementCounterByType(this.tipe);
     }
 
-    public void decrement() throws InterruptedException {
-        this.wareHouse.decrementCounterByType(this.tipe);
-    }
+//    public void decrement() throws InterruptedException {
+//        this.wareHouse.decrementCounterByType(this.tipe);
+//   }
 
     public void setCurrentStock() {
         try {

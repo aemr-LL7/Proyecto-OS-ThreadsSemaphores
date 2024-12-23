@@ -21,7 +21,8 @@ public class Director extends Thread {
 
     private int dayDuration;
 
-    private static int COMPUTER_PRICE;
+    private int normalPC_Price;
+    private int gpuPC_Price;
     private int totalRevenue; // Ganancias totales por las computadoras enviadas
     private static int SALARY_PER_HOUR = 60;
 
@@ -35,7 +36,8 @@ public class Director extends Thread {
         this.status = "Administrating";
         this.PM = pm;
         this.company = company;
-        this.COMPUTER_PRICE = company.getCOMPUTERPrice();
+        this.normalPC_Price = company.getStandardPCPrice();
+        this.gpuPC_Price = company.getPcWithGPUPrice();
         this.wareHouse = wareHouse;
         this.dayDuration = dayDuration;
         this.PM = pm;
@@ -47,14 +49,14 @@ public class Director extends Thread {
 
         while (true) {
             int randomHourToCheckPM = this.random.nextInt(24) + 1; // Hora aleatoria en la que Director revisara al PM
-            this.status = "Administrating";
+            this.setStatus("Administrating");
             try {
                 for (int i = 0; i < 24; i++) {
-                    
+
                     this.hasCheckedThePM = false;
                     if (this.getPm().getRemainingDays() == 0) {
                         Thread.sleep(this.dayDuration / 24);
-                        this.status = "Sending";
+
                         this.getPm().getDayCounterSemaphore().acquire();
                         // Enviar computadoras a las distribuidoras (toma 24 horas)
                         this.sendComputers();
@@ -62,19 +64,16 @@ public class Director extends Thread {
                         this.resetDaysCounter();
                         // Salir del ciclo ya que se enviaron computadoras
                         this.getPm().getDayCounterSemaphore().release();
-                        this.status = "Administraring";
+                        this.setStatus("Administraring");
+
                     } else if (randomHourToCheckPM == i) {
 
-                        this.status = "Checking PM";
+                        this.setStatus("Checking PM");
                         Thread.sleep((long) ((this.dayDuration / 24) * 0.58));//35/60 == 0.58 como estamos dividiendo el dia en horas, podemos usar este calculo
                         this.checkProjectManager();
-                        
 
-                    } else {
-                        this.status = "Administrating";
                     }
-                    
-                    this.status = "Administraring";
+                    Thread.sleep(dayDuration);
                 }
 
                 this.payMe();
@@ -88,14 +87,25 @@ public class Director extends Thread {
 
     // Metodo para enviar las computadoras a las distribuidoras
     private void sendComputers() throws InterruptedException {
+        this.setStatus("Sending");
 
-        this.wareHouse.getSemaphoreByType(5).acquire();
+        // Registrar las ganancias
+        this.getWareHouse().getSemaphoreByType(5).acquire();
+
         System.out.println("Director esta enviando computadoras a las distribuidoras...");
-        this.company.addBrute(this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE); // Registrar las ganancias
+        // Registrar las ganancias
+        int standardComputersSent = this.getWareHouse().getCOMPUTER_Count();
+        System.out.println("=========================== DIRECTOR\nPC NORMALES: " + standardComputersSent);
+        int graphicComputersSent = this.getWareHouse().getGPUCOMPUTER_Count();
+        System.out.println("=========================== DIRECTOR\nPC CON GPU: " + graphicComputersSent);
+        int totalBrute = (standardComputersSent * this.getNormalPC_Price()) + (graphicComputersSent * this.getGpuPC_Price());
+        System.out.println("TOTAL BRUTE: " + totalBrute);
+        this.company.addBruteGains(totalBrute);
 
-        System.out.println("Ganancia registrada: $" + (this.wareHouse.getCOMPUTER_Count() * COMPUTER_PRICE));
-        this.wareHouse.setCOMPUTER_Count(0); // Reiniciar el num de pcs completadas
-        this.wareHouse.getSemaphoreByType(5).release();
+        System.out.println("Ganancia bruta registrada: $" + (totalBrute));
+        this.getWareHouse().setCOMPUTER_Count(0); // Reiniciar el num de pcs completadas
+        this.getWareHouse().setGPUCOMPUTER_Count(0); // Reiniciar el num de pcswithgpu completadas
+        this.getWareHouse().getSemaphoreByType(5).release();
 
         Thread.sleep(this.dayDuration);
     }
@@ -111,14 +121,16 @@ public class Director extends Thread {
 //            System.out.println("Director esta revisando al Project Manager...");
             // Verificar si el PM esta viendo anime
             if (this.PM.isWatchingAnime()) {
-//                System.out.println("¡Falta! El PM fue descubierto viendo anime!");
+                System.out.println("¡Falta! El PM fue descubierto viendo anime!");
                 this.hasCheckedThePM = true;
                 this.PM.incrementPenaltyCounter();
-                this.status = "Administrating";
+                System.out.println("Strike por penalizacion: " + this.PM.getPenaltyCounter() + ", Salario actual:" + this.PM.getAccumulatedSalary());
+                this.setStatus("Administrating");
             } else {
-//                System.out.println("El PM esta trabajando correctamente");
+                System.out.println("El PM esta trabajando correctamente");
             }
         }
+        this.setStatus("Administrating");
     }
 
     // Metodo para calcular el salario diario
@@ -151,33 +163,47 @@ public class Director extends Thread {
         SALARY_PER_HOUR = aSALARY_PER_HOUR;
     }
 
-    /**
-     * @return the COMPUTER_PRICE
-     */
-    public static int getCOMPUTER_PRICE() {
-        return COMPUTER_PRICE;
-    }
-
-    /**
-     * @param aCOMPUTER_PRICE the COMPUTER_PRICE to set
-     */
-    public static void setCOMPUTER_PRICE(int aCOMPUTER_PRICE) {
-        COMPUTER_PRICE = aCOMPUTER_PRICE;
-    }
-
     private ProjectManager getPm() {
         return this.PM;
     }
 
     private void payMe() throws InterruptedException {
-        this.wareHouse.getPaymentSemaphore().acquire();
+        this.getWareHouse().getPaymentSemaphore().acquire();
         int payment = (24 * 60);
-        this.wareHouse.addCost(payment);
-        this.wareHouse.getPaymentSemaphore().release();
+        this.getWareHouse().addCost(payment);
+        this.getWareHouse().getPaymentSemaphore().release();
     }
 
     public String getStatus() {
         return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the wareHouse
+     */
+    public Warehouse getWareHouse() {
+        return wareHouse;
+    }
+
+    /**
+     * @return the normalPC_Price
+     */
+    public int getNormalPC_Price() {
+        return normalPC_Price;
+    }
+
+    /**
+     * @return the gpuPC_Price
+     */
+    public int getGpuPC_Price() {
+        return gpuPC_Price;
     }
 
 }

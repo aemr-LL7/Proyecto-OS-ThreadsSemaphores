@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import Main.App;
 import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -17,8 +18,8 @@ import org.jfree.data.xy.XYSeries;
 public class Dashboard extends javax.swing.JFrame {
 
     private static Dashboard instanceDashboard;
-    private final Home homeInstance = Home.getHomeInstance();
-    
+    private final App appInstance = App.getAppInstance();
+
     private Point initialClick;
     private XYSeries SERIES_HP;
     private XYSeries SERIES_MSI;
@@ -37,7 +38,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         //
         this.chartPanelVisual.setLayout(new java.awt.BorderLayout());
-        this.chartPanelVisual.add(homeInstance.getChartManager().getChartPanel(), java.awt.BorderLayout.CENTER);
+        this.chartPanelVisual.add(appInstance.getChartManager().getChartPanel(), java.awt.BorderLayout.CENTER);
         this.chartPanelVisual.validate();
         this.getStarted();
 
@@ -62,20 +63,21 @@ public class Dashboard extends javax.swing.JFrame {
                             @Override
                             public void run() {
 
-//                                profit1.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning() - (int) app.getNickelodeon().getTotalCost()));
-//                                cost1.setText(formatNumberAsK((int) app.getCartoonNetwork().getTotalCost()));
-//                                earning1.setText(formatNumberAsK((int) app.getCartoonNetwork().getEarning()));
-//
-//                                profit.setText(formatNumberAsK((int) app.getNickelodeon().getEarning() - (int) app.getNickelodeon().getTotalCost()));
-//                                cost2.setText(formatNumberAsK((int) app.getNickelodeon().getTotalCost()));
-//                                earning.setText(formatNumberAsK((int) app.getNickelodeon().getEarning()));
-//
-//                                totalDays.setText(String.valueOf(app.getCartoonNetwork().getTotalDays()));
-//                                currentDeadline.setText(String.valueOf(app.getCartoonNetwork().getRemainingDays()));
+                                daysElapsed.setText(String.valueOf(appInstance.getFactory0().getDaysElapsed()));
+                                deadlineLabel.setText(String.valueOf(appInstance.getFactory0().getPM().getRemainingDays()));
+
+                                costsHP.setText(String.valueOf(appInstance.getFactory0().getCompany().getOperationCost()));
+                                bruteProfitHP.setText(String.valueOf(appInstance.getFactory0().getCompany().getBrute()));
+                                totalProfitHP.setText(String.valueOf(appInstance.getFactory0().getCompany().getNetWins()));
+
+                                costsMSI.setText(String.valueOf(appInstance.getFactory1().getCompany().getOperationCost()));
+                                bruteProfitMSI.setText(String.valueOf(appInstance.getFactory1().getCompany().getBrute()));
+                                totalProfitMSI.setText(String.valueOf(appInstance.getFactory1().getCompany().getNetWins()));
+
                             }
                         });
 
-                        Thread.sleep(Home.getDuration() / 48);
+                        Thread.sleep(appInstance.getDayDuration() / 48);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                         break;
@@ -110,9 +112,9 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         chartPanelVisual = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        daysElapsed = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        deadlineLabel = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -129,6 +131,7 @@ public class Dashboard extends javax.swing.JFrame {
         totalProfitHP = new javax.swing.JTextField();
         costsHP = new javax.swing.JTextField();
         bruteProfitHP = new javax.swing.JTextField();
+        backgroundLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -249,22 +252,22 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel8.setText("Días Transcurridos:");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, -1, 30));
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("0");
-        jTextField1.setFocusable(false);
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 520, 100, 30));
+        daysElapsed.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        daysElapsed.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        daysElapsed.setText("0");
+        daysElapsed.setFocusable(false);
+        jPanel2.add(daysElapsed, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 520, 100, 30));
 
         jLabel10.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Días para la Entrega:");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 520, -1, 30));
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setText("0");
-        jTextField2.setFocusable(false);
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 520, 100, 30));
+        deadlineLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        deadlineLabel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        deadlineLabel.setText("0");
+        deadlineLabel.setFocusable(false);
+        jPanel2.add(deadlineLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 520, 100, 30));
 
         jPanel9.setBackground(new java.awt.Color(90, 183, 142));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -340,6 +343,10 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 490, 170));
 
+        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/graphics.png"))); // NOI18N
+        backgroundLabel.setText("jLabel11");
+        jPanel2.add(backgroundLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 540, 580));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1280, 580));
 
         jPanel3.setBackground(new java.awt.Color(34, 34, 107));
@@ -352,7 +359,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Lucida Sans Unicode", 3, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("GamePulse Labs ");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, 30));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 460, 30));
 
         jPanel6.setBackground(new java.awt.Color(39, 157, 39));
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(45, 45, 45, 45));
@@ -378,7 +385,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         Parameters params = new Parameters();
-        params.setVisible(true);
+        params.getParamsWindInstance().loadParentWindow(this);
         this.dispose();
     }//GEN-LAST:event_jLabel5MouseClicked
 
@@ -444,11 +451,14 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backgroundLabel;
     private javax.swing.JTextField bruteProfitHP;
     private javax.swing.JTextField bruteProfitMSI;
     private javax.swing.JPanel chartPanelVisual;
     private javax.swing.JTextField costsHP;
     private javax.swing.JTextField costsMSI;
+    private javax.swing.JTextField daysElapsed;
+    private javax.swing.JTextField deadlineLabel;
     private javax.swing.JLabel exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -478,8 +488,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField totalProfitHP;
     private javax.swing.JTextField totalProfitMSI;
     // End of variables declaration//GEN-END:variables

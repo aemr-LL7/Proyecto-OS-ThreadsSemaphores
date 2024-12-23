@@ -4,6 +4,7 @@
  */
 package WorkingClasses;
 
+import Main.App;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -46,20 +47,20 @@ public class ProjectManager extends Thread {
             try {
                 for (int i = 0; i <= 24; i++) {
                     // Ciclo de 30 minutos viendo anime y 30 minutos trabajando
-                    if (i < 16){
+                    if (i < 16) {
                         this.watchAnime(); // Ver anime por 30 minutos
                         this.work(); // Trabajar por 30 minutos
                     }
-                    
-                    if (i>16 && i<24){
-                        this.work();
+
+                    if (i > 16 && i < 24) {
                         this.work();
                     }
-                    
-                    if (i == 24){
+
+                    if (i == 23) {
                         this.updateDaysCounter();
+                        this.updateElapsedTime();
                     }
-                    
+
                 }
                 // Trabaja las últimas 8 horas actualizando el contador de días
                 this.payMe();
@@ -72,7 +73,7 @@ public class ProjectManager extends Thread {
     private void watchAnime() throws InterruptedException {
 
         this.watchingAnime = true;
-//        System.out.println("Project Manager esta viendo anime...");
+        //System.out.println("Project Manager esta viendo anime...");
         Thread.sleep((this.dayDuration / 24) / 2); // Simula 30 minutos viendo anime
 
     }
@@ -94,6 +95,14 @@ public class ProjectManager extends Thread {
         }
         this.getDayCounterSemaphore().release();
 
+    }
+
+    private void updateElapsedTime() {
+        if (this.company.getCompanyName().equals("HP")) {
+            App.getFactory0().setDaysElapsed(App.getFactory0().getDaysElapsed() + 1);
+        } else {
+            App.getFactory1().setDaysElapsed(App.getFactory1().getDaysElapsed() + 1);
+        }
     }
 
     private void payMe() throws InterruptedException {
@@ -182,8 +191,5 @@ public class ProjectManager extends Thread {
     public int getAccumulatedSalary() {
         return accumulatedSalary;
     }
-    
-    
-    
 
 }

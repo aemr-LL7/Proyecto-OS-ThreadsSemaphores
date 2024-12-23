@@ -17,52 +17,14 @@ import javax.swing.JFrame;
  */
 public class Home extends javax.swing.JFrame {
 
-    private static Home home_main;
-
-    // General params
-    private static int duration;
-    private static int deadline;
-
-    // General variables
-    private static Factory factory0; //HP
-    private static Factory factory1;    //MSI
-    private static ChartManager chartManager;
-
-    // Archivos params
-    private static String selectedPath = ".saved//data.txt";
-    private static File selectedFile = new File(selectedPath);
-    private FileManager fileManager = new FileManager();
-
     public void addWorkerOperationCost(String companyName, int ammount) {
 
     }
-
-    public static synchronized Home getHomeInstance() {
-        if (home_main == null) {
-            home_main = new Home();
-        }
-        return home_main;
-    }
-
+    
     /**
      * Creates new form Home
      */
     public Home() {
-        // Leer data.txt en .saved (raiz del proyecto)
-        this.fileManager.savedDirectoryExists();
-        this.fileManager.loadParamsFromTxt();
-
-        // INICIAR SIMULACION
-        this.getFactory0().start();
-        this.getFactory1().start();
-        chartManager = new ChartManager();
-        
-        // Mostrar los valores asignados
-//        System.out.println("Duration: " + this.getDuration());
-//        System.out.println("Deadline: " + this.getDeadline());
-//        System.out.println("Compañia instanciada: " + this.getFactory0().getName());
-//        System.out.println("Compañia instanciada: " + this.getFactory1().getName());
-
         //GUI STUFF
         initComponents();
         // properties gui
@@ -92,24 +54,19 @@ public class Home extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        mainBackground = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -204,133 +161,82 @@ public class Home extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 1280, 70));
 
         jPanel2.setBackground(new java.awt.Color(51, 88, 137));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel9.setBackground(new java.awt.Color(96, 79, 114));
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel12.setBackground(new java.awt.Color(146, 126, 167));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel15.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel15.setText("Guardar estado actual en un archivo.");
-        jPanel9.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 330, 30));
-
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/preference_icon.png"))); // NOI18N
-        jPanel9.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
-
-        jLabel16.setFont(new java.awt.Font("Eras Demi ITC", 0, 36)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel16.setText("FUNCIONES");
-        jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 220, 30));
-
-        jLabel18.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel18.setText("Modificar los valores de estudio.");
-        jPanel9.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 290, 30));
-
-        jLabel19.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel19.setText("la simulación.");
-        jPanel9.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 130, 20));
-
-        jLabel20.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/arrows_icon.png"))); // NOI18N
-        jLabel20.setText("HP y MSI:");
-        jPanel9.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 150, 50));
-
-        jLabel21.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel21.setText("Monitorear y modificar parámetros de");
-        jPanel9.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 340, 30));
-
-        jLabel22.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/arrows_icon.png"))); // NOI18N
-        jLabel22.setText("PARÁMETROS:");
-        jPanel9.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 200, 50));
-
-        jLabel23.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/logarrow_icon.png"))); // NOI18N
-        jLabel23.setText("GUARDAR:");
-        jPanel9.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 150, 30));
-
-        jLabel24.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel24.setText("Visualizar costos y ganancias");
-        jPanel9.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 260, 30));
-
-        jLabel25.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/arrows_icon.png"))); // NOI18N
-        jLabel25.setText("DASHBOARD:");
-        jPanel9.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 200, 50));
-
-        jLabel17.setFont(new java.awt.Font("Eras Demi ITC", 0, 18)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel17.setText("en tiempo real.");
-        jPanel9.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 140, 30));
-
-        jPanel10.setBackground(new java.awt.Color(193, 146, 178));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel13.setFont(new java.awt.Font("HP Simplified", 0, 24)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel13.setText("análisis del mercado gamer, enfocada en ayudar a las compañías");
-        jPanel10.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 650, 30));
-
-        jLabel14.setFont(new java.awt.Font("HP Simplified", 0, 24)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Lucida Bright", 1, 28)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel14.setText("nacionales a identificar oportunidades en la creciente industria de");
-        jPanel10.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 670, 30));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/preference_icon.png"))); // NOI18N
+        jLabel14.setText("FUNCIONES");
+        jPanel12.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("HP Simplified", 0, 24)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Lucida Bright", 1, 15)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/stats_icon.png"))); // NOI18N
+        jLabel15.setText("Visualizar costos y ganancias en tiempo real.");
+        jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel12.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 440, -1));
+
+        jLabel16.setFont(new java.awt.Font("Lucida Bright", 1, 15)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/simulation_icon.png"))); // NOI18N
+        jLabel16.setText("Monitorear y modificar parámetros de la simulación.");
+        jLabel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel12.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 460, -1));
+
+        jLabel17.setFont(new java.awt.Font("Lucida Bright", 1, 15)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/edit_icon.png"))); // NOI18N
+        jLabel17.setText("Modificar los valores de estudio.");
+        jLabel17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel12.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 430, -1));
+
+        jLabel18.setFont(new java.awt.Font("Lucida Bright", 1, 15)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/logarrow_icon.png"))); // NOI18N
+        jLabel18.setText("Guardar estado actual en un archivo.");
+        jLabel18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel12.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 440, -1));
+
+        jPanel2.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 40, 480, 520));
+
+        jPanel11.setBackground(new java.awt.Color(193, 146, 178));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Lucida Bright", 1, 19)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setText("videojuegos a nivel internacional.");
+        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 460, 40));
+
+        jLabel11.setFont(new java.awt.Font("Lucida Bright", 1, 19)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel11.setText("videojuegos a nivel internacional.");
-        jPanel10.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 350, 30));
+        jLabel11.setText("Somos una empresa dedicada a la investigación y");
+        jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 520, 40));
 
-        jLabel12.setFont(new java.awt.Font("HP Simplified", 0, 24)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Lucida Bright", 1, 19)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel12.setText("GamePulse Labs es una empresa dedicada a la investigación y");
-        jPanel10.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 620, 30));
+        jLabel12.setText("análisis del mercado gamer, enfocada en ayudar a las compañías");
+        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 680, 40));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(157, 157, 157))
-        );
+        jLabel13.setFont(new java.awt.Font("Lucida Bright", 1, 19)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel13.setText("nacionales a identificar oportunidades en la creciente industria de");
+        jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 700, 40));
+
+        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 700, 200));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/browse_bg.png"))); // NOI18N
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, 310));
+
+        mainBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI.Assets/main_bg.png"))); // NOI18N
+        jPanel2.add(mainBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1280, 580));
 
@@ -453,22 +359,17 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -476,84 +377,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel mainBackground;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @return the duration
-     */
-    public static int getDuration() {
-        return duration;
-    }
-
-    /**
-     * @param aDuration the duration to set
-     */
-    public static void setDuration(int aDuration) {
-        duration = aDuration;
-    }
-
-    /**
-     * @return the deadline
-     */
-    public static int getDeadline() {
-        return deadline;
-    }
-
-    /**
-     * @param aDeadline the deadline to set
-     */
-    public static void setDeadline(int aDeadline) {
-        deadline = aDeadline;
-    }
-
-    /**
-     * @return the selectedFile
-     */
-    public static File getSelectedFile() {
-        return selectedFile;
-    }
-
-    /**
-     * @return the factory0
-     */
-    public static Factory getFactory0() {
-        return factory0;
-    }
-
-    /**
-     * @param aFactory0 the factory0 to set
-     */
-    public static void setFactory0(Factory aFactory0) {
-        factory0 = aFactory0;
-    }
-
-    /**
-     * @return the factory1
-     */
-    public static Factory getFactory1() {
-        return factory1;
-    }
-
-    /**
-     * @param aFactory1 the factory1 to set
-     */
-    public static void setFactory1(Factory aFactory1) {
-        factory1 = aFactory1;
-    }
-
-    /**
-     * @return the chartManager
-     */
-    public static ChartManager getChartManager() {
-        return chartManager;
-    }
-
-    /**
-     * @param aChartManager the chartManager to set
-     */
-    public static void setChartManager(ChartManager aChartManager) {
-        chartManager = aChartManager;
-    }
 
 }

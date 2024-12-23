@@ -15,6 +15,7 @@ public class Factory extends Thread {
 
     private int daysTillShipement;
     private int dayDuration;
+    private int daysElapsed;
 
     private Workers[] MOBO;
     private Workers[] CPU;
@@ -22,6 +23,7 @@ public class Factory extends Thread {
     private Workers[] PSU;
     private Workers[] GPU;
     private Workers[] ASMBLY;
+    private int maxCapacity;
 
     private ProjectManager PM;
     private Director director;
@@ -30,7 +32,7 @@ public class Factory extends Thread {
 
     private Warehouse wareHouse;
 
-    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, Company company, int daysTillShipement) {
+    public Factory(int dayDuration, int MOBOWorkersAmmount, int CPUWorkersAmmount, int RAMWorkersAmmount, int PSUWorkersAmmount, int GPUWorkersAmmount, int ASMBLYWorkersAmmount, int maxCapacity, Company company, int daysTillShipement) {
         this.dayDuration = dayDuration;
         this.daysTillShipement = daysTillShipement;
         this.MOBO = new Workers[MOBOWorkersAmmount];
@@ -39,8 +41,9 @@ public class Factory extends Thread {
         this.PSU = new Workers[PSUWorkersAmmount];
         this.GPU = new Workers[GPUWorkersAmmount];
         this.ASMBLY = new Workers[ASMBLYWorkersAmmount];
+        this.maxCapacity = maxCapacity;
         this.company = company;
-        
+
         this.wareHouse = this.company.getInventoryWareHouse();
         this.PM = new ProjectManager(this.daysTillShipement, this.company, this.dayDuration);
         this.director = new Director(this.PM, this.wareHouse, this.dayDuration, this.company);
@@ -91,16 +94,18 @@ public class Factory extends Thread {
         }
 
     }
-    
-    private void startExecutives(){
+
+    private void startExecutives() {
         this.PM.start();
         this.director.start();
     }
 
     public void registerCosts() throws InterruptedException {
         this.wareHouse.getPaymentSemaphore().acquire();
+
         this.company.addOperationCost(this.wareHouse.getAccumulatedProductionCost());
         this.wareHouse.cleanHouse();
+
         this.wareHouse.getPaymentSemaphore().release();
     }
 
@@ -114,6 +119,39 @@ public class Factory extends Thread {
         System.out.println("ASMBLY: " + ASMBLY.length);
     }
 
+    public int getWorkersCountByType(int type) {
+        switch (type) {
+            case 0:
+                for (Workers MOBO1 : MOBO) {
+                    return MOBO.length;
+                }
+
+            case 1:
+                for (Workers CPU1 : CPU) {
+                    return CPU.length;
+                }
+            case 2:
+                for (Workers RAM1 : RAM) {
+                    return RAM.length;
+                }
+            case 3:
+                for (Workers PSU1 : PSU) {
+                    return PSU.length;
+                }
+            case 4:
+                for (Workers GPU1 : GPU) {
+                    return GPU.length;
+                }
+            case 5:
+                for (Workers ASM1 : ASMBLY) {
+                    return ASMBLY.length;
+                }
+            default:
+                System.out.println("No se ha encontrado el tipo de trabajador requerido.");
+                return -1;
+        }
+    }
+
     @Override
     public void run() {
         this.startWorkers();
@@ -124,7 +162,16 @@ public class Factory extends Thread {
                 Thread.sleep(dayDuration); // Esperar un día (simulado)
                 this.registerCosts(); //agregamos los gastos de los workers, el sistema de control de las entradas las lleva el director.
                 this.company.calculateNetWins();
-                System.out.println("==================================================PASO UN PINSHY DIA");
+                // Reporte diario al final de cada día de simulación
+                System.out.println("============================================ Pinshy Dia completado: " + (this.getPM().getRemainingDays()));
+
+                if (this.getPM().getRemainingDays() == 0) {
+                    System.out.println("Simulación terminada: Todos los dias de envio completados.");
+                    System.out.println("Costos operativos: $" + this.company.getOperationCost());
+                    System.out.println("Ganancias brutas: $" + this.company.getBrute());
+                    System.out.println("Ganancias netas: $$$" + this.company.getNetWins());
+                }
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -154,7 +201,33 @@ public class Factory extends Thread {
     public Warehouse getWareHouse() {
         return wareHouse;
     }
-    
-    
-    
+
+    /**
+     * @return the daysElapsed
+     */
+    public int getDaysElapsed() {
+        return daysElapsed;
+    }
+
+    /**
+     * @param daysElapsed the daysElapsed to set
+     */
+    public void setDaysElapsed(int daysElapsed) {
+        this.daysElapsed = daysElapsed;
+    }
+
+    /**
+     * @return the maxCapacity
+     */
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    /**
+     * @param maxCapacity the maxCapacity to set
+     */
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
 }

@@ -1,21 +1,22 @@
 [General Params]
-Duration=5000
+Duration=1000
 Deadline=25
 
 [HP]
 Motherboard=3
 CPU=3
-RAM=3
-PSU=1
-GPU=6
-Assemblers=1
+RAM=4
+PSU=2
+GPU=2
+Assemblers=3
 MaxCapacity=17
 
 [MSI]
-Motherboard=1
-CPU=1
-RAM=1
-PSU=1
-GPU=1
-Assemblers=1
-MaxCapacity=21
+Motherboard=8
+CPU=4
+RAM=3
+PSU=5
+GPU=3
+Assemblers=2
+MaxCapacity=25
+

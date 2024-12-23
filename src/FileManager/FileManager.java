@@ -35,8 +35,8 @@ public class FileManager {
 
     private void writeInitialStructure() {
         String initialContent = "[General Params]\n"
-                + "Duration=1000\n"
-                + "Deadline=10\n\n"
+                + "Duration=5000\n"
+                + "Deadline=15\n\n"
                 + "[HP]\n"
                 + "Motherboard=1\n"
                 + "CPU=1\n"
@@ -105,6 +105,7 @@ public class FileManager {
     }
 
     public void writeData(File inFile, String[] company0, String[] company1) {
+        
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(inFile))) {
             // Escribir la seccion de parametros generales
             writer.write("[General Params]\n");
@@ -114,26 +115,26 @@ public class FileManager {
             // Escribir la sección de HP
 //            Company hp = App.getCompany0();
             writer.write("[HP]\n");
-            writer.write("Motherboard=" + 1 + "\n");
-            writer.write("CPU=" + 1 + "\n");
-            writer.write("RAM=" + 1 + "\n");
-            writer.write("PSU=" + 1 + "\n");
-            writer.write("GPU=" + 1 + "\n");
-            writer.write("Assemblers=" + 1 + "\n");
-            writer.write("MaxCapacity=" + 25 + "\n\n");
+            writer.write("Motherboard=" + company0[0] + "\n");
+            writer.write("CPU=" + company0[1] + "\n");
+            writer.write("RAM=" + company0[2] + "\n");
+            writer.write("PSU=" + company0[3] + "\n");
+            writer.write("GPU=" + company0[4] + "\n");
+            writer.write("Assemblers=" + company0[5] + "\n");
+            writer.write("MaxCapacity=" + company0[6] + "\n\n");
 
             // Escribir la sección de MSI
 //            Company msi = App.getCompany1();
             writer.write("[MSI]\n");
-            writer.write("Motherboard=" + 1 + "\n");
-            writer.write("CPU=" + 1 + "\n");
-            writer.write("RAM=" + 1 + "\n");
-            writer.write("PSU=" + 1 + "\n");
-            writer.write("GPU=" + 1 + "\n");
-            writer.write("Assemblers=" + 1 + "\n");
-            writer.write("MaxCapacity=" + 25 + "\n");
+            writer.write("Motherboard=" + company1[0] + "\n");
+            writer.write("CPU=" + company1[1] + "\n");
+            writer.write("RAM=" + company1[2] + "\n");
+            writer.write("PSU=" + company1[3] + "\n");
+            writer.write("GPU=" + company1[4] + "\n");
+            writer.write("Assemblers=" + company1[5] + "\n");
+            writer.write("MaxCapacity=" + company1[6] + "\n\n");
 
-            System.out.println("==================== Datos escritos correctamente en el archivo");
+            System.out.println("===================================== Datos escritos correctamente en el archivo");
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al escribir los datos en el archivo.", "Error", JOptionPane.ERROR_MESSAGE);

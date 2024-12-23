@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  */
 public class Workers extends Thread {
 
+    private boolean running = true; // Indicador de ejecución
     private int tipe; // Identifica el tipo de trabajador: 0=Placa Base, 1=CPU, 2=RAM, 3=Fuente, 4=Tarjeta Grafica
     private int salaryPerHour;
     private int productionTime; // Tiempo necesario para producir un componente (en días)
@@ -61,7 +62,7 @@ public class Workers extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (running) {
             try {
                 this.payMe(); // Cobro fijo por el período de ensamblaje
                 this.work();  // Intentar ensamblar una computadora
@@ -77,7 +78,7 @@ public class Workers extends Thread {
             boolean success = this.wareHouse.tryToAssembleComputer();
             if (success) {
                 System.out.println("Ensamblador creo una computadora para " + this.wareHouse.getCompanyName() + " Cantidad NORMAL: " + this.wareHouse.getCOMPUTER_Count() + " Cantidad CON GPU: " + this.wareHouse.getGPUCOMPUTER_Count());
-                
+
             } else {
                 System.out.println("Ensamblador no pudo ensamblar una computadora: recursos insuficientes.");
             }
@@ -88,7 +89,13 @@ public class Workers extends Thread {
                 System.out.println("Almacen lleno para tipo " + getType() + ". No se puede producir mas.");
             }
         }
-        
+
+    }
+
+    // Método para detener el hilo
+    public void stopWorking() {
+        running = false;
+        this.interrupt(); // Interrumpir el hilo si está en espera
     }
 
 //    public void makeCompter() throws InterruptedException {
@@ -118,7 +125,6 @@ public class Workers extends Thread {
 //            System.out.println("No se pudo ensamblar computadora");
 //        }
 //    }
-
     public void payMe() throws InterruptedException {
         this.getPaymentSemaphore().acquire();
         int payment = this.salaryPerHour * 24 * this.productionTime; // Cobro fijo por el tiempo de produccion
@@ -133,7 +139,6 @@ public class Workers extends Thread {
 //    public void decrement() throws InterruptedException {
 //        this.wareHouse.decrementCounterByType(this.tipe);
 //   }
-
     public void setCurrentStock() {
         try {
             this.wareHouse.incrementCounterByType(this.tipe);

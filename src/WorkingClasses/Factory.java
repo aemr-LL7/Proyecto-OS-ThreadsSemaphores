@@ -49,7 +49,7 @@ public class Factory extends Thread {
         this.director = new Director(this.PM, this.wareHouse, this.dayDuration, this.company);
 
         this.populateWorkers();
-//        this.start();//Corremos esta mierda si o k hpta 
+//        this.start();//Corremos esta mierda si o k hpta ===> el diavlo (0_=)
     }
 
     private void populateWorkers() {
@@ -98,6 +98,63 @@ public class Factory extends Thread {
     private void startExecutives() {
         this.PM.start();
         this.director.start();
+    }
+
+    // Detener a todos los hilos de trabajadores
+    private void stopAllWorkers() {
+        for (int i = 0; i < this.MOBO.length; i++) {
+            MOBO[i].stopWorking();
+        }
+        for (int i = 0; i < this.CPU.length; i++) {
+            CPU[i].stopWorking();
+        }
+        for (int i = 0; i < this.RAM.length; i++) {
+            RAM[i].stopWorking();
+        }
+        for (int i = 0; i < this.PSU.length; i++) {
+            PSU[i].stopWorking();
+        }
+        for (int i = 0; i < this.GPU.length; i++) {
+            GPU[i].stopWorking();
+        }
+        for (int i = 0; i < this.ASMBLY.length; i++) {
+            ASMBLY[i].stopWorking();
+        }
+    }
+
+    // Crear un arreglo de trabajadores segun su tipo
+    private Workers[] createWorkers(int count, int type) {
+        
+        Workers[] workersArray = new Workers[count];
+        for (int i = 0; i < count; i++) {
+            workersArray[i] = new Workers(type, this.wareHouse, this.dayDuration);
+        }
+        return workersArray;
+    }
+
+    // Cargar nuevos trabajadores en los atrray
+    private void loadNewWorkers(String[] workerValues) {
+        try {
+            this.MOBO = createWorkers(Integer.parseInt(workerValues[0]), 0); // Tipo 0: MOBO
+            this.CPU = createWorkers(Integer.parseInt(workerValues[1]), 1); // Tipo 1: CPU
+            this.RAM = createWorkers(Integer.parseInt(workerValues[2]), 2); // Tipo 2: RAM
+            this.PSU = createWorkers(Integer.parseInt(workerValues[3]), 3); // Tipo 3: PSU
+            this.GPU = createWorkers(Integer.parseInt(workerValues[4]), 4); // Tipo 4: GPU
+            this.ASMBLY = createWorkers(Integer.parseInt(workerValues[5]), 5); // Tipo 5: ASMBLY
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Los valores de trabajadores no son validossssss");
+        }
+    }
+
+    // Método sincronizado para actualizar los trabajadores
+    public synchronized void updateWorkers(String[] workerValues) {
+
+        this.stopAllWorkers();
+
+        // 2-> Actualizar los arreglos de trabajadores
+        this.loadNewWorkers(workerValues);
+
+        this.startWorkers();
     }
 
     public void registerCosts() throws InterruptedException {

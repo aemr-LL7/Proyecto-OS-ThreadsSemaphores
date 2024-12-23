@@ -161,7 +161,7 @@ public class ProjectManager extends Thread {
     }
 
     public void resetDayCount() {
-        this.remainingDays = this.daysTillShipement;
+        this.remainingDays = this.getDaysTillShipement();
     }
 
     public int getDaysTillShipement() {
@@ -190,6 +190,13 @@ public class ProjectManager extends Thread {
 
     public int getAccumulatedSalary() {
         return accumulatedSalary;
+    }
+
+    /**
+     * @param daysTillShipement the daysTillShipement to set
+     */
+    public void setDaysTillShipement(int daysTillShipement) {
+        this.daysTillShipement = daysTillShipement;
     }
 
 }
